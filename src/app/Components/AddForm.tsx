@@ -9,20 +9,27 @@ interface AddFormProps {
 const AddForm: React.FC<AddFormProps> = ({ onAdd }) => {
    const [itemName, setItemName] = React.useState("");
    const [itemDescription, setItemDescription] = React.useState("");
+   const [error, setError] = React.useState(false);
 
    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
+
       if (itemName.trim() && itemDescription.trim()) {
          onAdd(itemName, itemDescription);
          setItemName("");
          setItemDescription("");
+         setError(false);
+      } else {
+         setError(true);
+         return;
       }
    };
 
-   const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       setItemName("");
       setItemDescription("");
+      setError(false);
    };
 
    return (
@@ -43,6 +50,12 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd }) => {
                placeholder="Descrição do item"
             />
 
+            {error && (
+               <p className="text-sm text-rose-700">
+                  Preencha todos os campos obrigatórios.
+               </p>
+            )}
+
             <div className="flex items-center gap-2">
                <button
                   onClick={handleSubmit}
@@ -56,7 +69,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd }) => {
                </button>
 
                <button
-                  onClick={handleReset}
+                  onClick={handleCancel}
                   type="submit"
                   className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-rose-600 border-2 border-rose-600 shadow-sm
                              hover:bg-rose-600 hover:text-white hover:shadow-xl transition duration-75 ease-in-out
