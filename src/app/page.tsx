@@ -9,7 +9,6 @@ export default function Home() {
    const handleAddItem = (title: string) => {
       setItems((prev) => [...prev, title]);
    };
-
    const handleRemoveItem = (index: number) => {
       setItems((prev) => {
          return prev.filter((i) => i !== prev[index]);
@@ -23,11 +22,11 @@ export default function Home() {
          <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-            {items.map((item, itemIndex) => (
+            {items.map((itemTitle, itemIndex) => (
                <ItemCard
                   key={itemIndex}
                   i={itemIndex}
-                  title={item}
+                  title={itemTitle}
                   removeItem={handleRemoveItem}
                />
             ))}
