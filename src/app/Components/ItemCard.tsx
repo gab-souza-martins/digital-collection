@@ -26,7 +26,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ i, title, removeItem }) => {
          </p>
 
          <button aria-label="Remover item" onClick={handleRemove}>
-            <FaTrash className="text-gray-800 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
+            <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
          </button>
       </div>
    );

@@ -21,14 +21,17 @@ export default function Home() {
          <h1 className="text-3xl font-bold">Coleção digital</h1>
          <BtnForm onAdd={handleAddItem} />
          <br />
-         {items.map((item, itemIndex) => (
-            <ItemCard
-               key={itemIndex}
-               i={itemIndex}
-               title={item}
-               removeItem={handleRemoveItem}
-            />
-         ))}
+
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+            {items.map((item, itemIndex) => (
+               <ItemCard
+                  key={itemIndex}
+                  i={itemIndex}
+                  title={item}
+                  removeItem={handleRemoveItem}
+               />
+            ))}
+         </div>
       </div>
    );
 }
