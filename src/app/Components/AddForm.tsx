@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { FaPlus, FaBan } from "react-icons/fa";
+import { FaPlus, FaBan, FaFileImage } from "react-icons/fa";
 
 interface AddFormProps {
    onAdd: (title: string, description: string) => void;
@@ -34,18 +34,37 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
          <div className="bg-white border-1 border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96">
-            <form className="flex flex-col gap-2">
+            <form className="flex flex-col gap-3">
                <input
                   onChange={(e) => setItemName(e.target.value)}
-                  className="border border-gray-800 rounded-md"
+                  className="border border-gray-800 rounded-md p-2"
                   type="text"
                   value={itemName}
                   placeholder="Nome do item"
                />
 
+               <div className="border rounded-md p-2 flex flex-col gap-2">
+                  <p className="text-semibold text-neutral-500">
+                     Imagem (opcional)
+                  </p>
+                  <div className="flex justify-center items-center gap-2 bg-gray-600/80 rounded-md w-50 h-50 self-center">
+                     <FaFileImage
+                        className="text-white"
+                        style={{ fontSize: "2em" }}
+                     />
+                     <input
+                        className="absolute opacity-0 w-50 h-50 cursor-pointer"
+                        type="file"
+                        name="itemImage"
+                        id="imageInput"
+                        aria-label="Imagem do item"
+                     />
+                  </div>
+               </div>
+
                <textarea
                   onChange={(e) => setItemDescription(e.target.value)}
-                  className="border border-gray-800 rounded-md"
+                  className="border border-gray-800 rounded-md p-2"
                   value={itemDescription}
                   placeholder="Descrição do item"
                />
