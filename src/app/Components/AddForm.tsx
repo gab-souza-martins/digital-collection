@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { FaPlus, FaBan, FaFileImage } from "react-icons/fa";
 
 interface AddFormProps {
@@ -8,9 +9,20 @@ interface AddFormProps {
 }
 
 const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
-   const [itemName, setItemName] = React.useState("");
-   const [itemDescription, setItemDescription] = React.useState("");
-   const [error, setError] = React.useState(false);
+   const [itemName, setItemName] = React.useState<string>("");
+   const [itemDescription, setItemDescription] = React.useState<string>("");
+
+   const [image, setImage] = React.useState<File | null>(null);
+   const [hasSelectedImage, setHasSelectedImage] =
+      React.useState<boolean>(false);
+
+   const [error, setError] = React.useState<boolean>(false);
+
+   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+         setImage(e.target.files[0]);
+      }
+   };
 
    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -47,18 +59,38 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                   <p className="text-semibold text-neutral-500">
                      Imagem (opcional)
                   </p>
-                  <div className="flex justify-center items-center gap-2 bg-gray-600/80 rounded-md w-50 h-50 self-center">
-                     <FaFileImage
-                        className="text-white"
-                        style={{ fontSize: "2em" }}
-                     />
+
+                  <div className="flex justify-center items-center self-center">
+                     {!hasSelectedImage && (
+                        <div className="flex justify-center items-center gap-2 bg-gray-600/80 rounded-md w-50 h-50 self-center">
+                           <FaFileImage
+                              className="text-white"
+                              style={{ fontSize: "2em" }}
+                           />
+                        </div>
+                     )}
+
                      <input
-                        className="absolute opacity-0 w-50 h-50 cursor-pointer"
+                        className="absolute opacity-0 w-60 h-50 cursor-pointer"
                         type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                           handleImageChange(e);
+                           setHasSelectedImage(true);
+                        }}
                         name="itemImage"
                         id="imageInput"
                         aria-label="Imagem do item"
                      />
+                     {image && hasSelectedImage && (
+                        <Image
+                           src={URL.createObjectURL(image)}
+                           alt="Pré-visualização da imagem"
+                           className="self-center rounded-md object-cover"
+                           width={300}
+                           height={300}
+                        />
+                     )}
                   </div>
                </div>
 
