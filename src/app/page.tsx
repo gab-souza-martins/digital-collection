@@ -11,7 +11,6 @@ interface Item {
 
 export default function Home() {
    const [items, setItems] = React.useState<Item[]>([]);
-
    const handleAddItem = (title: string, description: string) => {
       setItems((prev) => [...prev, { title, description }]);
    };
@@ -21,13 +20,23 @@ export default function Home() {
       });
    };
 
+   const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
+   const handleOpenAddForm = () => {
+      setIsAddFormOpen(true);
+   };
+   const handleCloseAddForm = () => {
+      setIsAddFormOpen(false);
+   };
+
    return (
       <div className="p-4">
          <h1 className="text-3xl font-bold">Coleção digital</h1>
 
-         <AddForm onAdd={handleAddItem} />
+         {isAddFormOpen && (
+            <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
+         )}
 
-         <OpenAddFormBtn />
+         <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">

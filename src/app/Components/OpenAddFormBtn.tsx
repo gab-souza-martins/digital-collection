@@ -3,14 +3,14 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 
 interface OpenAddFormBtnProps {
-   onAdd: (title: string) => void;
+   openForm: () => void;
 }
 
-const OpenAddFormBtn = () => {
+const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = (openForm) => {
    return (
       <div>
          <button
-            // onClick={handleSubmit}
+            onClick={openForm.openForm}
             type="submit"
             className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-white bg-emerald-600 shadow-sm
              hover:bg-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
