@@ -3,10 +3,16 @@ import { FaTrash } from "react-icons/fa";
 interface ItemCardProps {
    i: number;
    title: string;
+   description: string;
    removeItem: (index: number) => void;
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ i, title, removeItem }) => {
+const ItemCard: React.FC<ItemCardProps> = ({
+   i,
+   title,
+   description,
+   removeItem,
+}) => {
    const handleRemove = () => {
       removeItem(i);
    };
@@ -19,7 +25,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ i, title, removeItem }) => {
 
          <hr className="opacity-40" />
 
-         <p>Descrição aqui.</p>
+         <p>{description}</p>
 
          <p className="text-sm text-gray-500 mt-2">
             Adicionado em {date.toLocaleDateString("pt-BR")}

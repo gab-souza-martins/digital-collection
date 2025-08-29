@@ -1,13 +1,19 @@
 "use client";
 import React from "react";
-import BtnForm from "./Components/BtnForm";
+import OpenAddFormBtn from "./Components/OpenAddFormBtn";
 import ItemCard from "./Components/ItemCard";
+import AddForm from "./Components/AddForm";
+
+interface Item {
+   title: string;
+   description: string;
+}
 
 export default function Home() {
-   const [items, setItems] = React.useState<string[]>([]);
+   const [items, setItems] = React.useState<Item[]>([]);
 
-   const handleAddItem = (title: string) => {
-      setItems((prev) => [...prev, title]);
+   const handleAddItem = (title: string, description: string) => {
+      setItems((prev) => [...prev, { title, description }]);
    };
    const handleRemoveItem = (index: number) => {
       setItems((prev) => {
@@ -18,15 +24,19 @@ export default function Home() {
    return (
       <div className="p-4">
          <h1 className="text-3xl font-bold">Coleção digital</h1>
-         <BtnForm onAdd={handleAddItem} />
+
+         <AddForm onAdd={handleAddItem} />
+
+         <OpenAddFormBtn />
          <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-            {items.map((itemTitle, itemIndex) => (
+            {items.map((item, itemIndex) => (
                <ItemCard
                   key={itemIndex}
                   i={itemIndex}
-                  title={itemTitle}
+                  title={item.title}
+                  description={item.description}
                   removeItem={handleRemoveItem}
                />
             ))}
