@@ -2,12 +2,19 @@
 import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 
-const BtnAdd = () => {
+interface BtnFormProps {
+   onAdd: (title: string) => void;
+}
+
+const BtnForm: React.FC<BtnFormProps> = ({ onAdd }) => {
    const [itemName, setItemName] = React.useState("");
 
-   const handleAddItem = (e: React.MouseEvent<HTMLButtonElement>) => {
+   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      console.log(itemName);
+      if (itemName.trim()) {
+         onAdd(itemName);
+         setItemName("");
+      }
    };
 
    return (
@@ -21,8 +28,8 @@ const BtnAdd = () => {
             />
 
             <button
-               id="btnAdd"
-               onClick={handleAddItem}
+               onClick={handleSubmit}
+               type="submit"
                className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-white bg-emerald-600 shadow-sm
              hover:bg-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
              active:bg-emerald-800 active:shadow-md"
@@ -35,4 +42,4 @@ const BtnAdd = () => {
    );
 };
 
-export default BtnAdd;
+export default BtnForm;
