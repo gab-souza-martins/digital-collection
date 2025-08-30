@@ -42,6 +42,20 @@ export default function Home() {
       setIsAddFormOpen(false);
    };
 
+   const handleTextSearch = (searchTerm: string) => {
+      if (searchTerm.trim() !== "") {
+         const filteredItems = items.filter(
+            (item) =>
+               item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               item.description.toLowerCase().includes(searchTerm.toLowerCase())
+         );
+         setItems(filteredItems);
+      } else if (searchTerm.trim() === "") {
+         const savedItems: string | null = localStorage.getItem("items");
+         return savedItems ? setItems(JSON.parse(savedItems)) : setItems([]);
+      }
+   };
+
    return (
       <div className="p-4">
          <h1 className="text-3xl font-bold">Coleção digital</h1>
@@ -52,7 +66,7 @@ export default function Home() {
 
          <p className="text-gray-600">Tamanho da coleção: {items.length}</p>
 
-         <Searchbar />
+         <Searchbar textSearch={handleTextSearch} />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />
