@@ -12,25 +12,42 @@ interface Item {
 }
 
 export default function Home() {
-   const [items, setItems] = React.useState<Item[]>([]);
-
+   const [allItems, setAllItems] = React.useState<Item[]>([]);
+   const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
    React.useEffect(() => {
       const savedItems: string | null = localStorage.getItem("items");
-      return savedItems ? setItems(JSON.parse(savedItems)) : setItems([]);
+      const parsed: Item[] = savedItems ? JSON.parse(savedItems) : [];
+      setAllItems(parsed);
+      setViewedItems(parsed);
    }, []);
+
+   const [searchTerm, setSearchTerm] = React.useState<string>("");
+   React.useEffect(() => {
+      if (searchTerm.trim() !== "") {
+         const filteredItems = allItems.filter(
+            (item) =>
+               item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               item.description.toLowerCase().includes(searchTerm.toLowerCase())
+         );
+         setViewedItems(filteredItems);
+      } else {
+         setViewedItems(allItems);
+      }
+   }, [searchTerm, allItems]);
 
    const handleAddItem = (
       title: string,
       description: string,
       image?: string
    ) => {
-      const newItems = [...items, { title, description, image }];
-      setItems(newItems);
+      const newItems = [...allItems, { title, description, image }];
+      setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
    };
+
    const handleRemoveItem = (index: number) => {
-      const newItems = items.filter((i) => i !== items[index]);
-      setItems(newItems);
+      const newItems = allItems.filter((i) => i !== viewedItems[index]);
+      setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
@@ -43,17 +60,7 @@ export default function Home() {
    };
 
    const handleTextSearch = (searchTerm: string) => {
-      if (searchTerm.trim() !== "") {
-         const filteredItems = items.filter(
-            (item) =>
-               item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               item.description.toLowerCase().includes(searchTerm.toLowerCase())
-         );
-         setItems(filteredItems);
-      } else if (searchTerm.trim() === "") {
-         const savedItems: string | null = localStorage.getItem("items");
-         return savedItems ? setItems(JSON.parse(savedItems)) : setItems([]);
-      }
+      setSearchTerm(searchTerm);
    };
 
    return (
@@ -64,7 +71,7 @@ export default function Home() {
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
          )}
 
-         <p className="text-gray-600">Tamanho da coleção: {items.length}</p>
+         <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
 
          <Searchbar textSearch={handleTextSearch} />
 
@@ -72,7 +79,7 @@ export default function Home() {
          <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-            {items.map((item, itemIndex) => (
+            {viewedItems.map((item, itemIndex) => (
                <ItemCard
                   key={itemIndex}
                   i={itemIndex}
