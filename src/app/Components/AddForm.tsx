@@ -12,10 +12,6 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    const [itemName, setItemName] = React.useState<string>("");
    const [itemDescription, setItemDescription] = React.useState<string>("");
 
-   const [previewImage, setPreviewImage] = React.useState<File | null>(null);
-   const [hasSelectedImage, setHasSelectedImage] =
-      React.useState<boolean>(false);
-
    const fileToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       if (!e.target.files || e.target.files.length === 0) return;
@@ -30,14 +26,10 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
       };
    };
    const [itemImageBase64, setItemImageBase64] = React.useState<string>("");
+   const [hasSelectedImage, setHasSelectedImage] =
+      React.useState<boolean>(false);
 
    const [error, setError] = React.useState<boolean>(false);
-
-   const handlePreviewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files[0]) {
-         setPreviewImage(e.target.files[0]);
-      }
-   };
 
    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -93,7 +85,6 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                         accept="image/*"
                         onChange={(e) => {
                            if (e.target.files && e.target.files[0]) {
-                              handlePreviewChange(e);
                               fileToBase64(e);
                            }
                            setHasSelectedImage(true);
@@ -102,9 +93,9 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                         id="imageInput"
                         aria-label="Imagem do item"
                      />
-                     {previewImage && hasSelectedImage && (
+                     {itemImageBase64 && hasSelectedImage && (
                         <Image
-                           src={URL.createObjectURL(previewImage)}
+                           src={itemImageBase64}
                            alt="Pré-visualização da imagem"
                            className="self-center rounded-md object-cover"
                            width={300}
