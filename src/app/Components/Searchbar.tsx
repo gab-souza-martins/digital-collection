@@ -8,27 +8,17 @@ interface SearchbarProps {
 const Searchbar: React.FC<SearchbarProps> = ({ textSearch }) => {
    const [textTerm, setTextTerm] = React.useState<string>("");
 
-   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextTerm(e.target.value);
-   };
-
-   const handleSearch = (
-      e: React.FormEvent<HTMLInputElement | HTMLFormElement>
-   ) => {
-      e.preventDefault();
-      textSearch(textTerm);
-   };
-
    return (
       <div>
-         <form onSubmit={handleSearch} className="flex items-center gap-1">
+         <form className="flex items-center gap-1">
             <input
                onChange={(e) => {
-                  handleTextChange(e);
-                  handleSearch(e);
+                  setTextTerm(e.target.value);
+                  textSearch(e.target.value);
                }}
                type="text"
                className="border border-gray-800 rounded-md py-1 px-2"
+               value={textTerm}
                placeholder="Pesquisar itens"
             />
          </form>
