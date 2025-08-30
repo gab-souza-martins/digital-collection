@@ -12,17 +12,25 @@ interface Item {
 
 export default function Home() {
    const [items, setItems] = React.useState<Item[]>([]);
+
+   React.useEffect(() => {
+      const savedItems: string | null = localStorage.getItem("items");
+      return savedItems ? setItems(JSON.parse(savedItems)) : setItems([]);
+   }, []);
+
    const handleAddItem = (
       title: string,
       description: string,
       image?: string
    ) => {
-      setItems((prev) => [...prev, { title, description, image }]);
+      const newItems = [...items, { title, description, image }];
+      setItems(newItems);
+      localStorage.setItem("items", JSON.stringify(newItems));
    };
    const handleRemoveItem = (index: number) => {
-      setItems((prev) => {
-         return prev.filter((i) => i !== prev[index]);
-      });
+      const newItems = items.filter((i) => i !== items[index]);
+      setItems(newItems);
+      localStorage.setItem("items", JSON.stringify(newItems));
    };
 
    const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
