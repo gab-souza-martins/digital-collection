@@ -54,10 +54,18 @@ export default function Home() {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
+   const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] =
+      React.useState<boolean>(false);
+   const handleOpenConfirmRemove = () => {
+      setIsConfirmRemoveOpen(true);
+   };
    const handleRemoveItem = (index: number) => {
       const newItems = allItems.filter((i) => i !== viewedItems[index]);
       setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
+   };
+   const handleCloseConfirmRemove = () => {
+      setIsConfirmRemoveOpen(false);
    };
 
    const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
@@ -85,7 +93,9 @@ export default function Home() {
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
          )}
 
-         <ConfirmRemove />
+         {isConfirmRemoveOpen && (
+            <ConfirmRemove closeRemove={handleCloseConfirmRemove} />
+         )}
 
          <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
 
@@ -105,7 +115,7 @@ export default function Home() {
                   title={item.title}
                   description={item.description}
                   image={item.image}
-                  removeItem={handleRemoveItem}
+                  openRemoveConfirm={handleOpenConfirmRemove}
                />
             ))}
          </div>

@@ -10,6 +10,12 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
    confirmRemove,
    closeRemove,
 }) => {
+   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      confirmRemove();
+      closeRemove();
+   };
+
    const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       closeRemove();
@@ -25,7 +31,7 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
 
             <div className="flex gap-2">
                <button
-                  //   onClick={handleConfirm}
+                  onClick={handleConfirm}
                   type="submit"
                   className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 
                             text-white bg-rose-600 border-2 border-rose-600 shadow-sm
