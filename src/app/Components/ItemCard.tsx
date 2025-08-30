@@ -1,9 +1,11 @@
+import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 
 interface ItemCardProps {
    i: number;
    title: string;
    description: string;
+   image?: string;
    removeItem: (index: number) => void;
 }
 
@@ -11,6 +13,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
    i,
    title,
    description,
+   image,
    removeItem,
 }) => {
    const handleRemove = () => {
@@ -22,6 +25,16 @@ const ItemCard: React.FC<ItemCardProps> = ({
    return (
       <div className="w-2xs border rounded-lg p-4 shadow-md">
          <h2 className="text-2xl font-semibold">{title}</h2>
+
+         {image && (
+            <Image
+               src={image}
+               alt={title}
+               className="rounded-md object-cover"
+               width={300}
+               height={300}
+            />
+         )}
 
          <hr className="opacity-40" />
 

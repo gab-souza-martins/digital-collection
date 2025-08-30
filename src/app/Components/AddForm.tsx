@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaPlus, FaBan, FaFileImage } from "react-icons/fa";
 
 interface AddFormProps {
-   onAdd: (title: string, description: string) => void;
+   onAdd: (title: string, description: string, image?: string) => void;
    closeForm: () => void;
 }
 
@@ -12,15 +12,30 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    const [itemName, setItemName] = React.useState<string>("");
    const [itemDescription, setItemDescription] = React.useState<string>("");
 
-   const [image, setImage] = React.useState<File | null>(null);
+   const [previewImage, setPreviewImage] = React.useState<File | null>(null);
    const [hasSelectedImage, setHasSelectedImage] =
       React.useState<boolean>(false);
 
+   const fileToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      if (!e.target.files || e.target.files.length === 0) return;
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+         setItemImageBase64(reader.result as string);
+      };
+      reader.onerror = (error) => {
+         console.log("Error:", error);
+      };
+   };
+   const [itemImageBase64, setItemImageBase64] = React.useState<string>("");
+
    const [error, setError] = React.useState<boolean>(false);
 
-   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handlePreviewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
-         setImage(e.target.files[0]);
+         setPreviewImage(e.target.files[0]);
       }
    };
 
@@ -28,9 +43,10 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
       e.preventDefault();
 
       if (itemName.trim() && itemDescription.trim()) {
-         onAdd(itemName, itemDescription);
+         onAdd(itemName, itemDescription, itemImageBase64);
          setItemName("");
          setItemDescription("");
+         setItemImageBase64("");
          setError(false);
       } else {
          setError(true);
@@ -75,16 +91,19 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
-                           handleImageChange(e);
+                           if (e.target.files && e.target.files[0]) {
+                              handlePreviewChange(e);
+                              fileToBase64(e);
+                           }
                            setHasSelectedImage(true);
                         }}
                         name="itemImage"
                         id="imageInput"
                         aria-label="Imagem do item"
                      />
-                     {image && hasSelectedImage && (
+                     {previewImage && hasSelectedImage && (
                         <Image
-                           src={URL.createObjectURL(image)}
+                           src={URL.createObjectURL(previewImage)}
                            alt="Pré-visualização da imagem"
                            className="self-center rounded-md object-cover"
                            width={300}

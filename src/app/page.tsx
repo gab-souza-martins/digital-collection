@@ -7,12 +7,17 @@ import AddForm from "./Components/AddForm";
 interface Item {
    title: string;
    description: string;
+   image?: string;
 }
 
 export default function Home() {
    const [items, setItems] = React.useState<Item[]>([]);
-   const handleAddItem = (title: string, description: string) => {
-      setItems((prev) => [...prev, { title, description }]);
+   const handleAddItem = (
+      title: string,
+      description: string,
+      image?: string
+   ) => {
+      setItems((prev) => [...prev, { title, description, image }]);
    };
    const handleRemoveItem = (index: number) => {
       setItems((prev) => {
@@ -46,6 +51,7 @@ export default function Home() {
                   i={itemIndex}
                   title={item.title}
                   description={item.description}
+                  image={item.image}
                   removeItem={handleRemoveItem}
                />
             ))}
