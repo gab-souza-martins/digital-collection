@@ -36,10 +36,6 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
 
       if (itemName.trim() && itemDescription.trim()) {
          onAdd(itemName, itemDescription, itemImageBase64);
-         setItemName("");
-         setItemDescription("");
-         setItemImageBase64("");
-         setError(false);
          closeForm();
       } else {
          setError(true);
