@@ -6,7 +6,7 @@ interface ItemCardProps {
    title: string;
    description: string;
    image?: string;
-   openRemoveConfirm: () => void;
+   openRemoveConfirm: (index: number) => void;
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
@@ -17,7 +17,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
    openRemoveConfirm,
 }) => {
    const handleRemoveConfirm = () => {
-      openRemoveConfirm();
+      openRemoveConfirm(i);
    };
 
    const date: Date = new Date();

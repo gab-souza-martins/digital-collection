@@ -13,6 +13,7 @@ interface Item {
 }
 
 export default function Home() {
+   // *Define os itens totais e os visualizados
    const [allItems, setAllItems] = React.useState<Item[]>([]);
    const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
    React.useEffect(() => {
@@ -22,6 +23,7 @@ export default function Home() {
       setViewedItems(parsed);
    }, []);
 
+   // *Define os filtros de busca
    const [searchTerm, setSearchTerm] = React.useState<string>("");
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
    React.useEffect(() => {
@@ -44,6 +46,14 @@ export default function Home() {
       setViewedItems(filteredItems);
    }, [searchTerm, imageFilter, allItems]);
 
+   const handleTextSearch = (searchTerm: string) => {
+      setSearchTerm(searchTerm);
+   };
+   const handleImageFilter = (hasImage: boolean) => {
+      setImageFilter(hasImage);
+   };
+
+   // *Define adição e remoção de itens
    const handleAddItem = (
       title: string,
       description: string,
@@ -54,33 +64,31 @@ export default function Home() {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
+   const [indexToRemove, setIndexToRemove] = React.useState<number>(-1);
    const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] =
       React.useState<boolean>(false);
-   const handleOpenConfirmRemove = () => {
+
+   const handleOpenConfirmRemove = (index: number) => {
+      setIndexToRemove(index);
       setIsConfirmRemoveOpen(true);
-   };
-   const handleRemoveItem = (index: number) => {
-      const newItems = allItems.filter((i) => i !== viewedItems[index]);
-      setAllItems(newItems);
-      localStorage.setItem("items", JSON.stringify(newItems));
    };
    const handleCloseConfirmRemove = () => {
       setIsConfirmRemoveOpen(false);
    };
 
+   const handleConfirmRemoveItem = () => {
+      const newItems = allItems.filter((i) => i !== viewedItems[indexToRemove]);
+      setAllItems(newItems);
+      localStorage.setItem("items", JSON.stringify(newItems));
+   };
+
+   // *Define abertura e fechamento do formulário de adição
    const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
    const handleOpenAddForm = () => {
       setIsAddFormOpen(true);
    };
    const handleCloseAddForm = () => {
       setIsAddFormOpen(false);
-   };
-
-   const handleTextSearch = (searchTerm: string) => {
-      setSearchTerm(searchTerm);
-   };
-   const handleImageFilter = (hasImage: boolean) => {
-      setImageFilter(hasImage);
    };
 
    //
@@ -94,7 +102,10 @@ export default function Home() {
          )}
 
          {isConfirmRemoveOpen && (
-            <ConfirmRemove closeRemove={handleCloseConfirmRemove} />
+            <ConfirmRemove
+               confirmRemove={handleConfirmRemoveItem}
+               closeRemove={handleCloseConfirmRemove}
+            />
          )}
 
          <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
