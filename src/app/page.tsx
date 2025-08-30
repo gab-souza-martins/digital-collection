@@ -3,6 +3,7 @@ import React from "react";
 import OpenAddFormBtn from "./Components/OpenAddFormBtn";
 import ItemCard from "./Components/ItemCard";
 import AddForm from "./Components/AddForm";
+import Searchbar from "./Components/Searchbar";
 
 interface Item {
    title: string;
@@ -50,6 +51,8 @@ export default function Home() {
          )}
 
          <p className="text-gray-600">Tamanho da coleção: {items.length}</p>
+
+         <Searchbar />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />
