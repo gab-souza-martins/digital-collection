@@ -22,18 +22,26 @@ export default function Home() {
    }, []);
 
    const [searchTerm, setSearchTerm] = React.useState<string>("");
+   const [imageFilter, setImageFilter] = React.useState<boolean>(false);
    React.useEffect(() => {
+      let filteredItems: Item[] = allItems;
+
+      if (imageFilter) {
+         filteredItems = allItems.filter(
+            (item) => item.image !== "" && item.image !== undefined
+         );
+      }
+
       if (searchTerm.trim() !== "") {
-         const filteredItems = allItems.filter(
+         filteredItems = filteredItems.filter(
             (item) =>
                item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                item.description.toLowerCase().includes(searchTerm.toLowerCase())
          );
-         setViewedItems(filteredItems);
-      } else {
-         setViewedItems(allItems);
       }
-   }, [searchTerm, allItems]);
+
+      setViewedItems(filteredItems);
+   }, [searchTerm, imageFilter, allItems]);
 
    const handleAddItem = (
       title: string,
@@ -62,6 +70,9 @@ export default function Home() {
    const handleTextSearch = (searchTerm: string) => {
       setSearchTerm(searchTerm);
    };
+   const handleImageFilter = (hasImage: boolean) => {
+      setImageFilter(hasImage);
+   };
 
    return (
       <div className="p-4">
@@ -73,7 +84,10 @@ export default function Home() {
 
          <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
 
-         <Searchbar textSearch={handleTextSearch} />
+         <Searchbar
+            textSearch={handleTextSearch}
+            imageFilter={handleImageFilter}
+         />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />

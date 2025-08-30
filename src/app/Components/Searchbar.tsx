@@ -3,9 +3,10 @@ import React from "react";
 
 interface SearchbarProps {
    textSearch: (searchTerm: string) => void;
+   imageFilter: (hasImage: boolean) => void;
 }
 
-const Searchbar: React.FC<SearchbarProps> = ({ textSearch }) => {
+const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
    const [textTerm, setTextTerm] = React.useState<string>("");
 
    return (
@@ -31,6 +32,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch }) => {
                   Possui imagem
                </label>
                <input
+                  onChange={(e) => imageFilter(e.target.checked)}
                   type="checkbox"
                   id="imageFilter"
                   className="cursor-pointer border border-gray-800 rounded-md w-5 h-5"
