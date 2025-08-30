@@ -48,6 +48,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
          setItemDescription("");
          setItemImageBase64("");
          setError(false);
+         closeForm();
       } else {
          setError(true);
          return;
