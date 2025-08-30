@@ -4,6 +4,7 @@ import OpenAddFormBtn from "./Components/OpenAddFormBtn";
 import ItemCard from "./Components/ItemCard";
 import AddForm from "./Components/AddForm";
 import Searchbar from "./Components/Searchbar";
+import ConfirmRemove from "./Components/ConfirmRemove";
 
 interface Item {
    title: string;
@@ -25,7 +26,7 @@ export default function Home() {
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
    React.useEffect(() => {
       let filteredItems: Item[] = allItems;
-
+      // TODO: Mudar ordem dos filtros
       if (imageFilter) {
          filteredItems = allItems.filter(
             (item) => item.image !== "" && item.image !== undefined
@@ -74,6 +75,8 @@ export default function Home() {
       setImageFilter(hasImage);
    };
 
+   //
+   //
    return (
       <div className="p-4">
          <h1 className="text-3xl font-bold">Coleção digital</h1>
@@ -81,6 +84,8 @@ export default function Home() {
          {isAddFormOpen && (
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
          )}
+
+         <ConfirmRemove />
 
          <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
 

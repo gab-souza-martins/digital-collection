@@ -125,6 +125,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                      <FaPlus />
                      <span className="font-semibold">Adicionar</span>
                   </button>
+
                   <button
                      onClick={handleCancel}
                      type="submit"

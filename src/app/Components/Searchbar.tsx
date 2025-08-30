@@ -12,6 +12,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
    return (
       <div>
          <form className="flex flex-col items-start gap-2 xs:flex-row xs:items-center xs:gap-3">
+            {/* TODO: Mudar tamanho do input */}
             <input
                onChange={(e) => {
                   setTextTerm(e.target.value);
@@ -23,7 +24,6 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
                placeholder="Pesquisar itens"
                aria-label="Pesquisar itens"
             />
-
             <div className="flex items-center gap-1">
                <label
                   htmlFor="imageFilter"
