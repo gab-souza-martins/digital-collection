@@ -49,6 +49,8 @@ export default function Home() {
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
          )}
 
+         <p className="text-gray-600">Tamanho da coleção: {items.length}</p>
+
          <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />
 
