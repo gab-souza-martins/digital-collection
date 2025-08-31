@@ -5,6 +5,7 @@ import ItemCard from "./Components/ItemCard";
 import AddForm from "./Components/AddForm";
 import Searchbar from "./Components/Searchbar";
 import ConfirmRemove from "./Components/ConfirmRemove";
+import ItemSort from "./Components/ItemSort";
 
 interface Item {
    title: string;
@@ -20,9 +21,9 @@ export default function Home() {
 
    React.useEffect(() => {
       const savedItems: string | null = localStorage.getItem("items");
-      const parsed: Item[] = savedItems ? JSON.parse(savedItems) : [];
-      setAllItems(parsed);
-      setViewedItems(parsed);
+      const parsedItems: Item[] = savedItems ? JSON.parse(savedItems) : [];
+      setAllItems(parsedItems);
+      setViewedItems(parsedItems);
    }, []);
 
    // *Define abertura e fechamento do formulário de adição
@@ -88,6 +89,24 @@ export default function Home() {
    // *Define ordenação dos itens
    const [sortAlphabetically, setSortAlphabetically] =
       React.useState<boolean>(false);
+
+   React.useEffect(() => {
+      const savedAlphabeticalSort: string | null =
+         localStorage.getItem("sortAlphabetically");
+      console.log(savedAlphabeticalSort);
+
+      const parsed: boolean = savedAlphabeticalSort
+         ? JSON.parse(savedAlphabeticalSort)
+         : false;
+      console.log(parsed);
+
+      setSortAlphabetically(parsed);
+   }, []);
+
+   const handleSortAlphabetically = (isSorting: boolean) => {
+      setSortAlphabetically(isSorting);
+      localStorage.setItem("sortAlphabetically", JSON.stringify(isSorting));
+   };
 
    // *Define os filtros de busca e ordenação
    const [searchTerm, setSearchTerm] = React.useState<string>("");
@@ -157,13 +176,7 @@ export default function Home() {
          />
          <br />
 
-         {/* TODO: Passar para o seu próprio componente */}
-         <label htmlFor="alphabeticalSort">Alfabético</label>
-         <input
-            onChange={(e) => setSortAlphabetically(e.target.checked)}
-            type="checkbox"
-            id="alphabeticalSort"
-         />
+         <ItemSort onAlphabeticalSort={handleSortAlphabetically} />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />
