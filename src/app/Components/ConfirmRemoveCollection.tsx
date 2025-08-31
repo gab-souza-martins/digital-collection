@@ -1,31 +1,32 @@
 import React from "react";
 import { FaBan, FaTrash } from "react-icons/fa";
 
-interface ConfirmRemoveProps {
-   confirmRemove: () => void;
-   closeRemove: () => void;
+interface ConfirmRemoveCollectionProps {
+   confirmRemoveCollection: () => void;
+   closeRemoveCollection: () => void;
 }
 
-const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
-   confirmRemove,
-   closeRemove,
+const ConfirmRemoveCollection: React.FC<ConfirmRemoveCollectionProps> = ({
+   confirmRemoveCollection,
+   closeRemoveCollection,
 }) => {
    const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      confirmRemove();
-      closeRemove();
+      confirmRemoveCollection();
+      closeRemoveCollection();
    };
 
    const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      closeRemove();
+      closeRemoveCollection();
    };
 
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
          <div className="bg-white border-1 border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96">
             <p className="text-rose-700">
-               Deletar um item é permanente. Deseja prosseguir?
+               Deletar sua coleção é permanente. Todos os itens dentro serão
+               perdidos. Deseja prosseguir?
             </p>
             <br />
 
@@ -58,4 +59,4 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
    );
 };
 
-export default ConfirmRemove;
+export default ConfirmRemoveCollection;

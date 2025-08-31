@@ -6,15 +6,19 @@ interface OpenAddFormBtnProps {
    openForm: () => void;
 }
 
-const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = (openForm) => {
+const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = ({ openForm }) => {
+   const handleOpen = () => {
+      openForm();
+   };
+
    return (
       <div>
          <button
-            onClick={openForm.openForm}
+            onClick={handleOpen}
             type="submit"
-            className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-white bg-emerald-600 shadow-sm
-             hover:bg-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
-             active:bg-emerald-800 active:shadow-md"
+            className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-white bg-emerald-600 border-emerald-600 shadow-sm
+             hover:bg-emerald-700 hover:border-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
+             active:bg-emerald-800 active:border-emerald-700 active:shadow-md"
          >
             <FaPlusCircle />
             <span className="font-semibold">Adicionar item</span>

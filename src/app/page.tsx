@@ -4,8 +4,10 @@ import OpenAddFormBtn from "./Components/OpenAddFormBtn";
 import ItemCard from "./Components/ItemCard";
 import AddForm from "./Components/AddForm";
 import Searchbar from "./Components/Searchbar";
-import ConfirmRemove from "./Components/ConfirmRemove";
+import ConfirmRemoveItem from "./Components/ConfirmRemoveItem";
 import ItemSort from "./Components/ItemSort";
+import OpenRemoveCollection from "./Components/OpenRemoveCollection";
+import ConfirmRemoveCollection from "./Components/ConfirmRemoveCollection";
 
 interface Item {
    title: string;
@@ -36,7 +38,7 @@ export default function Home() {
       setIsAddFormOpen(false);
    };
 
-   // *Define adição e remoção de itens
+   // *Define adição de itens
    const handleAddItem = (
       title: string,
       description: string,
@@ -58,22 +60,38 @@ export default function Home() {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
+   // *Define remoção de itens
    const [indexToRemove, setIndexToRemove] = React.useState<number>(-1);
-   const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] =
+   const [isConfirmRemoveItemOpen, setIsConfirmRemoveItemOpen] =
       React.useState<boolean>(false);
 
-   const handleOpenConfirmRemove = (index: number) => {
+   const handleOpenConfirmRemoveItem = (index: number) => {
       setIndexToRemove(index);
-      setIsConfirmRemoveOpen(true);
+      setIsConfirmRemoveItemOpen(true);
    };
-   const handleCloseConfirmRemove = () => {
-      setIsConfirmRemoveOpen(false);
+   const handleCloseConfirmRemoveItem = () => {
+      setIsConfirmRemoveItemOpen(false);
    };
 
    const handleConfirmRemoveItem = () => {
       const newItems = allItems.filter((i) => i !== viewedItems[indexToRemove]);
       setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
+   };
+
+   // *Define remoção de toda a coleção
+   const [isConfirmRemoveCollectionOpen, setIsConfirmRemoveCollectionOpen] =
+      React.useState<boolean>(false);
+
+   const handleOpenConfirmRemoveCollection = () => {
+      setIsConfirmRemoveCollectionOpen(true);
+   };
+   const handleCloseConfirmRemoveCollection = () => {
+      setIsConfirmRemoveCollectionOpen(false);
+   };
+   const handleConfirmRemoveCollection = () => {
+      localStorage.removeItem("items");
+      setAllItems([]);
    };
 
    // *Define favoritos
@@ -176,10 +194,17 @@ export default function Home() {
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
          )}
 
-         {isConfirmRemoveOpen && (
-            <ConfirmRemove
-               confirmRemove={handleConfirmRemoveItem}
-               closeRemove={handleCloseConfirmRemove}
+         {isConfirmRemoveItemOpen && (
+            <ConfirmRemoveItem
+               confirmRemoveItem={handleConfirmRemoveItem}
+               closeRemoveItem={handleCloseConfirmRemoveItem}
+            />
+         )}
+
+         {isConfirmRemoveCollectionOpen && (
+            <ConfirmRemoveCollection
+               confirmRemoveCollection={handleConfirmRemoveCollection}
+               closeRemoveCollection={handleCloseConfirmRemoveCollection}
             />
          )}
 
@@ -189,11 +214,16 @@ export default function Home() {
             textSearch={handleTextSearch}
             imageFilter={handleImageFilter}
          />
-         <br />
 
          <ItemSort sort={handleSort} />
 
-         <OpenAddFormBtn openForm={handleOpenAddForm} />
+         <div className="flex items-center gap-2">
+            <OpenAddFormBtn openForm={handleOpenAddForm} />
+            <OpenRemoveCollection
+               openRemoveCollection={handleOpenConfirmRemoveCollection}
+            />
+         </div>
+
          <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
@@ -207,7 +237,7 @@ export default function Home() {
                   image={item.image}
                   isFav={item.isFav}
                   favoriteEvent={handleFavoriteEvent}
-                  openRemoveConfirm={handleOpenConfirmRemove}
+                  openRemoveConfirm={handleOpenConfirmRemoveItem}
                />
             ))}
          </div>
