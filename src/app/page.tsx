@@ -55,8 +55,6 @@ export default function Home() {
    const handleOpenConfirmRemove = (index: number) => {
       setIndexToRemove(index);
       setIsConfirmRemoveOpen(true);
-
-      console.log(index);
    };
    const handleCloseConfirmRemove = () => {
       setIsConfirmRemoveOpen(false);
@@ -84,8 +82,6 @@ export default function Home() {
       if (newItems) {
          setAllItems(newItems);
       }
-
-      console.log(index);
    };
 
    // *Define ordenação dos itens
@@ -119,6 +115,11 @@ export default function Home() {
             a.title.localeCompare(b.title)
          );
       }
+
+      filteredItems = [...filteredItems].sort(
+         ({ isFav: favA = false }, { isFav: favB = false }) =>
+            Number(favB) - Number(favA)
+      );
 
       setViewedItems(filteredItems);
    }, [searchTerm, imageFilter, sortAlphabetically, allItems]);
