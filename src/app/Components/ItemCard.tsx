@@ -6,6 +6,7 @@ interface ItemCardProps {
    i: number;
    title: string;
    description: string;
+   dateAdded: string;
    image?: string;
    isFav: boolean;
    favoriteEvent: (index: number) => void;
@@ -16,6 +17,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
    i,
    title,
    description,
+   dateAdded,
    image,
    isFav,
    favoriteEvent,
@@ -28,8 +30,6 @@ const ItemCard: React.FC<ItemCardProps> = ({
    const handleRemoveConfirm = () => {
       openRemoveConfirm(i);
    };
-
-   const date: Date = new Date();
 
    return (
       <div className="w-2xs border rounded-lg p-4 shadow-md">
@@ -61,9 +61,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
 
          <p>{description}</p>
 
-         <p className="text-sm text-gray-500 mt-2">
-            Adicionado em {date.toLocaleDateString("pt-BR")}
-         </p>
+         <p className="text-sm text-gray-500 mt-2">{dateAdded}</p>
 
          <button aria-label="Remover item" onClick={handleRemoveConfirm}>
             <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />

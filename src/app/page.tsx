@@ -10,6 +10,7 @@ import ItemSort from "./Components/ItemSort";
 interface Item {
    title: string;
    description: string;
+   dateAdded: string;
    image?: string;
    isFav: boolean;
 }
@@ -43,7 +44,15 @@ export default function Home() {
    ) => {
       const newItems = [
          ...allItems,
-         { title, description, image, isFav: false },
+         {
+            title,
+            description,
+            image,
+            dateAdded: `Adicionado 
+            em ${new Date().toLocaleDateString("pt-BR")} 
+            às ${new Date().toLocaleTimeString("pt-BR")}`,
+            isFav: false,
+         },
       ];
       setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
@@ -93,12 +102,10 @@ export default function Home() {
    React.useEffect(() => {
       const savedAlphabeticalSort: string | null =
          localStorage.getItem("sortAlphabetically");
-      console.log(savedAlphabeticalSort);
 
       const parsed: boolean = savedAlphabeticalSort
          ? JSON.parse(savedAlphabeticalSort)
          : false;
-      console.log(parsed);
 
       setSortAlphabetically(parsed);
    }, []);
@@ -188,6 +195,7 @@ export default function Home() {
                   i={itemIndex}
                   title={item.title}
                   description={item.description}
+                  dateAdded={item.dateAdded}
                   image={item.image}
                   isFav={item.isFav}
                   favoriteEvent={handleFavoriteEvent}
