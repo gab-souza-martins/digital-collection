@@ -13,9 +13,23 @@ interface Item {
 }
 
 export default function Home() {
+   //* Define ordenação dos itens
+   const [sortAlphabetically, setSortAlphabetically] =
+      React.useState<boolean>(false);
+
+   React.useEffect(() => {
+      setViewedItems((prev) => {
+         const sorted = [...prev].sort((a, b) =>
+            a.title.localeCompare(b.title)
+         );
+         return sortAlphabetically ? sorted : prev;
+      });
+   }, [sortAlphabetically]);
+
    // *Define os itens totais e os visualizados
    const [allItems, setAllItems] = React.useState<Item[]>([]);
    const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
+
    React.useEffect(() => {
       const savedItems: string | null = localStorage.getItem("items");
       const parsed: Item[] = savedItems ? JSON.parse(savedItems) : [];
@@ -23,34 +37,13 @@ export default function Home() {
       setViewedItems(parsed);
    }, []);
 
-   // *Define os filtros de busca
-   const [searchTerm, setSearchTerm] = React.useState<string>("");
-   const [imageFilter, setImageFilter] = React.useState<boolean>(false);
-   React.useEffect(() => {
-      let filteredItems: Item[] = allItems;
-      // TODO: Mudar ordem dos filtros
-      if (imageFilter) {
-         filteredItems = allItems.filter(
-            (item) => item.image !== "" && item.image !== undefined
-         );
-      }
-
-      if (searchTerm.trim() !== "") {
-         filteredItems = filteredItems.filter(
-            (item) =>
-               item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               item.description.toLowerCase().includes(searchTerm.toLowerCase())
-         );
-      }
-
-      setViewedItems(filteredItems);
-   }, [searchTerm, imageFilter, allItems]);
-
-   const handleTextSearch = (searchTerm: string) => {
-      setSearchTerm(searchTerm);
+   // *Define abertura e fechamento do formulário de adição
+   const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
+   const handleOpenAddForm = () => {
+      setIsAddFormOpen(true);
    };
-   const handleImageFilter = (hasImage: boolean) => {
-      setImageFilter(hasImage);
+   const handleCloseAddForm = () => {
+      setIsAddFormOpen(false);
    };
 
    // *Define adição e remoção de itens
@@ -82,13 +75,34 @@ export default function Home() {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
-   // *Define abertura e fechamento do formulário de adição
-   const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
-   const handleOpenAddForm = () => {
-      setIsAddFormOpen(true);
+   // *Define os filtros de busca
+   const [searchTerm, setSearchTerm] = React.useState<string>("");
+   const [imageFilter, setImageFilter] = React.useState<boolean>(false);
+   React.useEffect(() => {
+      let filteredItems: Item[] = allItems;
+      // TODO: Mudar ordem dos filtros
+      if (imageFilter) {
+         filteredItems = allItems.filter(
+            (item) => item.image !== "" && item.image !== undefined
+         );
+      }
+
+      if (searchTerm.trim() !== "") {
+         filteredItems = filteredItems.filter(
+            (item) =>
+               item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               item.description.toLowerCase().includes(searchTerm.toLowerCase())
+         );
+      }
+
+      setViewedItems(filteredItems);
+   }, [searchTerm, imageFilter, allItems]);
+
+   const handleTextSearch = (searchTerm: string) => {
+      setSearchTerm(searchTerm);
    };
-   const handleCloseAddForm = () => {
-      setIsAddFormOpen(false);
+   const handleImageFilter = (hasImage: boolean) => {
+      setImageFilter(hasImage);
    };
 
    //
@@ -113,6 +127,12 @@ export default function Home() {
          <Searchbar
             textSearch={handleTextSearch}
             imageFilter={handleImageFilter}
+         />
+         <br />
+
+         <input
+            onChange={(e) => setSortAlphabetically(e.target.checked)}
+            type="checkbox"
          />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
