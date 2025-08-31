@@ -10,6 +10,7 @@ interface Item {
    title: string;
    description: string;
    image?: string;
+   isFav: boolean;
 }
 
 export default function Home() {
@@ -39,7 +40,10 @@ export default function Home() {
       description: string,
       image?: string
    ) => {
-      const newItems = [...allItems, { title, description, image }];
+      const newItems = [
+         ...allItems,
+         { title, description, image, isFav: false },
+      ];
       setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
    };
@@ -51,6 +55,8 @@ export default function Home() {
    const handleOpenConfirmRemove = (index: number) => {
       setIndexToRemove(index);
       setIsConfirmRemoveOpen(true);
+
+      console.log(index);
    };
    const handleCloseConfirmRemove = () => {
       setIsConfirmRemoveOpen(false);
@@ -62,7 +68,27 @@ export default function Home() {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
-   //* Define ordenação dos itens
+   // *Define favoritos
+   const handleFavoriteEvent = (index: number) => {
+      const newItems: Item[] | undefined = allItems.map((item) => {
+         if (item === viewedItems[index]) {
+            if (item.isFav) {
+               item.isFav = false;
+            } else {
+               item.isFav = true;
+            }
+         }
+         return item;
+      });
+
+      if (newItems) {
+         setAllItems(newItems);
+      }
+
+      console.log(index);
+   };
+
+   // *Define ordenação dos itens
    const [sortAlphabetically, setSortAlphabetically] =
       React.useState<boolean>(false);
 
@@ -129,9 +155,12 @@ export default function Home() {
          />
          <br />
 
+         {/* TODO: Passar para o seu próprio componente */}
+         <label htmlFor="alphabeticalSort">Alfabético</label>
          <input
             onChange={(e) => setSortAlphabetically(e.target.checked)}
             type="checkbox"
+            id="alphabeticalSort"
          />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
@@ -145,6 +174,8 @@ export default function Home() {
                   title={item.title}
                   description={item.description}
                   image={item.image}
+                  isFav={item.isFav}
+                  favoriteEvent={handleFavoriteEvent}
                   openRemoveConfirm={handleOpenConfirmRemove}
                />
             ))}
