@@ -2,11 +2,11 @@
 import React from "react";
 import { FaDumpsterFire } from "react-icons/fa";
 
-interface OpenRemoveCollectionProps {
+interface OpenRemoveCollectionBtnProps {
    openRemoveCollection: () => void;
 }
 
-const OpenRemoveCollection: React.FC<OpenRemoveCollectionProps> = ({
+const OpenRemoveCollectionBtn: React.FC<OpenRemoveCollectionBtnProps> = ({
    openRemoveCollection,
 }) => {
    const handleOpen = () => {
@@ -29,4 +29,4 @@ const OpenRemoveCollection: React.FC<OpenRemoveCollectionProps> = ({
    );
 };
 
-export default OpenRemoveCollection;
+export default OpenRemoveCollectionBtn;

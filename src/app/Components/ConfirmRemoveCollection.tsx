@@ -1,5 +1,6 @@
 import React from "react";
-import { FaBan, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import CancelBtn from "./Botões/CancelBtn";
 
 interface ConfirmRemoveCollectionProps {
    confirmRemoveCollection: () => void;
@@ -13,11 +14,6 @@ const ConfirmRemoveCollection: React.FC<ConfirmRemoveCollectionProps> = ({
    const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       confirmRemoveCollection();
-      closeRemoveCollection();
-   };
-
-   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
       closeRemoveCollection();
    };
 
@@ -43,16 +39,7 @@ const ConfirmRemoveCollection: React.FC<ConfirmRemoveCollectionProps> = ({
                   <span className="font-semibold">Confirmar</span>
                </button>
 
-               <button
-                  onClick={handleCancel}
-                  type="submit"
-                  className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-rose-600 border-2 border-rose-600 shadow-sm
-                             hover:bg-rose-600 hover:text-white hover:shadow-xl transition duration-75 ease-in-out
-                             active:bg-rose-700 active:border-rose-700 active:shadow-md"
-               >
-                  <FaBan />
-                  <span className="font-semibold">Cancelar</span>
-               </button>
+               <CancelBtn onClickEvent={closeRemoveCollection} />
             </div>
          </div>
       </div>

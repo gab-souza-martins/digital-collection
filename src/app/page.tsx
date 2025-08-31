@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import OpenAddFormBtn from "./Components/OpenAddFormBtn";
+import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
 import ItemCard from "./Components/ItemCard";
 import AddForm from "./Components/AddForm";
 import Searchbar from "./Components/Searchbar";
 import ConfirmRemoveItem from "./Components/ConfirmRemoveItem";
 import ItemSort from "./Components/ItemSort";
-import OpenRemoveCollection from "./Components/OpenRemoveCollection";
+import OpenRemoveCollectionBtn from "./Components/Botões/OpenRemoveCollectionBtn";
 import ConfirmRemoveCollection from "./Components/ConfirmRemoveCollection";
 
 interface Item {
@@ -219,7 +219,7 @@ export default function Home() {
 
          <div className="flex items-center gap-2">
             <OpenAddFormBtn openForm={handleOpenAddForm} />
-            <OpenRemoveCollection
+            <OpenRemoveCollectionBtn
                openRemoveCollection={handleOpenConfirmRemoveCollection}
             />
          </div>

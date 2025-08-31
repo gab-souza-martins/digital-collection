@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { FaPlus, FaBan, FaFileImage } from "react-icons/fa";
+import { FaPlus, FaFileImage } from "react-icons/fa";
+import CancelBtn from "./Botões/CancelBtn";
 
 interface AddFormProps {
    onAdd: (title: string, description: string, image?: string) => void;
@@ -41,11 +42,6 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
          setError(true);
          return;
       }
-   };
-
-   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      closeForm();
    };
 
    return (
@@ -126,16 +122,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                      <span className="font-semibold">Adicionar</span>
                   </button>
 
-                  <button
-                     onClick={handleCancel}
-                     type="submit"
-                     className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-rose-600 border-2 border-rose-600 shadow-sm
-                                 hover:bg-rose-600 hover:text-white hover:shadow-xl transition duration-75 ease-in-out
-                                 active:bg-rose-700 active:border-rose-700 active:shadow-md"
-                  >
-                     <FaBan />
-                     <span className="font-semibold">Cancelar</span>
-                  </button>
+                  <CancelBtn onClickEvent={closeForm} />
                </div>
             </form>
          </div>
