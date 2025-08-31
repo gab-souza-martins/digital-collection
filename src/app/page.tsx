@@ -67,9 +67,9 @@ export default function Home() {
    };
 
    // *Define favoritos
-   const handleFavoriteEvent = (index: number) => {
+   const handleFavoriteEvent = (i: number) => {
       const newItems: Item[] | undefined = allItems.map((item) => {
-         if (item === viewedItems[index]) {
+         if (item === viewedItems[i]) {
             if (item.isFav) {
                item.isFav = false;
             } else {
@@ -81,6 +81,7 @@ export default function Home() {
 
       if (newItems) {
          setAllItems(newItems);
+         localStorage.setItem("items", JSON.stringify(newItems));
       }
    };
 
