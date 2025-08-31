@@ -96,23 +96,20 @@ export default function Home() {
    };
 
    // *Define ordenação dos itens
-   const [sortAlphabetically, setSortAlphabetically] =
-      React.useState<boolean>(false);
+   const [sortValue, setSortValue] = React.useState<string>("");
 
    React.useEffect(() => {
-      const savedAlphabeticalSort: string | null =
-         localStorage.getItem("sortAlphabetically");
+      const savedSortValue: string | null = localStorage.getItem("sortValue");
 
-      const parsed: boolean = savedAlphabeticalSort
-         ? JSON.parse(savedAlphabeticalSort)
-         : false;
+      const parsed: string = savedSortValue ? JSON.parse(savedSortValue) : "";
 
-      setSortAlphabetically(parsed);
+      setSortValue(parsed);
    }, []);
 
-   const handleSortAlphabetically = (isSorting: boolean) => {
-      setSortAlphabetically(isSorting);
-      localStorage.setItem("sortAlphabetically", JSON.stringify(isSorting));
+   const handleSort = (sort: string) => {
+      setSortValue(sort);
+      localStorage.setItem("sortValue", JSON.stringify(sort));
+      console.log(sortValue);
    };
 
    // *Define os filtros de busca e ordenação
@@ -137,10 +134,22 @@ export default function Home() {
       }
 
       //* Filtros de ordenação
-      if (sortAlphabetically) {
-         filteredItems = [...filteredItems].sort((a, b) =>
-            a.title.localeCompare(b.title)
-         );
+      switch (sortValue) {
+         case "date-reverse":
+            filteredItems = [...filteredItems].reverse();
+            break;
+         case "alphabetical":
+            filteredItems = [...filteredItems].sort((a, b) =>
+               a.title.localeCompare(b.title)
+            );
+            break;
+         case "alphabetical-reverse":
+            filteredItems = [...filteredItems].sort((a, b) =>
+               b.title.localeCompare(a.title)
+            );
+            break;
+         default:
+            break;
       }
 
       filteredItems = [...filteredItems].sort(
@@ -149,7 +158,7 @@ export default function Home() {
       );
 
       setViewedItems(filteredItems);
-   }, [searchTerm, imageFilter, sortAlphabetically, allItems]);
+   }, [allItems, searchTerm, imageFilter, sortValue]);
 
    const handleTextSearch = (searchTerm: string) => {
       setSearchTerm(searchTerm);
@@ -183,7 +192,7 @@ export default function Home() {
          />
          <br />
 
-         <ItemSort onAlphabeticalSort={handleSortAlphabetically} />
+         <ItemSort sort={handleSort} />
 
          <OpenAddFormBtn openForm={handleOpenAddForm} />
          <br />
