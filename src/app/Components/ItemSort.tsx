@@ -6,7 +6,7 @@ interface ItemSortProps {
 }
 
 const ItemSort: React.FC<ItemSortProps> = ({ sort }) => {
-   const [selectedSort, setSelectedSort] = React.useState<string>("");
+   const [selectedSort, setSelectedSort] = React.useState<string>("date");
    const handleSort = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       sort(selectedSort);

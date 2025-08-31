@@ -109,7 +109,6 @@ export default function Home() {
    const handleSort = (sort: string) => {
       setSortValue(sort);
       localStorage.setItem("sortValue", JSON.stringify(sort));
-      console.log(sortValue);
    };
 
    // *Define os filtros de busca e ordenação
