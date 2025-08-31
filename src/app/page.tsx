@@ -4,10 +4,9 @@ import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
 import ItemCard from "./Components/ItemCard";
 import AddForm from "./Components/AddForm";
 import Searchbar from "./Components/Searchbar";
-import ConfirmRemoveItem from "./Components/ConfirmRemoveItem";
 import ItemSort from "./Components/ItemSort";
 import OpenRemoveCollectionBtn from "./Components/Botões/OpenRemoveCollectionBtn";
-import ConfirmRemoveCollection from "./Components/ConfirmRemoveCollection";
+import ConfirmRemove from "./Components/ConfirmRemove";
 
 interface Item {
    title: string;
@@ -196,16 +195,18 @@ export default function Home() {
          )}
 
          {isConfirmRemoveItemOpen && (
-            <ConfirmRemoveItem
-               confirmRemoveItem={handleConfirmRemoveItem}
-               closeRemoveItem={handleCloseConfirmRemoveItem}
+            <ConfirmRemove
+               text="Remover um item é uma ação irreversível."
+               confirmRemove={handleConfirmRemoveItem}
+               closeRemove={handleCloseConfirmRemoveItem}
             />
          )}
 
          {isConfirmRemoveCollectionOpen && (
-            <ConfirmRemoveCollection
-               confirmRemoveCollection={handleConfirmRemoveCollection}
-               closeRemoveCollection={handleCloseConfirmRemoveCollection}
+            <ConfirmRemove
+               text="Remover a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
+               confirmRemove={handleConfirmRemoveCollection}
+               closeRemove={handleCloseConfirmRemoveCollection}
             />
          )}
 

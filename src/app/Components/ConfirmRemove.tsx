@@ -2,28 +2,27 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 import CancelBtn from "./Botões/CancelBtn";
 
-interface ConfirmRemoveCollectionProps {
-   confirmRemoveCollection: () => void;
-   closeRemoveCollection: () => void;
+interface ConfirmRemoveProps {
+   text: string;
+   confirmRemove: () => void;
+   closeRemove: () => void;
 }
 
-const ConfirmRemoveCollection: React.FC<ConfirmRemoveCollectionProps> = ({
-   confirmRemoveCollection,
-   closeRemoveCollection,
+const ConfirmRemoveItem: React.FC<ConfirmRemoveProps> = ({
+   text,
+   confirmRemove,
+   closeRemove,
 }) => {
    const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      confirmRemoveCollection();
-      closeRemoveCollection();
+      confirmRemove();
+      closeRemove();
    };
 
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
          <div className="bg-white border-1 border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96">
-            <p className="text-rose-700">
-               Deletar sua coleção é permanente. Todos os itens dentro serão
-               perdidos. Deseja prosseguir?
-            </p>
+            <p className="text-rose-700">{text} Deseja prosseguir?</p>
             <br />
 
             <div className="flex gap-2">
@@ -39,11 +38,11 @@ const ConfirmRemoveCollection: React.FC<ConfirmRemoveCollectionProps> = ({
                   <span className="font-semibold">Confirmar</span>
                </button>
 
-               <CancelBtn onClickEvent={closeRemoveCollection} />
+               <CancelBtn onClickEvent={closeRemove} />
             </div>
          </div>
       </div>
    );
 };
 
-export default ConfirmRemoveCollection;
+export default ConfirmRemoveItem;
