@@ -13,19 +13,6 @@ interface Item {
 }
 
 export default function Home() {
-   //* Define ordenação dos itens
-   const [sortAlphabetically, setSortAlphabetically] =
-      React.useState<boolean>(false);
-
-   React.useEffect(() => {
-      setViewedItems((prev) => {
-         const sorted = [...prev].sort((a, b) =>
-            a.title.localeCompare(b.title)
-         );
-         return sortAlphabetically ? sorted : prev;
-      });
-   }, [sortAlphabetically]);
-
    // *Define os itens totais e os visualizados
    const [allItems, setAllItems] = React.useState<Item[]>([]);
    const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
@@ -75,18 +62,18 @@ export default function Home() {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
-   // *Define os filtros de busca
+   //* Define ordenação dos itens
+   const [sortAlphabetically, setSortAlphabetically] =
+      React.useState<boolean>(false);
+
+   // *Define os filtros de busca e ordenação
    const [searchTerm, setSearchTerm] = React.useState<string>("");
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
+
    React.useEffect(() => {
       let filteredItems: Item[] = allItems;
-      // TODO: Mudar ordem dos filtros
-      if (imageFilter) {
-         filteredItems = allItems.filter(
-            (item) => item.image !== "" && item.image !== undefined
-         );
-      }
 
+      //* Filtros de busca
       if (searchTerm.trim() !== "") {
          filteredItems = filteredItems.filter(
             (item) =>
@@ -94,9 +81,21 @@ export default function Home() {
                item.description.toLowerCase().includes(searchTerm.toLowerCase())
          );
       }
+      if (imageFilter) {
+         filteredItems = allItems.filter(
+            (item) => item.image !== "" && item.image !== undefined
+         );
+      }
+
+      //* Filtros de ordenação
+      if (sortAlphabetically) {
+         filteredItems = [...filteredItems].sort((a, b) =>
+            a.title.localeCompare(b.title)
+         );
+      }
 
       setViewedItems(filteredItems);
-   }, [searchTerm, imageFilter, allItems]);
+   }, [searchTerm, imageFilter, sortAlphabetically, allItems]);
 
    const handleTextSearch = (searchTerm: string) => {
       setSearchTerm(searchTerm);
