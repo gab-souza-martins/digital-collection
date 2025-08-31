@@ -30,12 +30,13 @@ export default function Home() {
    }, []);
 
    // *Define abertura e fechamento do formulário de adição
-   const [isAddFormOpen, setIsAddFormOpen] = React.useState<boolean>(false);
-   const handleOpenAddForm = () => {
-      setIsAddFormOpen(true);
+   const [isAddItemFormOpen, setIsAddItemFormOpen] =
+      React.useState<boolean>(false);
+   const handleOpenAddItemForm = () => {
+      setIsAddItemFormOpen(true);
    };
-   const handleCloseAddForm = () => {
-      setIsAddFormOpen(false);
+   const handleCloseAddItemForm = () => {
+      setIsAddItemFormOpen(false);
    };
 
    // *Define adição de itens
@@ -190,8 +191,8 @@ export default function Home() {
       <div className="p-4">
          <h1 className="text-3xl font-bold">Coleção digital</h1>
 
-         {isAddFormOpen && (
-            <AddForm onAdd={handleAddItem} closeForm={handleCloseAddForm} />
+         {isAddItemFormOpen && (
+            <AddForm onAdd={handleAddItem} closeForm={handleCloseAddItemForm} />
          )}
 
          {isConfirmRemoveItemOpen && (
@@ -218,7 +219,7 @@ export default function Home() {
          <ItemSort sort={handleSort} />
 
          <div className="flex items-center gap-2">
-            <OpenAddFormBtn openForm={handleOpenAddForm} />
+            <OpenAddFormBtn openForm={handleOpenAddItemForm} />
             <OpenRemoveCollectionBtn
                openRemoveCollection={handleOpenConfirmRemoveCollection}
             />

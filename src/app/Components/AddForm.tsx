@@ -10,8 +10,8 @@ interface AddFormProps {
 }
 
 const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
-   const [itemName, setItemName] = React.useState<string>("");
-   const [itemDescription, setItemDescription] = React.useState<string>("");
+   const [name, setName] = React.useState<string>("");
+   const [description, setDescription] = React.useState<string>("");
 
    const fileToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
@@ -20,13 +20,13 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-         setItemImageBase64(reader.result as string);
+         setImageBase64(reader.result as string);
       };
       reader.onerror = (error) => {
          console.log("Error:", error);
       };
    };
-   const [itemImageBase64, setItemImageBase64] = React.useState<string>("");
+   const [imageBase64, setImageBase64] = React.useState<string>("");
    const [hasSelectedImage, setHasSelectedImage] =
       React.useState<boolean>(false);
 
@@ -35,8 +35,8 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
 
-      if (itemName.trim() && itemDescription.trim()) {
-         onAdd(itemName, itemDescription, itemImageBase64);
+      if (name.trim() && description.trim()) {
+         onAdd(name, description, imageBase64);
          closeForm();
       } else {
          setError(true);
@@ -49,11 +49,11 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
          <div className="bg-white border-1 border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96">
             <form className="flex flex-col gap-3">
                <input
-                  onChange={(e) => setItemName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   className="border border-gray-800 rounded-md p-2"
                   type="text"
-                  value={itemName}
-                  placeholder="Nome do item"
+                  value={name}
+                  placeholder="Nome"
                />
 
                <div className="border rounded-md p-2 flex flex-col gap-2">
@@ -85,9 +85,9 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                         id="imageInput"
                         aria-label="Imagem do item"
                      />
-                     {itemImageBase64 && hasSelectedImage && (
+                     {imageBase64 && hasSelectedImage && (
                         <Image
-                           src={itemImageBase64}
+                           src={imageBase64}
                            alt="Pré-visualização da imagem"
                            className="self-center rounded-md object-cover"
                            width={300}
@@ -98,10 +98,10 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                </div>
 
                <textarea
-                  onChange={(e) => setItemDescription(e.target.value)}
+                  onChange={(e) => setDescription(e.target.value)}
                   className="border border-gray-800 rounded-md p-2"
-                  value={itemDescription}
-                  placeholder="Descrição do item"
+                  value={description}
+                  placeholder="Descrição"
                />
 
                {error && (
