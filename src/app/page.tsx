@@ -200,7 +200,7 @@ const Home = () => {
             />
          )}
 
-         <div className="flex flex-col gap-4 ml:flex-row ml:gap-10">
+         <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
             <Searchbar
                textSearch={handleTextSearch}
                imageFilter={handleImageFilter}
@@ -209,6 +209,8 @@ const Home = () => {
          </div>
 
          <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
+
+         <hr className="mb-5 opacity-40" />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
             {viewedCollections.map((collection) => (

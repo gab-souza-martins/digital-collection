@@ -220,17 +220,6 @@ const CollectionPage = () => {
    //
    return (
       <div className="p-4">
-         <div className="flex items-center gap-2">
-            <Link
-               href={"../../"}
-               className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
-            >
-               <FaArrowLeft />
-            </Link>
-
-            <h1 className="text-3xl font-bold">{collectionName}</h1>
-         </div>
-
          {isAddItemFormOpen && (
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddItemForm} />
          )}
@@ -251,9 +240,18 @@ const CollectionPage = () => {
             />
          )}
 
-         <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
+         <div className="flex items-center gap-2">
+            <Link
+               href={"../../"}
+               className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
+            >
+               <FaArrowLeft />
+            </Link>
 
-         <div className="flex flex-col gap-4 ml:flex-row ml:gap-10">
+            <h1 className="text-3xl font-bold">{collectionName}</h1>
+         </div>
+
+         <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
             <Searchbar
                textSearch={handleTextSearch}
                imageFilter={handleImageFilter}
@@ -262,6 +260,12 @@ const CollectionPage = () => {
          </div>
 
          <OpenAddFormBtn openForm={handleOpenAddItemForm} />
+
+         <hr className="mb-5 opacity-40" />
+
+         <p className="text-gray-600 mb-3">
+            Tamanho da coleção: {allItems.length}
+         </p>
 
          <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
             {viewedItems.map((item) => (
