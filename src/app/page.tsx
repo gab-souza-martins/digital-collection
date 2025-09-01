@@ -78,6 +78,7 @@ const Home = () => {
       const newCollections = allCollections.filter((i) => i.id !== idToRemove);
       setAllCollections(newCollections);
       localStorage.setItem("collections", JSON.stringify(newCollections));
+      localStorage.removeItem(`items-${idToRemove}`);
    };
 
    // *Remoção de todas as coleções

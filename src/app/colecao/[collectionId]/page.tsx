@@ -12,21 +12,45 @@ import ConfirmRemove from "@/app/Components/ConfirmRemove";
 import Link from "next/link";
 import { FaCaretLeft } from "react-icons/fa";
 import Item from "@/app/Types/ItemType";
+import Collection from "@/app/Types/CollectionType";
 
-const Collection = () => {
+const CollectionPage = () => {
    const params = useParams();
    const { collectionId } = params;
+
+   // *Nome da coleção
+   const [collectionName, setCollectionName] = React.useState<string>("");
+
+   React.useEffect(() => {
+      const savedCollections: string | null =
+         localStorage.getItem("collections");
+
+      const parsed: Collection[] = savedCollections
+         ? JSON.parse(savedCollections)
+         : [];
+
+      const currentCollection: Collection | undefined = parsed.find(
+         (c) => c.id === collectionId
+      );
+
+      if (currentCollection) {
+         setCollectionName(currentCollection.title);
+      }
+   }, [collectionId]);
 
    // *Itens totais e os visualizados
    const [allItems, setAllItems] = React.useState<Item[]>([]);
    const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
 
    React.useEffect(() => {
-      const savedItems: string | null = localStorage.getItem("items");
-      const parsedItems: Item[] = savedItems ? JSON.parse(savedItems) : [];
-      setAllItems(parsedItems);
-      setViewedItems(parsedItems);
-   }, []);
+      const savedItems: string | null = localStorage.getItem(
+         `items-${collectionId}`
+      );
+      const parsed: Item[] = savedItems ? JSON.parse(savedItems) : [];
+
+      setAllItems(parsed);
+      setViewedItems(parsed);
+   }, [collectionId]);
 
    // *Abertura e fechamento do formulário de adição
    const [isAddItemFormOpen, setIsAddItemFormOpen] =
@@ -58,7 +82,7 @@ const Collection = () => {
          },
       ];
       setAllItems(newItems);
-      localStorage.setItem("items", JSON.stringify(newItems));
+      localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
    };
 
    // *Remoção de itens
@@ -77,7 +101,7 @@ const Collection = () => {
    const handleConfirmRemoveItem = () => {
       const newItems = allItems.filter((i) => i.id !== idToRemove);
       setAllItems(newItems);
-      localStorage.setItem("items", JSON.stringify(newItems));
+      localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
    };
 
    // *Remoção de toda a coleção
@@ -91,7 +115,7 @@ const Collection = () => {
       setIsConfirmRemoveCollectionOpen(false);
    };
    const handleConfirmRemoveCollection = () => {
-      localStorage.removeItem("items");
+      localStorage.removeItem(`items-${collectionId}`);
       setAllItems([]);
    };
 
@@ -110,7 +134,10 @@ const Collection = () => {
 
       if (newItems) {
          setAllItems(newItems);
-         localStorage.setItem("items", JSON.stringify(newItems));
+         localStorage.setItem(
+            `items-${collectionId}`,
+            JSON.stringify(newItems)
+         );
       }
    };
 
@@ -201,7 +228,7 @@ const Collection = () => {
                <FaCaretLeft />
             </Link>
 
-            <h1 className="text-3xl font-bold">{collectionId}</h1>
+            <h1 className="text-3xl font-bold">{collectionName}</h1>
          </div>
 
          {isAddItemFormOpen && (
@@ -261,4 +288,4 @@ const Collection = () => {
    );
 };
 
-export default Collection;
+export default CollectionPage;
