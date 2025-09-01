@@ -10,7 +10,7 @@ import Sort from "@/app/Components/Sort";
 import OpenRemoveAllBtn from "@/app/Components/Botões/OpenRemoveAllBtn";
 import ConfirmRemove from "@/app/Components/ConfirmRemove";
 import Link from "next/link";
-import { FaCaretLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import Item from "@/app/Types/ItemType";
 import Collection from "@/app/Types/CollectionType";
 
@@ -223,9 +223,9 @@ const CollectionPage = () => {
          <div className="flex items-center gap-2">
             <Link
                href={"../../"}
-               className="text-xl p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
+               className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
             >
-               <FaCaretLeft />
+               <FaArrowLeft />
             </Link>
 
             <h1 className="text-3xl font-bold">{collectionName}</h1>
@@ -263,7 +263,7 @@ const CollectionPage = () => {
 
          <OpenAddFormBtn openForm={handleOpenAddItemForm} />
 
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+         <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
             {viewedItems.map((item) => (
                <ItemCard
                   key={item.id}
