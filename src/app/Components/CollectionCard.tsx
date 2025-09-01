@@ -39,7 +39,9 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
          <hr className="opacity-40 my-2" />
 
-         <p className="min-h-12 mb-4 break-all">{description}</p>
+         <p className="min-h-12 mb-4 break-all whitespace-pre-wrap">
+            {description}
+         </p>
 
          <div className="mt-auto">
             <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
