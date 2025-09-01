@@ -120,12 +120,14 @@ const Collection = () => {
    };
 
    // *Define ordenação dos itens
-   const [sortValue, setSortValue] = React.useState<string>("");
+   const [sortValue, setSortValue] = React.useState<string>("date");
 
    React.useEffect(() => {
       const savedSortValue: string | null = localStorage.getItem("sortValue");
 
-      const parsed: string = savedSortValue ? JSON.parse(savedSortValue) : "";
+      const parsed: string = savedSortValue
+         ? JSON.parse(savedSortValue)
+         : "date";
 
       setSortValue(parsed);
    }, []);
