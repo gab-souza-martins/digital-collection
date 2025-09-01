@@ -24,7 +24,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
    };
 
    return (
-      <div className="w-2xs border rounded-lg p-4 shadow-md">
+      <div className="w-2xs min-h-[100%] flex flex-col justify-start border rounded-lg p-4 shadow-md">
          <h2 className="text-2xl font-semibold">{title}</h2>
 
          {image && (
@@ -39,13 +39,15 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
          <hr className="opacity-40 my-2" />
 
-         <p className="min-h-12">{description}</p>
+         <p className="min-h-12 mb-4">{description}</p>
 
-         <p className="text-sm text-gray-500 my-2">{dateCreated}</p>
+         <div className="mt-auto">
+            <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
 
-         <button aria-label="Remover coleção" onClick={handleRemoveConfirm}>
-            <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
-         </button>
+            <button aria-label="Remover coleção" onClick={handleRemoveConfirm}>
+               <FaTrash className="cursor-pointer text-gray-600 hover:text-rose-600 transition duration-75 ease-in-out" />
+            </button>
+         </div>
       </div>
    );
 };
