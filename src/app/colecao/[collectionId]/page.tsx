@@ -219,7 +219,7 @@ const CollectionPage = () => {
    //
    //
    return (
-      <div className="p-4">
+      <div className="p-4 md:px-6 lg:px-8">
          {isAddItemFormOpen && (
             <AddForm onAdd={handleAddItem} closeForm={handleCloseAddItemForm} />
          )}
@@ -240,26 +240,27 @@ const CollectionPage = () => {
             />
          )}
 
-         <div className="flex items-center gap-2">
-            <Link
-               href={"../../"}
-               className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
-            >
-               <FaArrowLeft />
-            </Link>
+         <header>
+            <div className="flex items-center gap-2">
+               <Link
+                  href={"../../"}
+                  className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
+               >
+                  <FaArrowLeft />
+               </Link>
+               <h1 className="text-3xl font-bold">{collectionName}</h1>
+            </div>
 
-            <h1 className="text-3xl font-bold">{collectionName}</h1>
-         </div>
+            <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
+               <Searchbar
+                  textSearch={handleTextSearch}
+                  imageFilter={handleImageFilter}
+               />
+               <Sort sort={handleSort} />
+            </div>
 
-         <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
-            <Searchbar
-               textSearch={handleTextSearch}
-               imageFilter={handleImageFilter}
-            />
-            <Sort sort={handleSort} />
-         </div>
-
-         <OpenAddFormBtn openForm={handleOpenAddItemForm} />
+            <OpenAddFormBtn openForm={handleOpenAddItemForm} />
+         </header>
 
          <hr className="mb-5 opacity-40" />
 
@@ -267,23 +268,27 @@ const CollectionPage = () => {
             Tamanho da coleção: {allItems.length}
          </p>
 
-         <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-            {viewedItems.map((item) => (
-               <ItemCard
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  description={item.description}
-                  dateAdded={item.dateAdded}
-                  image={item.image}
-                  isFav={item.isFav}
-                  favoriteEvent={handleFavoriteEvent}
-                  openRemoveConfirm={handleOpenConfirmRemoveItem}
-               />
-            ))}
-         </div>
+         <main>
+            <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+               {viewedItems.map((item) => (
+                  <ItemCard
+                     key={item.id}
+                     id={item.id}
+                     title={item.title}
+                     description={item.description}
+                     dateAdded={item.dateAdded}
+                     image={item.image}
+                     isFav={item.isFav}
+                     favoriteEvent={handleFavoriteEvent}
+                     openRemoveConfirm={handleOpenConfirmRemoveItem}
+                  />
+               ))}
+            </div>
 
-         <OpenRemoveAllBtn openRemoveAll={handleOpenConfirmEmptyCollection} />
+            <OpenRemoveAllBtn
+               openRemoveAll={handleOpenConfirmEmptyCollection}
+            />
+         </main>
       </div>
    );
 };

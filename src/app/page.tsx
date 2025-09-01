@@ -174,9 +174,7 @@ const Home = () => {
    };
 
    return (
-      <div className="p-4">
-         <h1 className="text-3xl font-bold">Coleção digital</h1>
-
+      <div className="p-4 md:px-6 lg:px-8">
          {isAddCollectionFormOpen && (
             <AddForm
                onAdd={handleAddCollection}
@@ -200,36 +198,42 @@ const Home = () => {
             />
          )}
 
-         <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
-            <Searchbar
-               textSearch={handleTextSearch}
-               imageFilter={handleImageFilter}
-            />
-            <Sort sort={handleSort} />
-         </div>
+         <header>
+            <h1 className="text-3xl font-bold">Coleção digital</h1>
 
-         <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
+            <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
+               <Searchbar
+                  textSearch={handleTextSearch}
+                  imageFilter={handleImageFilter}
+               />
+               <Sort sort={handleSort} />
+            </div>
+
+            <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
+         </header>
 
          <hr className="mb-5 opacity-40" />
 
-         <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-            {viewedCollections.map((collection) => (
-               <Link key={collection.id} href={`colecao/${collection.id}/`}>
-                  <CollectionCard
-                     id={collection.id}
-                     title={collection.title}
-                     description={collection.description}
-                     dateCreated={collection.dateCreated}
-                     image={collection.image}
-                     openRemoveConfirm={handleOpenConfirmRemoveCollection}
-                  />
-               </Link>
-            ))}
-         </div>
+         <main>
+            <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+               {viewedCollections.map((collection) => (
+                  <Link key={collection.id} href={`colecao/${collection.id}/`}>
+                     <CollectionCard
+                        id={collection.id}
+                        title={collection.title}
+                        description={collection.description}
+                        dateCreated={collection.dateCreated}
+                        image={collection.image}
+                        openRemoveConfirm={handleOpenConfirmRemoveCollection}
+                     />
+                  </Link>
+               ))}
+            </div>
 
-         <OpenRemoveAllBtn
-            openRemoveAll={handleOpenConfirmRemoveAllCollections}
-         />
+            <OpenRemoveAllBtn
+               openRemoveAll={handleOpenConfirmRemoveAllCollections}
+            />
+         </main>
       </div>
    );
 };
