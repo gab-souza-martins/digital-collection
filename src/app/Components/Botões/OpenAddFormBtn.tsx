@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 interface OpenAddFormBtnProps {
    openForm: () => void;
@@ -16,12 +16,14 @@ const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = ({ openForm }) => {
          <button
             onClick={handleOpen}
             type="submit"
-            className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 text-white bg-emerald-600 border-emerald-600 shadow-sm
-             hover:bg-emerald-700 hover:border-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
-             active:bg-emerald-800 active:border-emerald-700 active:shadow-md"
+            className="cursor-pointer rounded-full text-center p-4 fixed bottom-5 right-5
+                       text-xl xs:text-2xl sm:text-3xl
+                      text-white bg-emerald-600 shadow-sm
+                      hover:bg-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
+                      active:bg-emerald-800 active:shadow-md"
+            aria-label="Adicionar"
          >
-            <FaPlusCircle />
-            <span className="font-semibold">Adicionar</span>
+            <FaPlus />
          </button>
       </div>
    );
