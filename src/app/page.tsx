@@ -21,9 +21,11 @@ const Home = () => {
    React.useEffect(() => {
       const savedCollections: string | null =
          localStorage.getItem("collections");
+
       const parsed: Collection[] = savedCollections
          ? JSON.parse(savedCollections)
          : [];
+
       setAllCollections(parsed);
       setViewedCollections(parsed);
    }, []);
@@ -54,7 +56,6 @@ const Home = () => {
             dateCreated: `Criado 
             em ${new Date().toLocaleDateString("pt-BR")} 
             às ${new Date().toLocaleTimeString("pt-BR")}`,
-            items: [],
          },
       ];
       setAllCollections(newCollections);
