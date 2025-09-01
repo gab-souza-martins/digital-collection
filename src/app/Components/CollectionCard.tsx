@@ -31,17 +31,17 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
             <Image
                src={image}
                alt={title}
-               className="rounded-md object-cover"
+               className="rounded-md object-cover mb-3"
                width={300}
                height={300}
             />
          )}
 
-         <hr className="opacity-40" />
+         <hr className="opacity-40 my-2" />
 
          <p>{description}</p>
 
-         <p className="text-sm text-gray-500 mt-2">{dateCreated}</p>
+         <p className="text-sm text-gray-500 my-2">{dateCreated}</p>
 
          <button aria-label="Remover coleção" onClick={handleRemoveConfirm}>
             <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
