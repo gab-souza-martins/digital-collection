@@ -9,15 +9,7 @@ import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
 import OpenRemoveAllBtn from "./Components/Botões/OpenRemoveAllBtn";
 import CollectionCard from "./Components/CollectionCard";
 import Link from "next/link";
-
-interface Collection {
-   id: string;
-   title: string;
-   description: string;
-   dateCreated: string;
-   image?: string;
-   // items: Item[];
-}
+import Collection from "./Types/CollectionType";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -62,6 +54,7 @@ const Home = () => {
             dateCreated: `Criado 
             em ${new Date().toLocaleDateString("pt-BR")} 
             às ${new Date().toLocaleTimeString("pt-BR")}`,
+            items: [],
          },
       ];
       setAllCollections(newCollections);

@@ -10,14 +10,7 @@ import OpenRemoveAllBtn from "@/app/Components/Botões/OpenRemoveAllBtn";
 import ConfirmRemove from "@/app/Components/ConfirmRemove";
 import Link from "next/link";
 import { FaCaretLeft } from "react-icons/fa";
-
-interface Item {
-   title: string;
-   description: string;
-   dateAdded: string;
-   image?: string;
-   isFav: boolean;
-}
+import Item from "@/app/Types/ItemType";
 
 const Collection = () => {
    const params = useParams();
