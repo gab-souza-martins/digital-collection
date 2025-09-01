@@ -21,7 +21,7 @@ const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = ({ openForm }) => {
              active:bg-emerald-800 active:border-emerald-700 active:shadow-md"
          >
             <FaPlusCircle />
-            <span className="font-semibold">Adicionar item</span>
+            <span className="font-semibold">Adicionar</span>
          </button>
       </div>
    );

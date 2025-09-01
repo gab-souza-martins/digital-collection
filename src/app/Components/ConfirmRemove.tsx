@@ -8,7 +8,7 @@ interface ConfirmRemoveProps {
    closeRemove: () => void;
 }
 
-const ConfirmRemoveItem: React.FC<ConfirmRemoveProps> = ({
+const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
    text,
    confirmRemove,
    closeRemove,
@@ -45,4 +45,4 @@ const ConfirmRemoveItem: React.FC<ConfirmRemoveProps> = ({
    );
 };
 
-export default ConfirmRemoveItem;
+export default ConfirmRemove;

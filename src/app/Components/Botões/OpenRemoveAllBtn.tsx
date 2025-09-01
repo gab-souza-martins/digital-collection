@@ -2,15 +2,15 @@
 import React from "react";
 import { FaDumpsterFire } from "react-icons/fa";
 
-interface OpenRemoveCollectionBtnProps {
-   openRemoveCollection: () => void;
+interface OpenRemoveAllBtnProps {
+   openRemoveAll: () => void;
 }
 
-const OpenRemoveCollectionBtn: React.FC<OpenRemoveCollectionBtnProps> = ({
-   openRemoveCollection,
+const OpenRemoveAllBtn: React.FC<OpenRemoveAllBtnProps> = ({
+   openRemoveAll,
 }) => {
    const handleOpen = () => {
-      openRemoveCollection();
+      openRemoveAll();
    };
 
    return (
@@ -23,10 +23,10 @@ const OpenRemoveCollectionBtn: React.FC<OpenRemoveCollectionBtnProps> = ({
                      active:bg-rose-700 active:border-rose-700 active:shadow-md"
          >
             <FaDumpsterFire />
-            <span className="font-semibold">Remover coleção</span>
+            <span className="font-semibold">Remover todos</span>
          </button>
       </div>
    );
 };
 
-export default OpenRemoveCollectionBtn;
+export default OpenRemoveAllBtn;

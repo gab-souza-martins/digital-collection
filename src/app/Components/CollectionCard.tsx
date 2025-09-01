@@ -3,16 +3,16 @@ import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 
 interface CollectionCardProps {
-   i: number;
+   id: string;
    title: string;
    description: string;
    dateCreated: string;
    image?: string;
-   openRemoveConfirm: (index: number) => void;
+   openRemoveConfirm: (id: string) => void;
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({
-   i,
+   id,
    title,
    description,
    dateCreated,
@@ -20,7 +20,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
    openRemoveConfirm,
 }) => {
    const handleRemoveConfirm = () => {
-      openRemoveConfirm(i);
+      openRemoveConfirm(id);
    };
 
    return (

@@ -1,12 +1,22 @@
 "use client";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import AddForm from "./Components/AddForm";
+import ConfirmRemove from "./Components/ConfirmRemove";
+import Searchbar from "./Components/Searchbar";
+import Sort from "./Components/Sort";
+import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
+import OpenRemoveAllBtn from "./Components/Botões/OpenRemoveAllBtn";
+import CollectionCard from "./Components/CollectionCard";
+import Link from "next/link";
 
 interface Collection {
+   id: string;
    title: string;
    description: string;
    dateCreated: string;
    image?: string;
+   // items: Item[];
 }
 
 const Home = () => {
@@ -45,6 +55,7 @@ const Home = () => {
       const newCollections = [
          ...allCollections,
          {
+            id: uuidv4(),
             title,
             description,
             image,
@@ -58,12 +69,12 @@ const Home = () => {
    };
 
    // *Remoção de coleções
-   const [indexToRemove, setIndexToRemove] = React.useState<number>(-1);
+   const [idToRemove, setIdToRemove] = React.useState<string>("");
    const [isConfirmRemoveCollectionOpen, setIsConfirmRemoveCollectionOpen] =
       React.useState<boolean>(false);
 
-   const handleOpenConfirmRemoveCollection = (index: number) => {
-      setIndexToRemove(index);
+   const handleOpenConfirmRemoveCollection = (id: string) => {
+      setIdToRemove(id);
       setIsConfirmRemoveCollectionOpen(true);
    };
    const handleCloseConfirmRemoveCollection = () => {
@@ -71,9 +82,7 @@ const Home = () => {
    };
 
    const handleConfirmRemoveCollection = () => {
-      const newCollections = allCollections.filter(
-         (i) => i !== viewedCollections[indexToRemove]
-      );
+      const newCollections = allCollections.filter((i) => i.id !== idToRemove);
       setAllCollections(newCollections);
       localStorage.setItem("collections", JSON.stringify(newCollections));
    };
@@ -85,10 +94,10 @@ const Home = () => {
    ] = React.useState<boolean>(false);
 
    const handleOpenConfirmRemoveAllCollections = () => {
-      setIsConfirmRemoveCollectionOpen(true);
+      setIsConfirmRemoveAllCollectionsOpen(true);
    };
    const handleCloseConfirmRemoveAllCollections = () => {
-      setIsConfirmRemoveCollectionOpen(false);
+      setIsConfirmRemoveAllCollectionsOpen(false);
    };
    const handleConfirmRemoveAllCollections = () => {
       localStorage.clear();
@@ -113,14 +122,14 @@ const Home = () => {
       localStorage.setItem("sortValue", JSON.stringify(sort));
    };
 
-   // *Define os filtros de busca e ordenação
+   // *Filtros de busca e ordenação
    const [searchTerm, setSearchTerm] = React.useState<string>("");
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
 
    React.useEffect(() => {
       let filteredCollections: Collection[] = allCollections;
 
-      //* Filtros de busca
+      // *Busca
       if (searchTerm.trim() !== "") {
          filteredCollections = filteredCollections.filter(
             (collection) =>
@@ -139,7 +148,7 @@ const Home = () => {
          );
       }
 
-      //* Filtros de ordenação
+      // *Ordenação
       switch (sortValue) {
          case "date-reverse":
             filteredCollections = [...filteredCollections].reverse();
@@ -171,6 +180,60 @@ const Home = () => {
    return (
       <div className="p-4">
          <h1 className="text-3xl font-bold">Coleção digital</h1>
+
+         {isAddCollectionFormOpen && (
+            <AddForm
+               onAdd={handleAddCollection}
+               closeForm={handleCloseAddCollectionForm}
+            />
+         )}
+
+         {isConfirmRemoveCollectionOpen && (
+            <ConfirmRemove
+               text="Remover uma coleção é uma ação irreversível."
+               confirmRemove={handleConfirmRemoveCollection}
+               closeRemove={handleCloseConfirmRemoveCollection}
+            />
+         )}
+
+         {isConfirmRemoveAllCollectionsOpen && (
+            <ConfirmRemove
+               text="Remover as coleções é uma ação irreversível. Todos os itens serão perdidos."
+               confirmRemove={handleConfirmRemoveAllCollections}
+               closeRemove={handleCloseConfirmRemoveAllCollections}
+            />
+         )}
+
+         <Searchbar
+            textSearch={handleTextSearch}
+            imageFilter={handleImageFilter}
+         />
+
+         <Sort sort={handleSort} />
+
+         <div className="flex items-center gap-2">
+            <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
+            <OpenRemoveAllBtn
+               openRemoveAll={handleOpenConfirmRemoveAllCollections}
+            />
+         </div>
+
+         <br />
+
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+            {viewedCollections.map((collection) => (
+               <Link key={collection.id} href={`colecao/${collection.id}/`}>
+                  <CollectionCard
+                     id={collection.id}
+                     title={collection.title}
+                     description={collection.description}
+                     dateCreated={collection.dateCreated}
+                     image={collection.image}
+                     openRemoveConfirm={handleOpenConfirmRemoveCollection}
+                  />
+               </Link>
+            ))}
+         </div>
       </div>
    );
 };

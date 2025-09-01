@@ -1,11 +1,11 @@
 import React from "react";
 import { FaSort } from "react-icons/fa";
 
-interface ItemSortProps {
+interface SortProps {
    sort: (value: string) => void;
 }
 
-const ItemSort: React.FC<ItemSortProps> = ({ sort }) => {
+const Sort: React.FC<SortProps> = ({ sort }) => {
    const [selectedSort, setSelectedSort] = React.useState<string>("date");
    const handleSort = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -45,4 +45,4 @@ const ItemSort: React.FC<ItemSortProps> = ({ sort }) => {
    );
 };
 
-export default ItemSort;
+export default Sort;

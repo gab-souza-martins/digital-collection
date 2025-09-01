@@ -5,8 +5,8 @@ import OpenAddFormBtn from "@/app/Components/Botões/OpenAddFormBtn";
 import ItemCard from "@/app/Components/ItemCard";
 import AddForm from "@/app/Components/AddForm";
 import Searchbar from "@/app/Components/Searchbar";
-import ItemSort from "@/app/Components/ItemSort";
-import OpenRemoveCollectionBtn from "@/app/Components/Botões/OpenRemoveCollectionBtn";
+import Sort from "@/app/Components/Sort";
+import OpenRemoveAllBtn from "@/app/Components/Botões/OpenRemoveAllBtn";
 import ConfirmRemove from "@/app/Components/ConfirmRemove";
 import Link from "next/link";
 import { FaCaretLeft } from "react-icons/fa";
@@ -221,7 +221,7 @@ const Collection = () => {
 
          {isConfirmRemoveCollectionOpen && (
             <ConfirmRemove
-               text="Remover a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
+               text="Esvaziar a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
                confirmRemove={handleConfirmRemoveCollection}
                closeRemove={handleCloseConfirmRemoveCollection}
             />
@@ -234,12 +234,12 @@ const Collection = () => {
             imageFilter={handleImageFilter}
          />
 
-         <ItemSort sort={handleSort} />
+         <Sort sort={handleSort} />
 
          <div className="flex items-center gap-2">
             <OpenAddFormBtn openForm={handleOpenAddItemForm} />
-            <OpenRemoveCollectionBtn
-               openRemoveCollection={handleOpenConfirmRemoveCollection}
+            <OpenRemoveAllBtn
+               openRemoveAll={handleOpenConfirmRemoveCollection}
             />
          </div>
 
