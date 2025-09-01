@@ -200,15 +200,17 @@ const Home = () => {
             />
          )}
 
-         <Searchbar
-            textSearch={handleTextSearch}
-            imageFilter={handleImageFilter}
-         />
-         <Sort sort={handleSort} />
+         <div className="flex flex-col gap-4 ml:flex-row ml:gap-10">
+            <Searchbar
+               textSearch={handleTextSearch}
+               imageFilter={handleImageFilter}
+            />
+            <Sort sort={handleSort} />
+         </div>
 
          <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
 
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+         <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
             {viewedCollections.map((collection) => (
                <Link key={collection.id} href={`colecao/${collection.id}/`}>
                   <CollectionCard

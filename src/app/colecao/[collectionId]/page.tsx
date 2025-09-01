@@ -253,12 +253,13 @@ const CollectionPage = () => {
 
          <p className="text-gray-600">Tamanho da coleção: {allItems.length}</p>
 
-         <Searchbar
-            textSearch={handleTextSearch}
-            imageFilter={handleImageFilter}
-         />
-
-         <Sort sort={handleSort} />
+         <div className="flex flex-col gap-4 ml:flex-row ml:gap-10">
+            <Searchbar
+               textSearch={handleTextSearch}
+               imageFilter={handleImageFilter}
+            />
+            <Sort sort={handleSort} />
+         </div>
 
          <OpenAddFormBtn openForm={handleOpenAddItemForm} />
 
