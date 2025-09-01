@@ -16,7 +16,7 @@ interface Item {
    isFav: boolean;
 }
 
-export default function Home() {
+const Home = () => {
    // *Define os itens totais e os visualizados
    const [allItems, setAllItems] = React.useState<Item[]>([]);
    const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
@@ -245,4 +245,6 @@ export default function Home() {
          </div>
       </div>
    );
-}
+};
+
+export default Home;
