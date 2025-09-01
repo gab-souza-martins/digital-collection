@@ -1,6 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import OpenAddFormBtn from "@/app/Components/Botões/OpenAddFormBtn";
 import ItemCard from "@/app/Components/ItemCard";
 import AddForm from "@/app/Components/AddForm";
@@ -16,7 +17,7 @@ const Collection = () => {
    const params = useParams();
    const { collectionId } = params;
 
-   // *Define os itens totais e os visualizados
+   // *Itens totais e os visualizados
    const [allItems, setAllItems] = React.useState<Item[]>([]);
    const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
 
@@ -27,7 +28,7 @@ const Collection = () => {
       setViewedItems(parsedItems);
    }, []);
 
-   // *Define abertura e fechamento do formulário de adição
+   // *Abertura e fechamento do formulário de adição
    const [isAddItemFormOpen, setIsAddItemFormOpen] =
       React.useState<boolean>(false);
    const handleOpenAddItemForm = () => {
@@ -37,7 +38,7 @@ const Collection = () => {
       setIsAddItemFormOpen(false);
    };
 
-   // *Define adição de itens
+   // *Adição de itens
    const handleAddItem = (
       title: string,
       description: string,
@@ -46,6 +47,7 @@ const Collection = () => {
       const newItems = [
          ...allItems,
          {
+            id: uuidv4(),
             title,
             description,
             image,
@@ -59,13 +61,13 @@ const Collection = () => {
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
-   // *Define remoção de itens
-   const [indexToRemove, setIndexToRemove] = React.useState<number>(-1);
+   // *Remoção de itens
+   const [idToRemove, setIdToRemove] = React.useState<string>("");
    const [isConfirmRemoveItemOpen, setIsConfirmRemoveItemOpen] =
       React.useState<boolean>(false);
 
-   const handleOpenConfirmRemoveItem = (index: number) => {
-      setIndexToRemove(index);
+   const handleOpenConfirmRemoveItem = (index: string) => {
+      setIdToRemove(index);
       setIsConfirmRemoveItemOpen(true);
    };
    const handleCloseConfirmRemoveItem = () => {
@@ -73,12 +75,12 @@ const Collection = () => {
    };
 
    const handleConfirmRemoveItem = () => {
-      const newItems = allItems.filter((i) => i !== viewedItems[indexToRemove]);
+      const newItems = allItems.filter((i) => i.id !== idToRemove);
       setAllItems(newItems);
       localStorage.setItem("items", JSON.stringify(newItems));
    };
 
-   // *Define remoção de toda a coleção
+   // *Remoção de toda a coleção
    const [isConfirmRemoveCollectionOpen, setIsConfirmRemoveCollectionOpen] =
       React.useState<boolean>(false);
 
@@ -93,10 +95,10 @@ const Collection = () => {
       setAllItems([]);
    };
 
-   // *Define favoritos
-   const handleFavoriteEvent = (i: number) => {
+   // *Favoritos
+   const handleFavoriteEvent = (i: string) => {
       const newItems: Item[] | undefined = allItems.map((item) => {
-         if (item === viewedItems[i]) {
+         if (item.id === i) {
             if (item.isFav) {
                item.isFav = false;
             } else {
@@ -112,7 +114,7 @@ const Collection = () => {
       }
    };
 
-   // *Define ordenação dos itens
+   // *Ordenação dos itens
    const [sortValue, setSortValue] = React.useState<string>("date");
 
    React.useEffect(() => {
@@ -130,14 +132,14 @@ const Collection = () => {
       localStorage.setItem("sortValue", JSON.stringify(sort));
    };
 
-   // *Define os filtros de busca e ordenação
+   // *Filtros de busca e ordenação
    const [searchTerm, setSearchTerm] = React.useState<string>("");
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
 
    React.useEffect(() => {
       let filteredItems: Item[] = allItems;
 
-      //* Filtros de busca
+      // *Busca
       if (searchTerm.trim() !== "") {
          filteredItems = filteredItems.filter(
             (item) =>
@@ -151,7 +153,7 @@ const Collection = () => {
          );
       }
 
-      //* Filtros de ordenação
+      // *Ordenação
       switch (sortValue) {
          case "date-reverse":
             filteredItems = [...filteredItems].reverse();
@@ -170,11 +172,13 @@ const Collection = () => {
             break;
       }
 
+      // *Ordenação de favoritos
       filteredItems = [...filteredItems].sort(
          ({ isFav: favA = false }, { isFav: favB = false }) =>
             Number(favB) - Number(favA)
       );
 
+      // *
       setViewedItems(filteredItems);
    }, [allItems, searchTerm, imageFilter, sortValue]);
 
@@ -239,10 +243,10 @@ const Collection = () => {
          <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-            {viewedItems.map((item, itemIndex) => (
+            {viewedItems.map((item) => (
                <ItemCard
-                  key={itemIndex}
-                  i={itemIndex}
+                  key={item.id}
+                  id={item.id}
                   title={item.title}
                   description={item.description}
                   dateAdded={item.dateAdded}

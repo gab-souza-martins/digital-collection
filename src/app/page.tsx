@@ -160,6 +160,7 @@ const Home = () => {
             break;
       }
 
+      // *
       setViewedCollections(filteredCollections);
    }, [allCollections, searchTerm, imageFilter, sortValue]);
 

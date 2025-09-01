@@ -3,18 +3,18 @@ import Image from "next/image";
 import { FaStar, FaTrash } from "react-icons/fa";
 
 interface ItemCardProps {
-   i: number;
+   id: string;
    title: string;
    description: string;
    dateAdded: string;
    image?: string;
    isFav: boolean;
-   favoriteEvent: (index: number) => void;
-   openRemoveConfirm: (index: number) => void;
+   favoriteEvent: (index: string) => void;
+   openRemoveConfirm: (index: string) => void;
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
-   i,
+   id,
    title,
    description,
    dateAdded,
@@ -24,11 +24,11 @@ const ItemCard: React.FC<ItemCardProps> = ({
    openRemoveConfirm,
 }) => {
    const handleFavorite = () => {
-      favoriteEvent(i);
+      favoriteEvent(id);
    };
 
    const handleRemoveConfirm = () => {
-      openRemoveConfirm(i);
+      openRemoveConfirm(id);
    };
 
    return (
