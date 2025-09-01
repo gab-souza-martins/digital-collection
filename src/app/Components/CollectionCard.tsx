@@ -39,7 +39,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
          <hr className="opacity-40 my-2" />
 
-         <p>{description}</p>
+         <p className="min-h-12">{description}</p>
 
          <p className="text-sm text-gray-500 my-2">{dateCreated}</p>
 
