@@ -25,7 +25,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
    return (
       <div className="w-2xs min-h-[100%] flex flex-col justify-start border rounded-lg p-4 shadow-md">
-         <h2 className="text-2xl font-semibold">{title}</h2>
+         <h2 className="text-2xl font-semibold break-all">{title}</h2>
 
          {image && (
             <Image
@@ -39,7 +39,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
          <hr className="opacity-40 my-2" />
 
-         <p className="min-h-12 mb-4">{description}</p>
+         <p className="min-h-12 mb-4 break-all">{description}</p>
 
          <div className="mt-auto">
             <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
