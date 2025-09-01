@@ -105,16 +105,16 @@ const CollectionPage = () => {
    };
 
    // *Remoção de toda a coleção
-   const [isConfirmRemoveCollectionOpen, setIsConfirmRemoveCollectionOpen] =
+   const [isConfirmEmptyCollectionOpen, setIsConfirmEmptyCollectionOpen] =
       React.useState<boolean>(false);
 
-   const handleOpenConfirmRemoveCollection = () => {
-      setIsConfirmRemoveCollectionOpen(true);
+   const handleOpenConfirmEmptyCollection = () => {
+      setIsConfirmEmptyCollectionOpen(true);
    };
-   const handleCloseConfirmRemoveCollection = () => {
-      setIsConfirmRemoveCollectionOpen(false);
+   const handleCloseConfirmEmptyCollection = () => {
+      setIsConfirmEmptyCollectionOpen(false);
    };
-   const handleConfirmRemoveCollection = () => {
+   const handleConfirmEmptyCollection = () => {
       localStorage.removeItem(`items-${collectionId}`);
       setAllItems([]);
    };
@@ -243,11 +243,11 @@ const CollectionPage = () => {
             />
          )}
 
-         {isConfirmRemoveCollectionOpen && (
+         {isConfirmEmptyCollectionOpen && (
             <ConfirmRemove
                text="Esvaziar a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
-               confirmRemove={handleConfirmRemoveCollection}
-               closeRemove={handleCloseConfirmRemoveCollection}
+               confirmRemove={handleConfirmEmptyCollection}
+               closeRemove={handleCloseConfirmEmptyCollection}
             />
          )}
 
@@ -260,14 +260,7 @@ const CollectionPage = () => {
 
          <Sort sort={handleSort} />
 
-         <div className="flex items-center gap-2">
-            <OpenAddFormBtn openForm={handleOpenAddItemForm} />
-            <OpenRemoveAllBtn
-               openRemoveAll={handleOpenConfirmRemoveCollection}
-            />
-         </div>
-
-         <br />
+         <OpenAddFormBtn openForm={handleOpenAddItemForm} />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
             {viewedItems.map((item) => (
@@ -284,6 +277,8 @@ const CollectionPage = () => {
                />
             ))}
          </div>
+
+         <OpenRemoveAllBtn openRemoveAll={handleOpenConfirmEmptyCollection} />
       </div>
    );
 };

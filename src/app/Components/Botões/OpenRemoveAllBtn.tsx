@@ -14,7 +14,7 @@ const OpenRemoveAllBtn: React.FC<OpenRemoveAllBtnProps> = ({
    };
 
    return (
-      <div>
+      <div className="flex justify-center mt-10">
          <button
             onClick={handleOpen}
             type="submit"
