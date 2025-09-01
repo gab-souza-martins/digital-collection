@@ -14,7 +14,7 @@ const Sort: React.FC<SortProps> = ({ sort }) => {
 
    return (
       <div>
-         <form className="flex items-center gap-3">
+         <form className="flex flex-col items-start gap-1 xs:flex-row xs:items-center xs:gap-3">
             <div className="flex items-center gap-1">
                <label htmlFor="sortSelect">Ordenar por:</label>
                <select

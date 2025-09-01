@@ -204,7 +204,6 @@ const Home = () => {
             textSearch={handleTextSearch}
             imageFilter={handleImageFilter}
          />
-
          <Sort sort={handleSort} />
 
          <div className="flex items-center gap-2">
@@ -213,8 +212,6 @@ const Home = () => {
                openRemoveAll={handleOpenConfirmRemoveAllCollections}
             />
          </div>
-
-         <br />
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
             {viewedCollections.map((collection) => (
