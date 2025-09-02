@@ -25,7 +25,8 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    // *Handlers e funções das tags
    const [tagInput, setTagInput] = React.useState<string>("");
    const [itemTags, setItemTags] = React.useState<Tag[]>([]);
-   const [tagColor, setTagColor] = React.useState<string>("");
+   const [tagBgColor, setTagBgColor] = React.useState<string>("#000");
+   const [tagTextColor, setTagTextColor] = React.useState<string>("#fff");
 
    const addTag = (
       e:
@@ -39,7 +40,12 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
       } else {
          setItemTags((prev) => [
             ...prev,
-            { id: uuidv4(), name: tagInput.trim(), color: tagColor },
+            {
+               id: uuidv4(),
+               name: tagInput.trim(),
+               bgColor: tagBgColor,
+               textColor: tagTextColor,
+            },
          ]);
          setTagInput("");
       }
@@ -48,6 +54,23 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    const filterTag = (index: string) => {
       const newTags = itemTags.filter((t) => t.id !== index);
       setItemTags(newTags);
+   };
+
+   const tagText = (hex: string) => {
+      const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      if (rgb) {
+         const r: number = parseInt(rgb[1], 16);
+         const g: number = parseInt(rgb[2], 16);
+         const b: number = parseInt(rgb[3], 16);
+
+         const luma: number = g * 0.7152 + r * 0.2126 + b * 0.0722;
+
+         if (luma > 128) {
+            setTagTextColor("#000");
+         } else {
+            setTagTextColor("#fff");
+         }
+      }
    };
 
    // *Converter imagem para base64 e mostrá-la no form
@@ -162,8 +185,11 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                      />
 
                      <input
-                        onChange={(e) => setTagColor(e.target.value)}
-                        value={tagColor}
+                        onChange={(e) => {
+                           setTagBgColor(e.target.value);
+                           tagText(e.target.value);
+                        }}
+                        value={tagBgColor}
                         aria-label="Escolher cor da etiqueta"
                         className="w-full"
                         type="color"
@@ -185,7 +211,8 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                            key={t.id}
                            id={t.id}
                            name={t.name}
-                           color={t.color}
+                           bgColor={t.bgColor}
+                           textColor={t.textColor}
                            removeTag={filterTag}
                         />
                      ))}

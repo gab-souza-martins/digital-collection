@@ -1,7 +1,8 @@
 interface Tag {
    id: string;
    name: string;
-   color: string;
+   bgColor: string;
+   textColor: string;
 }
 
 export default Tag;
