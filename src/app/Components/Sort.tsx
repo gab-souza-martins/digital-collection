@@ -19,7 +19,9 @@ const Sort: React.FC<SortProps> = ({ sort }) => {
                <div className="flex items-center gap-1">
                   <label htmlFor="sortSelect">Ordenar por:</label>
                   <select
-                     onChange={(e) => setSelectedSort(e.target.value)}
+                     onChange={(e) => {
+                        setSelectedSort(e.target.value);
+                     }}
                      value={selectedSort}
                      id="sortSelect"
                      className="border border-gray-600/50 rounded-md py-1 px-2"
@@ -40,7 +42,7 @@ const Sort: React.FC<SortProps> = ({ sort }) => {
                           active:bg-emerald-700 active:border-emerald-700 active:shadow-md"
             >
                <FaSort />
-               Filtrar
+               Ordenar
             </button>
          </form>
       </div>
