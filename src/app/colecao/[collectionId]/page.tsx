@@ -13,6 +13,7 @@ import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 import Item from "@/app/Types/ItemType";
 import Collection from "@/app/Types/CollectionType";
+import Tag from "@/app/Types/TagType";
 
 const CollectionPage = () => {
    const params = useParams();
@@ -66,6 +67,7 @@ const CollectionPage = () => {
    const handleAddItem = (
       title: string,
       description: string,
+      tags: Tag[],
       image?: string
    ) => {
       const newItems = [
@@ -74,16 +76,12 @@ const CollectionPage = () => {
             id: uuidv4(),
             title,
             description,
+            tags,
             image,
             dateAdded: `Adicionado 
             em ${new Date().toLocaleDateString("pt-BR")} 
             às ${new Date().toLocaleTimeString("pt-BR")}`,
             isFav: false,
-            tags: [
-               { id: uuidv4(), name: "sólido" },
-               { id: uuidv4(), name: "escuro" },
-               { id: uuidv4(), name: "formatos padrões" },
-            ],
          },
       ];
       setAllItems(newItems);

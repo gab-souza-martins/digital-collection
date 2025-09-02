@@ -1,17 +1,49 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { FaPlus, FaFileImage } from "react-icons/fa";
+import { FaPlus, FaFileImage, FaTag } from "react-icons/fa";
 import CancelBtn from "./Botões/CancelBtn";
+import Tag from "../Types/TagType";
+import { v4 as uuidv4 } from "uuid";
+import TagComponent from "./TagComponent";
 
 interface AddFormProps {
-   onAdd: (title: string, description: string, image?: string) => void;
+   onAdd: (
+      title: string,
+      description: string,
+      tags: Tag[],
+      image?: string
+   ) => void;
    closeForm: () => void;
 }
 
 const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    const [name, setName] = React.useState<string>("");
    const [description, setDescription] = React.useState<string>("");
+
+   const [tagInput, setTagInput] = React.useState<string>("");
+   const [itemTags, setItemTags] = React.useState<Tag[]>([]);
+   const addTag = (
+      e:
+         | React.MouseEvent<HTMLButtonElement>
+         | React.KeyboardEvent<HTMLInputElement>
+   ) => {
+      e.preventDefault();
+
+      if (!tagInput.trim()) {
+         return;
+      } else {
+         setItemTags((prev) => [
+            ...prev,
+            { id: uuidv4(), name: tagInput.trim() },
+         ]);
+         setTagInput("");
+      }
+   };
+   const filterTag = (index: string) => {
+      const newTags = itemTags.filter((t) => t.id !== index);
+      setItemTags(newTags);
+   };
 
    const fileToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
@@ -36,7 +68,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
       e.preventDefault();
 
       if (name.trim() && description.trim()) {
-         onAdd(name, description, imageBase64);
+         onAdd(name, description, itemTags, imageBase64);
          closeForm();
       } else {
          setError(true);
@@ -103,6 +135,38 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                   value={description}
                   placeholder="Descrição"
                />
+
+               <div className="flex items-center justify-between gap-2 w-1/1">
+                  <input
+                     onChange={(e) => setTagInput(e.target.value)}
+                     onKeyDown={(e) =>
+                        e.key === "Enter" && (e.preventDefault(), addTag(e))
+                     }
+                     type="text"
+                     className="border border-gray-800 rounded-md p-2 min-w-78/100 sm:min-w-85/100"
+                     value={tagInput}
+                     placeholder="Etiquetas (opcional)"
+                  />
+
+                  <button
+                     onClick={addTag}
+                     className="cursor-pointer p-3 rounded-md bg-emerald-600 text-white
+                                hover:bg-emerald-700 active:bg-emerald-800 transition duration-75 ease-in-out"
+                  >
+                     <FaTag />
+                  </button>
+               </div>
+
+               <div className="flex items-center flex-wrap gap-2">
+                  {itemTags.map((t) => (
+                     <TagComponent
+                        key={t.id}
+                        id={t.id}
+                        name={t.name}
+                        removeTag={filterTag}
+                     />
+                  ))}
+               </div>
 
                {error && (
                   <p className="text-sm text-rose-700">
