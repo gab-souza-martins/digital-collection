@@ -1,6 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { FaStar, FaTrash } from "react-icons/fa";
+import Tag from "../Types/TagType";
+import TagComponent from "./TagComponent";
+import { v4 as uuidv4 } from "uuid";
 
 interface ItemCardProps {
    id: string;
@@ -9,6 +12,7 @@ interface ItemCardProps {
    dateAdded: string;
    image?: string;
    isFav: boolean;
+   tags: Tag[];
    favoriteEvent: (index: string) => void;
    openRemoveConfirm: (index: string) => void;
 }
@@ -20,6 +24,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
    dateAdded,
    image,
    isFav,
+   tags,
    favoriteEvent,
    openRemoveConfirm,
 }) => {
@@ -30,6 +35,11 @@ const ItemCard: React.FC<ItemCardProps> = ({
    const handleRemoveConfirm = () => {
       openRemoveConfirm(id);
    };
+
+   tags = [
+      { id: uuidv4(), name: "solido" },
+      { id: uuidv4(), name: "escuro" },
+   ];
 
    return (
       <div className="w-2xs min-h-[100%] border rounded-lg p-4 shadow-md">
@@ -63,10 +73,15 @@ const ItemCard: React.FC<ItemCardProps> = ({
             {description}
          </p>
 
-         <div className="mt-auto mb-2 flex items-center flex-wrap">
-            <div className="border border-dashed rounded-md px-2 bg-rose-600 text-white shadow-md">
-               Sólido
-            </div>
+         <div className="mt-auto mb-2 flex items-center flex-wrap gap-2">
+            {tags.map((t, i) => (
+               <TagComponent
+                  key={i}
+                  id={t.id}
+                  name={t.name}
+                  removeTag={handleRemoveConfirm}
+               />
+            ))}
          </div>
 
          <div className="mt-auto">
