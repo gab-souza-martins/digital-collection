@@ -118,7 +118,7 @@ const Home = () => {
    // *useMemo para filtragem de tags
    const uniqueTags = React.useMemo(() => {
       const tagNames = allCollections.flatMap((c) => c.tags.map((t) => t.name));
-      return Array.from(new Set(tagNames));
+      return Array.from(new Set(tagNames.sort((a, b) => a.localeCompare(b))));
    }, [allCollections]);
 
    // *Ordenação
