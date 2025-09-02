@@ -42,7 +42,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
    };
 
    return (
-      <div className="w-2xs min-h-[100%] border rounded-lg p-4 shadow-md">
+      <div className="flex flex-col w-2xs min-h-[100%] border rounded-lg p-4 shadow-md">
          <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold break-all">{title}</h2>
 
@@ -73,23 +73,23 @@ const ItemCard: React.FC<ItemCardProps> = ({
             {description}
          </p>
 
-         <div className="mt-auto mb-2 flex items-center flex-wrap gap-2">
-            {(tags ?? []).map((t) => (
-               <TagComponent
-                  key={t.id}
-                  id={t.id}
-                  name={t.name}
-                  removeTag={() => handleFilterTags(t.id)}
-               />
-            ))}
-         </div>
-
          <div className="mt-auto">
-            <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
-
-            <button aria-label="Remover item" onClick={handleRemoveConfirm}>
-               <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
-            </button>
+            <div className="mb-2 flex items-center flex-wrap gap-2">
+               {(tags ?? []).map((t) => (
+                  <TagComponent
+                     key={t.id}
+                     id={t.id}
+                     name={t.name}
+                     removeTag={() => handleFilterTags(t.id)}
+                  />
+               ))}
+            </div>
+            <div>
+               <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
+               <button aria-label="Remover item" onClick={handleRemoveConfirm}>
+                  <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
+               </button>
+            </div>
          </div>
       </div>
    );
