@@ -3,7 +3,6 @@ import Image from "next/image";
 import { FaStar, FaTrash } from "react-icons/fa";
 import Tag from "../Types/TagType";
 import TagComponent from "./TagComponent";
-import { v4 as uuidv4 } from "uuid";
 
 interface ItemCardProps {
    id: string;
@@ -15,6 +14,7 @@ interface ItemCardProps {
    tags: Tag[];
    favoriteEvent: (index: string) => void;
    openRemoveConfirm: (index: string) => void;
+   filterTags: (itemId: string, tagId: string) => void;
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
@@ -26,6 +26,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
    isFav,
    tags,
    favoriteEvent,
+   filterTags,
    openRemoveConfirm,
 }) => {
    const handleFavorite = () => {
@@ -36,16 +37,9 @@ const ItemCard: React.FC<ItemCardProps> = ({
       openRemoveConfirm(id);
    };
 
-   const [itemTags, setItemTags] = React.useState<Tag[]>([
-      { id: uuidv4(), name: "sólido" },
-      { id: uuidv4(), name: "escuro" },
-      { id: uuidv4(), name: "formatos padrões" },
-   ]);
-   const handleFilterTags = (index: string) => {
-      const newTags: Tag[] = itemTags.filter((t) => t.id !== index);
-      setItemTags(newTags);
+   const handleFilterTags = (tagId: string) => {
+      filterTags(id, tagId);
    };
-   tags = itemTags;
 
    return (
       <div className="w-2xs min-h-[100%] border rounded-lg p-4 shadow-md">
@@ -80,12 +74,12 @@ const ItemCard: React.FC<ItemCardProps> = ({
          </p>
 
          <div className="mt-auto mb-2 flex items-center flex-wrap gap-2">
-            {tags.map((t) => (
+            {(tags ?? []).map((t) => (
                <TagComponent
                   key={t.id}
                   id={t.id}
                   name={t.name}
-                  removeTag={handleFilterTags}
+                  removeTag={() => handleFilterTags(t.id)}
                />
             ))}
          </div>

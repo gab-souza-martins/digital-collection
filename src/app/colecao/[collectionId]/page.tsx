@@ -79,6 +79,11 @@ const CollectionPage = () => {
             em ${new Date().toLocaleDateString("pt-BR")} 
             às ${new Date().toLocaleTimeString("pt-BR")}`,
             isFav: false,
+            tags: [
+               { id: uuidv4(), name: "sólido" },
+               { id: uuidv4(), name: "escuro" },
+               { id: uuidv4(), name: "formatos padrões" },
+            ],
          },
       ];
       setAllItems(newItems);
@@ -119,17 +124,29 @@ const CollectionPage = () => {
       setAllItems([]);
    };
 
+   // *Remoção de tags
+   const handleRemoveTag = (itemId: string, tagId: string) => {
+      const newItems = allItems.map((i) => {
+         if (i.id === itemId) {
+            return { ...i, tags: i.tags.filter((t) => t.id !== tagId) };
+         }
+         return i;
+      });
+      setAllItems(newItems);
+      localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
+   };
+
    // *Favoritos
-   const handleFavoriteEvent = (i: string) => {
-      const newItems: Item[] | undefined = allItems.map((item) => {
-         if (item.id === i) {
-            if (item.isFav) {
-               item.isFav = false;
+   const handleFavoriteEvent = (id: string) => {
+      const newItems: Item[] = allItems.map((i) => {
+         if (i.id === id) {
+            if (i.isFav) {
+               i.isFav = false;
             } else {
-               item.isFav = true;
+               i.isFav = true;
             }
          }
-         return item;
+         return i;
       });
 
       if (newItems) {
@@ -270,16 +287,18 @@ const CollectionPage = () => {
 
          <main>
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-               {viewedItems.map((item) => (
+               {viewedItems.map((i) => (
                   <ItemCard
-                     key={item.id}
-                     id={item.id}
-                     title={item.title}
-                     description={item.description}
-                     dateAdded={item.dateAdded}
-                     image={item.image}
-                     isFav={item.isFav}
+                     key={i.id}
+                     id={i.id}
+                     title={i.title}
+                     description={i.description}
+                     dateAdded={i.dateAdded}
+                     image={i.image}
+                     isFav={i.isFav}
+                     tags={i.tags}
                      favoriteEvent={handleFavoriteEvent}
+                     filterTags={handleRemoveTag}
                      openRemoveConfirm={handleOpenConfirmRemoveItem}
                   />
                ))}
