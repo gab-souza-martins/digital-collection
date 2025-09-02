@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import TagComponent from "./TagComponent";
 import Tag from "../Types/TagType";
+import { FaPenToSquare } from "react-icons/fa6";
 
 interface CollectionCardProps {
    id: string;
@@ -12,6 +13,7 @@ interface CollectionCardProps {
    image?: string;
    tags: Tag[];
    openRemoveConfirm: (id: string) => void;
+   openEditForm: (index: string) => void;
    filterTags: (collectionId: string, tagId: string) => void;
 }
 
@@ -23,10 +25,15 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
    image,
    tags,
    openRemoveConfirm,
+   openEditForm,
    filterTags,
 }) => {
    const handleRemoveConfirm = () => {
       openRemoveConfirm(id);
+   };
+
+   const handleOpenEdit = () => {
+      openEditForm(id);
    };
 
    const handleFilterTags = (tagId: string) => {
@@ -69,9 +76,15 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
             <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
 
-            <button aria-label="Remover item" onClick={handleRemoveConfirm}>
-               <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
-            </button>
+            <div className="text-lg text-gray-600 flex items-center gap-4">
+               <button aria-label="Editar item" onClick={handleOpenEdit}>
+                  <FaPenToSquare className=" cursor-pointer hover:text-emerald-600 transition duration-75 ease-in-out" />
+               </button>
+
+               <button aria-label="Remover item" onClick={handleRemoveConfirm}>
+                  <FaTrash className="cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
+               </button>
+            </div>
          </div>
       </div>
    );

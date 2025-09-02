@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FaStar, FaTrash } from "react-icons/fa";
 import Tag from "../Types/TagType";
 import TagComponent from "./TagComponent";
+import { FaPenToSquare } from "react-icons/fa6";
 
 interface ItemCardProps {
    id: string;
@@ -14,6 +15,7 @@ interface ItemCardProps {
    tags: Tag[];
    favoriteEvent: (index: string) => void;
    openRemoveConfirm: (index: string) => void;
+   openEditForm: (index: string) => void;
    filterTags: (itemId: string, tagId: string) => void;
 }
 
@@ -26,8 +28,9 @@ const ItemCard: React.FC<ItemCardProps> = ({
    isFav,
    tags,
    favoriteEvent,
-   filterTags,
    openRemoveConfirm,
+   openEditForm,
+   filterTags,
 }) => {
    const handleFavorite = () => {
       favoriteEvent(id);
@@ -35,6 +38,10 @@ const ItemCard: React.FC<ItemCardProps> = ({
 
    const handleRemoveConfirm = () => {
       openRemoveConfirm(id);
+   };
+
+   const handleOpenEdit = () => {
+      openEditForm(id);
    };
 
    const handleFilterTags = (tagId: string) => {
@@ -88,9 +95,19 @@ const ItemCard: React.FC<ItemCardProps> = ({
             </div>
             <div>
                <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
-               <button aria-label="Remover item" onClick={handleRemoveConfirm}>
-                  <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
-               </button>
+
+               <div className="text-lg text-gray-600 flex items-center gap-4">
+                  <button aria-label="Editar item" onClick={handleOpenEdit}>
+                     <FaPenToSquare className=" cursor-pointer hover:text-emerald-600 transition duration-75 ease-in-out" />
+                  </button>
+
+                  <button
+                     aria-label="Remover item"
+                     onClick={handleRemoveConfirm}
+                  >
+                     <FaTrash className="cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
+                  </button>
+               </div>
             </div>
          </div>
       </div>
