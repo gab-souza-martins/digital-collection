@@ -99,7 +99,7 @@ const CollectionPage = () => {
    };
 
    const handleConfirmRemoveItem = () => {
-      const newItems = allItems.filter((i) => i.id !== idToRemove);
+      const newItems: Item[] = allItems.filter((i) => i.id !== idToRemove);
       setAllItems(newItems);
       localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
    };

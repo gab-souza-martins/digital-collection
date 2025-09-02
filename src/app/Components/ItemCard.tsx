@@ -36,10 +36,16 @@ const ItemCard: React.FC<ItemCardProps> = ({
       openRemoveConfirm(id);
    };
 
-   tags = [
-      { id: uuidv4(), name: "solido" },
+   const [itemTags, setItemTags] = React.useState<Tag[]>([
+      { id: uuidv4(), name: "sólido" },
       { id: uuidv4(), name: "escuro" },
-   ];
+      { id: uuidv4(), name: "formatos padrões" },
+   ]);
+   const handleFilterTags = (index: string) => {
+      const newTags: Tag[] = itemTags.filter((t) => t.id !== index);
+      setItemTags(newTags);
+   };
+   tags = itemTags;
 
    return (
       <div className="w-2xs min-h-[100%] border rounded-lg p-4 shadow-md">
@@ -74,12 +80,12 @@ const ItemCard: React.FC<ItemCardProps> = ({
          </p>
 
          <div className="mt-auto mb-2 flex items-center flex-wrap gap-2">
-            {tags.map((t, i) => (
+            {tags.map((t) => (
                <TagComponent
-                  key={i}
+                  key={t.id}
                   id={t.id}
                   name={t.name}
-                  removeTag={handleRemoveConfirm}
+                  removeTag={handleFilterTags}
                />
             ))}
          </div>
