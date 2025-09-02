@@ -32,17 +32,14 @@ const Home = () => {
       setViewedCollections(parsed);
    }, []);
 
-   // *Abertura e fechamento do formulário de adição
+   // *Adição de coleções
    const [isAddCollectionFormOpen, setIsAddCollectionFormOpen] =
       React.useState<boolean>(false);
+
    const handleOpenAddCollectionForm = () => {
       setIsAddCollectionFormOpen(true);
    };
-   const handleCloseAddCollectionForm = () => {
-      setIsAddCollectionFormOpen(false);
-   };
 
-   // *Adição de coleções
    const handleAddCollection = (
       title: string,
       description: string,
@@ -75,15 +72,21 @@ const Home = () => {
       setIdToRemove(id);
       setIsConfirmRemoveCollectionOpen(true);
    };
-   const handleCloseConfirmRemoveCollection = () => {
-      setIsConfirmRemoveCollectionOpen(false);
-   };
 
    const handleConfirmRemoveCollection = () => {
       const newCollections = allCollections.filter((c) => c.id !== idToRemove);
       setAllCollections(newCollections);
       localStorage.setItem("collections", JSON.stringify(newCollections));
       localStorage.removeItem(`items-${idToRemove}`);
+   };
+
+   // *Edição de coleções
+   // ?const [idToEdit, setIdToEdit] = React.useState<string>("");
+   const [isEditCollectionOpen, setIsEditCollectionOpen] =
+      React.useState<boolean>(false);
+
+   const handleOpenEditCollection = () => {
+      setIsEditCollectionOpen(true);
    };
 
    // *Remoção de todas as coleções
@@ -95,12 +98,18 @@ const Home = () => {
    const handleOpenConfirmRemoveAllCollections = () => {
       setIsConfirmRemoveAllCollectionsOpen(true);
    };
-   const handleCloseConfirmRemoveAllCollections = () => {
-      setIsConfirmRemoveAllCollectionsOpen(false);
-   };
+
    const handleConfirmRemoveAllCollections = () => {
       localStorage.clear();
       setAllCollections([]);
+   };
+
+   // *Fechar tudo
+   const handleClose = () => {
+      setIsAddCollectionFormOpen(false);
+      setIsConfirmRemoveCollectionOpen(false);
+      setIsConfirmRemoveAllCollectionsOpen(false);
+      setIsEditCollectionOpen(false);
    };
 
    // *Remoção de tags
@@ -207,8 +216,9 @@ const Home = () => {
       <div className="p-4 md:px-6 lg:px-8">
          {isAddCollectionFormOpen && (
             <AddAndEditForm
+               mode="add"
                onAdd={handleAddCollection}
-               closeForm={handleCloseAddCollectionForm}
+               closeForm={handleClose}
             />
          )}
 
@@ -216,7 +226,7 @@ const Home = () => {
             <ConfirmRemove
                text="Remover uma coleção é uma ação irreversível."
                confirmRemove={handleConfirmRemoveCollection}
-               closeRemove={handleCloseConfirmRemoveCollection}
+               closeRemove={handleClose}
             />
          )}
 
@@ -224,7 +234,7 @@ const Home = () => {
             <ConfirmRemove
                text="Remover as coleções é uma ação irreversível. Todos os itens serão perdidos."
                confirmRemove={handleConfirmRemoveAllCollections}
-               closeRemove={handleCloseConfirmRemoveAllCollections}
+               closeRemove={handleClose}
             />
          )}
 
@@ -261,6 +271,7 @@ const Home = () => {
                         image={c.image}
                         tags={c.tags}
                         openRemoveConfirm={handleOpenConfirmRemoveCollection}
+                        openEditForm={handleOpenEditCollection}
                         filterTags={handleRemoveTag}
                      />
                   </Link>

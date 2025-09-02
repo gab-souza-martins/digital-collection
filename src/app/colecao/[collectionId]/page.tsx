@@ -60,9 +60,6 @@ const CollectionPage = () => {
    const handleOpenAddItemForm = () => {
       setIsAddItemFormOpen(true);
    };
-   const handleCloseAddItemForm = () => {
-      setIsAddItemFormOpen(false);
-   };
 
    // *Adição de itens
    const handleAddItem = (
@@ -98,9 +95,6 @@ const CollectionPage = () => {
       setIdToRemove(index);
       setIsConfirmRemoveItemOpen(true);
    };
-   const handleCloseConfirmRemoveItem = () => {
-      setIsConfirmRemoveItemOpen(false);
-   };
 
    const handleConfirmRemoveItem = () => {
       const newItems: Item[] = allItems.filter((i) => i.id !== idToRemove);
@@ -115,12 +109,25 @@ const CollectionPage = () => {
    const handleOpenConfirmEmptyCollection = () => {
       setIsConfirmEmptyCollectionOpen(true);
    };
-   const handleCloseConfirmEmptyCollection = () => {
-      setIsConfirmEmptyCollectionOpen(false);
-   };
    const handleConfirmEmptyCollection = () => {
       localStorage.removeItem(`items-${collectionId}`);
       setAllItems([]);
+   };
+
+   // *Edição de coleções
+   // ?const [idToEdit, setIdToEdit] = React.useState<string>("");
+   const [isEditItemOpen, setIsEditItemOpen] = React.useState<boolean>(false);
+
+   const handleOpenEditItem = () => {
+      setIsEditItemOpen(true);
+   };
+
+   // *Fechar tudo
+   const handleClose = () => {
+      setIsAddItemFormOpen(false);
+      setIsConfirmRemoveItemOpen(false);
+      setIsConfirmEmptyCollectionOpen(false);
+      setIsEditItemOpen(false);
    };
 
    // *Remoção de tags
@@ -252,8 +259,9 @@ const CollectionPage = () => {
       <div className="p-4 md:px-6 lg:px-8">
          {isAddItemFormOpen && (
             <AddAndEditForm
+               mode="add"
                onAdd={handleAddItem}
-               closeForm={handleCloseAddItemForm}
+               closeForm={handleClose}
             />
          )}
 
@@ -261,7 +269,7 @@ const CollectionPage = () => {
             <ConfirmRemove
                text="Remover um item é uma ação irreversível."
                confirmRemove={handleConfirmRemoveItem}
-               closeRemove={handleCloseConfirmRemoveItem}
+               closeRemove={handleClose}
             />
          )}
 
@@ -269,7 +277,7 @@ const CollectionPage = () => {
             <ConfirmRemove
                text="Esvaziar a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
                confirmRemove={handleConfirmEmptyCollection}
-               closeRemove={handleCloseConfirmEmptyCollection}
+               closeRemove={handleClose}
             />
          )}
 
@@ -319,8 +327,9 @@ const CollectionPage = () => {
                      isFav={i.isFav}
                      tags={i.tags}
                      favoriteEvent={handleFavoriteEvent}
-                     filterTags={handleRemoveTag}
                      openRemoveConfirm={handleOpenConfirmRemoveItem}
+                     openEditForm={handleOpenEditItem}
+                     filterTags={handleRemoveTag}
                   />
                ))}
             </div>

@@ -16,7 +16,7 @@ interface InitialValues {
 
 interface AddAndEditFormProps {
    mode: "add" | "edit";
-   initialEditValues: InitialValues;
+   initialEditValues?: InitialValues;
    onAdd: (
       title: string,
       description: string,
@@ -39,6 +39,18 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
    onEdit,
    closeForm,
 }) => {
+   React.useEffect(() => {
+      if (initialEditValues) {
+         setName(initialEditValues.title);
+         setDescription(initialEditValues.description);
+         setItemTags(initialEditValues.tags);
+         if (initialEditValues.image) {
+            setImageBase64(initialEditValues.image);
+            setHasSelectedImage(true);
+         }
+      }
+   }, [initialEditValues]);
+
    // *Handlers de nome e descrição
    const [name, setName] = React.useState<string>("");
    const [description, setDescription] = React.useState<string>("");

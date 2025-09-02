@@ -77,11 +77,14 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
             <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
 
             <div className="text-lg text-gray-600 flex items-center gap-4">
-               <button aria-label="Editar item" onClick={handleOpenEdit}>
+               <button aria-label="Editar coleção" onClick={handleOpenEdit}>
                   <FaPenToSquare className=" cursor-pointer hover:text-emerald-600 transition duration-75 ease-in-out" />
                </button>
 
-               <button aria-label="Remover item" onClick={handleRemoveConfirm}>
+               <button
+                  aria-label="Remover coleção"
+                  onClick={handleRemoveConfirm}
+               >
                   <FaTrash className="cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
                </button>
             </div>
