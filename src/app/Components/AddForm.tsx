@@ -144,46 +144,52 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                   placeholder="Descrição"
                />
 
-               <div className="flex items-center justify-between gap-2 w-1/1">
-                  <input
-                     onChange={(e) => setTagInput(e.target.value)}
-                     onKeyDown={(e) =>
-                        e.key === "Enter" && (e.preventDefault(), addTag(e))
-                     }
-                     type="text"
-                     className="border border-gray-800 rounded-md p-2 min-w-7/10"
-                     value={tagInput}
-                     placeholder="Etiquetas (opcional)"
-                  />
+               <div className="flex flex-col gap-1 border rounded-md p-2">
+                  <p className="text-semibold text-neutral-500">
+                     Etiquetas (opcional)
+                  </p>
 
-                  <input
-                     onChange={(e) => setTagColor(e.target.value)}
-                     value={tagColor}
-                     aria-label="Escolher cor da etiqueta"
-                     className="w-full"
-                     type="color"
-                  />
-
-                  <button
-                     onClick={addTag}
-                     aria-label="Adicionar etiqueta."
-                     className="cursor-pointer p-3 rounded-md bg-emerald-600 text-white
-                                hover:bg-emerald-700 active:bg-emerald-800 transition duration-75 ease-in-out"
-                  >
-                     <FaTag />
-                  </button>
-               </div>
-
-               <div className="flex items-center flex-wrap gap-2">
-                  {itemTags.map((t) => (
-                     <TagComponent
-                        key={t.id}
-                        id={t.id}
-                        name={t.name}
-                        color={t.color}
-                        removeTag={filterTag}
+                  <div className="flex items-center justify-between gap-2 w-1/1">
+                     <input
+                        onChange={(e) => setTagInput(e.target.value)}
+                        onKeyDown={(e) =>
+                           e.key === "Enter" && (e.preventDefault(), addTag(e))
+                        }
+                        type="text"
+                        className="border border-gray-800 rounded-md p-2 min-w-6/10 sm:min-w-73/100"
+                        value={tagInput}
+                        placeholder="Etiqueta"
                      />
-                  ))}
+
+                     <input
+                        onChange={(e) => setTagColor(e.target.value)}
+                        value={tagColor}
+                        aria-label="Escolher cor da etiqueta"
+                        className="w-full"
+                        type="color"
+                     />
+
+                     <button
+                        onClick={addTag}
+                        aria-label="Adicionar etiqueta."
+                        className="cursor-pointer p-2.5 rounded-md bg-emerald-600 text-white
+                                   hover:bg-emerald-700 active:bg-emerald-800 transition duration-75 ease-in-out"
+                     >
+                        <FaTag />
+                     </button>
+                  </div>
+
+                  <div className="flex items-center flex-wrap gap-2">
+                     {itemTags.map((t) => (
+                        <TagComponent
+                           key={t.id}
+                           id={t.id}
+                           name={t.name}
+                           color={t.color}
+                           removeTag={filterTag}
+                        />
+                     ))}
+                  </div>
                </div>
 
                {error && (
