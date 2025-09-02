@@ -18,11 +18,15 @@ interface AddFormProps {
 }
 
 const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
+   // *Handlers de nome e descrição
    const [name, setName] = React.useState<string>("");
    const [description, setDescription] = React.useState<string>("");
 
+   // *Handlers e funções das tags
    const [tagInput, setTagInput] = React.useState<string>("");
    const [itemTags, setItemTags] = React.useState<Tag[]>([]);
+   const [tagColor, setTagColor] = React.useState<string>("");
+
    const addTag = (
       e:
          | React.MouseEvent<HTMLButtonElement>
@@ -35,16 +39,18 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
       } else {
          setItemTags((prev) => [
             ...prev,
-            { id: uuidv4(), name: tagInput.trim() },
+            { id: uuidv4(), name: tagInput.trim(), color: tagColor },
          ]);
          setTagInput("");
       }
    };
+
    const filterTag = (index: string) => {
       const newTags = itemTags.filter((t) => t.id !== index);
       setItemTags(newTags);
    };
 
+   // *Converter imagem para base64 e mostrá-la no form
    const fileToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       if (!e.target.files || e.target.files.length === 0) return;
@@ -62,8 +68,10 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    const [hasSelectedImage, setHasSelectedImage] =
       React.useState<boolean>(false);
 
+   // *Handler de erro
    const [error, setError] = React.useState<boolean>(false);
 
+   // *Handler de submit
    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
 
@@ -143,13 +151,22 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                         e.key === "Enter" && (e.preventDefault(), addTag(e))
                      }
                      type="text"
-                     className="border border-gray-800 rounded-md p-2 min-w-78/100 sm:min-w-85/100"
+                     className="border border-gray-800 rounded-md p-2 min-w-7/10"
                      value={tagInput}
                      placeholder="Etiquetas (opcional)"
                   />
 
+                  <input
+                     onChange={(e) => setTagColor(e.target.value)}
+                     value={tagColor}
+                     aria-label="Escolher cor da etiqueta"
+                     className="w-full"
+                     type="color"
+                  />
+
                   <button
                      onClick={addTag}
+                     aria-label="Adicionar etiqueta."
                      className="cursor-pointer p-3 rounded-md bg-emerald-600 text-white
                                 hover:bg-emerald-700 active:bg-emerald-800 transition duration-75 ease-in-out"
                   >
@@ -163,6 +180,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
                         key={t.id}
                         id={t.id}
                         name={t.name}
+                        color={t.color}
                         removeTag={filterTag}
                      />
                   ))}

@@ -24,7 +24,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
    };
 
    return (
-      <div className="w-2xs min-h-[100%] flex flex-col justify-start border rounded-lg p-4 shadow-md">
+      <div className="flex flex-col w-2xs min-h-[100%] justify-start border rounded-lg p-4 shadow-md">
          <h2 className="text-2xl font-semibold break-all">{title}</h2>
 
          {image && (

@@ -80,6 +80,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
                      key={t.id}
                      id={t.id}
                      name={t.name}
+                     color={t.color}
                      removeTag={() => handleFilterTags(t.id)}
                   />
                ))}
