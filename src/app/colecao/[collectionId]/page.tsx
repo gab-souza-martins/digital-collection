@@ -14,6 +14,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Item from "@/app/Types/ItemType";
 import Collection from "@/app/Types/CollectionType";
 import Tag from "@/app/Types/TagType";
+import TagFilter from "@/app/Components/TagFilter";
 
 const CollectionPage = () => {
    const params = useParams();
@@ -134,6 +135,12 @@ const CollectionPage = () => {
       localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
    };
 
+   // *useMemo para filtragem de tags
+   const uniqueTags = React.useMemo(() => {
+      const tagNames = allItems.flatMap((i) => i.tags.map((t) => t.name));
+      return Array.from(new Set(tagNames));
+   }, [allItems]);
+
    // *Favoritos
    const handleFavoriteEvent = (id: string) => {
       const newItems: Item[] = allItems.map((i) => {
@@ -177,6 +184,7 @@ const CollectionPage = () => {
    // *Filtros de busca e ordenação
    const [searchTerm, setSearchTerm] = React.useState<string>("");
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
+   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
 
    React.useEffect(() => {
       let filteredItems: Item[] = allItems;
@@ -190,8 +198,13 @@ const CollectionPage = () => {
          );
       }
       if (imageFilter) {
-         filteredItems = allItems.filter(
+         filteredItems = filteredItems.filter(
             (item) => item.image !== "" && item.image !== undefined
+         );
+      }
+      if (selectedTags.length > 0) {
+         filteredItems = filteredItems.filter((i) =>
+            i.tags.some((t) => selectedTags.includes(t.name))
          );
       }
 
@@ -222,7 +235,7 @@ const CollectionPage = () => {
 
       // *
       setViewedItems(filteredItems);
-   }, [allItems, searchTerm, imageFilter, sortValue]);
+   }, [allItems, searchTerm, imageFilter, selectedTags, sortValue]);
 
    const handleTextSearch = (searchTerm: string) => {
       setSearchTerm(searchTerm);
@@ -266,10 +279,15 @@ const CollectionPage = () => {
                <h1 className="text-3xl font-bold">{collectionName}</h1>
             </div>
 
-            <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
+            <div className="my-5 flex flex-col gap-4 lg:flex-row lg:gap-10">
                <Searchbar
                   textSearch={handleTextSearch}
                   imageFilter={handleImageFilter}
+               />
+               <TagFilter
+                  tagNames={uniqueTags}
+                  selectedTags={selectedTags}
+                  onCheck={setSelectedTags}
                />
                <Sort sort={handleSort} />
             </div>

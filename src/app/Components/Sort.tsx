@@ -15,19 +15,21 @@ const Sort: React.FC<SortProps> = ({ sort }) => {
    return (
       <div>
          <form className="flex flex-col items-start gap-1 2xs:flex-row 2xs:items-center 2xs:gap-3">
-            <div className="flex items-center gap-1">
-               <label htmlFor="sortSelect">Ordenar por:</label>
-               <select
-                  id="sortSelect"
-                  value={selectedSort}
-                  onChange={(e) => setSelectedSort(e.target.value)}
-                  className="border border-gray-600/50 rounded-md py-1 px-2"
-               >
-                  <option value="date">primeiro adicionado</option>
-                  <option value="date-reverse">último adicionado</option>
-                  <option value="alphabetical">título (A–Z)</option>
-                  <option value="alphabetical-reverse">título (Z–A)</option>
-               </select>
+            <div className="flex flex-col items-start gap-2">
+               <div className="flex items-center gap-1">
+                  <label htmlFor="sortSelect">Ordenar por:</label>
+                  <select
+                     onChange={(e) => setSelectedSort(e.target.value)}
+                     value={selectedSort}
+                     id="sortSelect"
+                     className="border border-gray-600/50 rounded-md py-1 px-2"
+                  >
+                     <option value="date">primeiro adicionado</option>
+                     <option value="date-reverse">último adicionado</option>
+                     <option value="alphabetical">título (A–Z)</option>
+                     <option value="alphabetical-reverse">título (Z–A)</option>
+                  </select>
+               </div>
             </div>
 
             <button
