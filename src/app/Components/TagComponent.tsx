@@ -25,7 +25,7 @@ const TagComponent: React.FC<TagComponentProps> = ({
          className="flex items-center gap-2 border border-dashed rounded-md pl-2 pr-1 shadow-md"
          style={{ backgroundColor: bgColor, color: textColor }}
       >
-         <span>{name}</span>
+         <span className="break-all">{name}</span>
 
          <button
             aria-label="Remover etiqueta"
