@@ -63,6 +63,12 @@ const ItemCard: React.FC<ItemCardProps> = ({
             {description}
          </p>
 
+         <div className="mt-auto mb-2 flex items-center flex-wrap">
+            <div className="border border-dashed rounded-md px-2 bg-rose-600 text-white shadow-md">
+               Sólido
+            </div>
+         </div>
+
          <div className="mt-auto">
             <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
 
