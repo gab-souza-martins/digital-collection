@@ -7,7 +7,14 @@ import Tag from "../Types/TagType";
 import { v4 as uuidv4 } from "uuid";
 import TagComponent from "./TagComponent";
 
-interface AddFormProps {
+// interface InitialValues {
+//    title: string;
+//    description: string;
+//    tags: Tag[];
+//    image?: string;
+// }
+
+interface AddAndEditFormProps {
    onAdd: (
       title: string,
       description: string,
@@ -17,7 +24,10 @@ interface AddFormProps {
    closeForm: () => void;
 }
 
-const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
+const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
+   onAdd,
+   closeForm,
+}) => {
    // *Handlers de nome e descrição
    const [name, setName] = React.useState<string>("");
    const [description, setDescription] = React.useState<string>("");
@@ -245,4 +255,4 @@ const AddForm: React.FC<AddFormProps> = ({ onAdd, closeForm }) => {
    );
 };
 
-export default AddForm;
+export default AddAndEditForm;

@@ -2,11 +2,11 @@
 import React from "react";
 import { FaPlus } from "react-icons/fa";
 
-interface OpenAddFormBtnProps {
+interface OpenFormBtnProps {
    openForm: () => void;
 }
 
-const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = ({ openForm }) => {
+const OpenFormBtn: React.FC<OpenFormBtnProps> = ({ openForm }) => {
    const handleOpen = () => {
       openForm();
    };
@@ -29,4 +29,4 @@ const OpenAddFormBtn: React.FC<OpenAddFormBtnProps> = ({ openForm }) => {
    );
 };
 
-export default OpenAddFormBtn;
+export default OpenFormBtn;

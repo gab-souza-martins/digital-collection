@@ -2,9 +2,8 @@
 import { useParams } from "next/navigation";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import OpenAddFormBtn from "@/app/Components/Botões/OpenAddFormBtn";
+import OpenFormBtn from "@/app/Components/Botões/OpenFormBtn";
 import ItemCard from "@/app/Components/ItemCard";
-import AddForm from "@/app/Components/AddForm";
 import Searchbar from "@/app/Components/Searchbar";
 import Sort from "@/app/Components/Sort";
 import OpenRemoveAllBtn from "@/app/Components/Botões/OpenRemoveAllBtn";
@@ -15,6 +14,7 @@ import Item from "@/app/Types/ItemType";
 import Collection from "@/app/Types/CollectionType";
 import Tag from "@/app/Types/TagType";
 import TagFilter from "@/app/Components/TagFilter";
+import AddAndEditForm from "@/app/Components/AddAndEditForm";
 
 const CollectionPage = () => {
    const params = useParams();
@@ -251,7 +251,10 @@ const CollectionPage = () => {
    return (
       <div className="p-4 md:px-6 lg:px-8">
          {isAddItemFormOpen && (
-            <AddForm onAdd={handleAddItem} closeForm={handleCloseAddItemForm} />
+            <AddAndEditForm
+               onAdd={handleAddItem}
+               closeForm={handleCloseAddItemForm}
+            />
          )}
 
          {isConfirmRemoveItemOpen && (
@@ -294,7 +297,7 @@ const CollectionPage = () => {
                <Sort sort={handleSort} />
             </div>
 
-            <OpenAddFormBtn openForm={handleOpenAddItemForm} />
+            <OpenFormBtn openForm={handleOpenAddItemForm} />
          </header>
 
          <hr className="mb-5 text-gray-400" />

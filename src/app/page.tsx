@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import AddForm from "./Components/AddForm";
 import ConfirmRemove from "./Components/ConfirmRemove";
 import Searchbar from "./Components/Searchbar";
 import Sort from "./Components/Sort";
-import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
+import OpenFormBtn from "./Components/Botões/OpenFormBtn";
 import OpenRemoveAllBtn from "./Components/Botões/OpenRemoveAllBtn";
 import CollectionCard from "./Components/CollectionCard";
 import Link from "next/link";
 import Collection from "./Types/CollectionType";
 import TagFilter from "./Components/TagFilter";
 import Tag from "./Types/TagType";
+import AddAndEditForm from "./Components/AddAndEditForm";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -206,7 +206,7 @@ const Home = () => {
    return (
       <div className="p-4 md:px-6 lg:px-8">
          {isAddCollectionFormOpen && (
-            <AddForm
+            <AddAndEditForm
                onAdd={handleAddCollection}
                closeForm={handleCloseAddCollectionForm}
             />
@@ -244,7 +244,7 @@ const Home = () => {
                <Sort sort={handleSort} />
             </div>
 
-            <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
+            <OpenFormBtn openForm={handleOpenAddCollectionForm} />
          </header>
 
          <hr className="mb-5 text-gray-400" />
