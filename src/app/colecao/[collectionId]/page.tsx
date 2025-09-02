@@ -202,6 +202,8 @@ const CollectionPage = () => {
             (item) => item.image !== "" && item.image !== undefined
          );
       }
+
+      // *Tags
       if (selectedTags.length > 0) {
          filteredItems = filteredItems.filter((i) =>
             i.tags.some((t) => selectedTags.includes(t.name))

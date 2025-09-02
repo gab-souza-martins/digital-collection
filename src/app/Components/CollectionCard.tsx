@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
+import TagComponent from "./TagComponent";
+import Tag from "../Types/TagType";
 
 interface CollectionCardProps {
    id: string;
@@ -8,7 +10,9 @@ interface CollectionCardProps {
    description: string;
    dateCreated: string;
    image?: string;
+   tags: Tag[];
    openRemoveConfirm: (id: string) => void;
+   filterTags: (collectionId: string, tagId: string) => void;
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({
@@ -17,10 +21,16 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
    description,
    dateCreated,
    image,
+   tags,
    openRemoveConfirm,
+   filterTags,
 }) => {
    const handleRemoveConfirm = () => {
       openRemoveConfirm(id);
+   };
+
+   const handleFilterTags = (tagId: string) => {
+      filterTags(id, tagId);
    };
 
    return (
@@ -44,10 +54,23 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
          </p>
 
          <div className="mt-auto">
+            <div className="mb-2 flex items-center flex-wrap gap-2">
+               {(tags ?? []).map((t) => (
+                  <TagComponent
+                     key={t.id}
+                     id={t.id}
+                     name={t.name}
+                     bgColor={t.bgColor}
+                     textColor={t.textColor}
+                     removeTag={() => handleFilterTags(t.id)}
+                  />
+               ))}
+            </div>
+
             <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
 
-            <button aria-label="Remover coleção" onClick={handleRemoveConfirm}>
-               <FaTrash className="cursor-pointer text-gray-600 hover:text-rose-600 transition duration-75 ease-in-out" />
+            <button aria-label="Remover item" onClick={handleRemoveConfirm}>
+               <FaTrash className="text-gray-600 cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
             </button>
          </div>
       </div>

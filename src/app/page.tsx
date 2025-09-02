@@ -11,6 +11,7 @@ import CollectionCard from "./Components/CollectionCard";
 import Link from "next/link";
 import Collection from "./Types/CollectionType";
 import TagFilter from "./Components/TagFilter";
+import Tag from "./Types/TagType";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -45,6 +46,7 @@ const Home = () => {
    const handleAddCollection = (
       title: string,
       description: string,
+      tags: Tag[],
       image?: string
    ) => {
       const newCollections = [
@@ -53,6 +55,7 @@ const Home = () => {
             id: uuidv4(),
             title,
             description,
+            tags,
             image,
             dateCreated: `Criado 
             em ${new Date().toLocaleDateString("pt-BR")} 
@@ -77,7 +80,7 @@ const Home = () => {
    };
 
    const handleConfirmRemoveCollection = () => {
-      const newCollections = allCollections.filter((i) => i.id !== idToRemove);
+      const newCollections = allCollections.filter((c) => c.id !== idToRemove);
       setAllCollections(newCollections);
       localStorage.setItem("collections", JSON.stringify(newCollections));
       localStorage.removeItem(`items-${idToRemove}`);
@@ -100,8 +103,27 @@ const Home = () => {
       setAllCollections([]);
    };
 
+   // *Remoção de tags
+   const handleRemoveTag = (collectionId: string, tagId: string) => {
+      const newCollections = allCollections.map((c) => {
+         if (c.id === collectionId) {
+            return { ...c, tags: c.tags.filter((t) => t.id !== tagId) };
+         }
+         return c;
+      });
+      setAllCollections(newCollections);
+      localStorage.setItem("collections", JSON.stringify(newCollections));
+   };
+
+   // *useMemo para filtragem de tags
+   const uniqueTags = React.useMemo(() => {
+      const tagNames = allCollections.flatMap((c) => c.tags.map((t) => t.name));
+      return Array.from(new Set(tagNames));
+   }, [allCollections]);
+
    // *Ordenação
    const [sortValue, setSortValue] = React.useState<string>("date");
+   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
 
    React.useEffect(() => {
       const savedSortValue: string | null = localStorage.getItem("sortValue");
@@ -144,6 +166,13 @@ const Home = () => {
          );
       }
 
+      // *Tags
+      if (selectedTags.length > 0) {
+         filteredCollections = filteredCollections.filter((c) =>
+            c.tags.some((t) => selectedTags.includes(t.name))
+         );
+      }
+
       // *Ordenação
       switch (sortValue) {
          case "date-reverse":
@@ -165,7 +194,7 @@ const Home = () => {
 
       // *
       setViewedCollections(filteredCollections);
-   }, [allCollections, searchTerm, imageFilter, sortValue]);
+   }, [allCollections, searchTerm, imageFilter, sortValue, selectedTags]);
 
    const handleTextSearch = (searchTerm: string) => {
       setSearchTerm(searchTerm);
@@ -207,7 +236,11 @@ const Home = () => {
                   textSearch={handleTextSearch}
                   imageFilter={handleImageFilter}
                />
-               <TagFilter />
+               <TagFilter
+                  tagNames={uniqueTags}
+                  selectedTags={selectedTags}
+                  onCheck={setSelectedTags}
+               />
                <Sort sort={handleSort} />
             </div>
 
@@ -218,15 +251,17 @@ const Home = () => {
 
          <main>
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
-               {viewedCollections.map((collection) => (
-                  <Link key={collection.id} href={`colecao/${collection.id}/`}>
+               {viewedCollections.map((c) => (
+                  <Link key={c.id} href={`colecao/${c.id}/`}>
                      <CollectionCard
-                        id={collection.id}
-                        title={collection.title}
-                        description={collection.description}
-                        dateCreated={collection.dateCreated}
-                        image={collection.image}
+                        id={c.id}
+                        title={c.title}
+                        description={c.description}
+                        dateCreated={c.dateCreated}
+                        image={c.image}
+                        tags={c.tags}
                         openRemoveConfirm={handleOpenConfirmRemoveCollection}
+                        filterTags={handleRemoveTag}
                      />
                   </Link>
                ))}
