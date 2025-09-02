@@ -7,15 +7,23 @@ import Tag from "../Types/TagType";
 import { v4 as uuidv4 } from "uuid";
 import TagComponent from "./TagComponent";
 
-// interface InitialValues {
-//    title: string;
-//    description: string;
-//    tags: Tag[];
-//    image?: string;
-// }
+interface InitialValues {
+   title: string;
+   description: string;
+   tags: Tag[];
+   image?: string;
+}
 
 interface AddAndEditFormProps {
+   mode: "add" | "edit";
+   initialEditValues: InitialValues;
    onAdd: (
+      title: string,
+      description: string,
+      tags: Tag[],
+      image?: string
+   ) => void;
+   onEdit: (
       title: string,
       description: string,
       tags: Tag[],
@@ -25,7 +33,10 @@ interface AddAndEditFormProps {
 }
 
 const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
+   mode,
+   initialEditValues,
    onAdd,
+   onEdit,
    closeForm,
 }) => {
    // *Handlers de nome e descrição
@@ -109,7 +120,11 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
       e.preventDefault();
 
       if (name.trim() && description.trim()) {
-         onAdd(name, description, itemTags, imageBase64);
+         if (mode === "edit") {
+            onEdit(name, description, itemTags, imageBase64);
+         } else {
+            onAdd(name, description, itemTags, imageBase64);
+         }
          closeForm();
       } else {
          setError(true);
@@ -244,7 +259,9 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                                  active:bg-emerald-800 active:border-emerald-800 active:shadow-md"
                   >
                      <FaPlus />
-                     <span className="font-semibold">Adicionar</span>
+                     <span className="font-semibold">
+                        {mode === "edit" ? "Salvar" : "Adicionar"}
+                     </span>
                   </button>
 
                   <CancelBtn onClickEvent={closeForm} />

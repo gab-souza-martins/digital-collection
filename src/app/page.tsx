@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import ConfirmRemove from "./Components/ConfirmRemove";
 import Searchbar from "./Components/Searchbar";
 import Sort from "./Components/Sort";
-import OpenFormBtn from "./Components/Botões/OpenFormBtn";
+import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
 import OpenRemoveAllBtn from "./Components/Botões/OpenRemoveAllBtn";
 import CollectionCard from "./Components/CollectionCard";
 import Link from "next/link";
@@ -244,7 +244,7 @@ const Home = () => {
                <Sort sort={handleSort} />
             </div>
 
-            <OpenFormBtn openForm={handleOpenAddCollectionForm} />
+            <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
          </header>
 
          <hr className="mb-5 text-gray-400" />

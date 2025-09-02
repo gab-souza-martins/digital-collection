@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import OpenFormBtn from "@/app/Components/Botões/OpenFormBtn";
+import OpenAddFormBtn from "@/app/Components/Botões/OpenAddFormBtn";
 import ItemCard from "@/app/Components/ItemCard";
 import Searchbar from "@/app/Components/Searchbar";
 import Sort from "@/app/Components/Sort";
@@ -297,7 +297,7 @@ const CollectionPage = () => {
                <Sort sort={handleSort} />
             </div>
 
-            <OpenFormBtn openForm={handleOpenAddItemForm} />
+            <OpenAddFormBtn openForm={handleOpenAddItemForm} />
          </header>
 
          <hr className="mb-5 text-gray-400" />
