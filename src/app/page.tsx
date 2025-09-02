@@ -10,6 +10,7 @@ import OpenRemoveAllBtn from "./Components/Botões/OpenRemoveAllBtn";
 import CollectionCard from "./Components/CollectionCard";
 import Link from "next/link";
 import Collection from "./Types/CollectionType";
+import TagFilter from "./Components/TagFilter";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -201,18 +202,19 @@ const Home = () => {
          <header>
             <h1 className="text-3xl font-bold">Coleção digital</h1>
 
-            <div className="my-5 flex flex-col gap-4 ml:flex-row ml:gap-10">
+            <div className="my-5 flex flex-wrap gap-4 lg:gap-10">
                <Searchbar
                   textSearch={handleTextSearch}
                   imageFilter={handleImageFilter}
                />
+               <TagFilter />
                <Sort sort={handleSort} />
             </div>
 
             <OpenAddFormBtn openForm={handleOpenAddCollectionForm} />
          </header>
 
-         <hr className="mb-5 opacity-40" />
+         <hr className="mb-5 text-gray-400" />
 
          <main>
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">

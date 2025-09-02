@@ -279,7 +279,7 @@ const CollectionPage = () => {
                <h1 className="text-3xl font-bold">{collectionName}</h1>
             </div>
 
-            <div className="my-5 flex flex-col gap-4 lg:flex-row lg:gap-10">
+            <div className="my-5 flex flex-wrap gap-4 lg:gap-10">
                <Searchbar
                   textSearch={handleTextSearch}
                   imageFilter={handleImageFilter}
@@ -295,7 +295,7 @@ const CollectionPage = () => {
             <OpenAddFormBtn openForm={handleOpenAddItemForm} />
          </header>
 
-         <hr className="mb-5 opacity-40" />
+         <hr className="mb-5 text-gray-400" />
 
          <p className="text-gray-600 mb-3">
             Tamanho da coleção: {allItems.length}

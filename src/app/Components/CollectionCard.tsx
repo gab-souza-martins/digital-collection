@@ -37,7 +37,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
             />
          )}
 
-         <hr className="opacity-40 my-2" />
+         <hr className="my-2 text-gray-400" />
 
          <p className="min-h-12 mb-4 break-all whitespace-pre-wrap">
             {description}

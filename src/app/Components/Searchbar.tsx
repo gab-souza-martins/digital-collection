@@ -18,7 +18,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
                   textSearch(e.target.value);
                }}
                type="text"
-               className="border border-gray-800 rounded-md py-1 px-2 w-40 2xs:w-60"
+               className="border border-gray-800 rounded-md py-1 px-2 w-40 2xs:w-59"
                value={textTerm}
                placeholder="Pesquisar itens"
                aria-label="Pesquisar itens"
