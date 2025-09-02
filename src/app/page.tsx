@@ -12,6 +12,7 @@ import Collection from "./Types/CollectionType";
 import TagFilter from "./Components/TagFilter";
 import Tag from "./Types/TagType";
 import AddAndEditForm from "./Components/AddAndEditForm";
+import InitialEditValues from "./Types/InitialEditValues";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -84,8 +85,18 @@ const Home = () => {
    // ?const [idToEdit, setIdToEdit] = React.useState<string>("");
    const [isEditCollectionOpen, setIsEditCollectionOpen] =
       React.useState<boolean>(false);
+   const [valuesToEdit, setValuesToEdit] = React.useState<InitialEditValues>();
 
-   const handleOpenEditCollection = () => {
+   const handleOpenEditCollection = (id: string) => {
+      const collectionToEdit = allCollections.find((c) => c.id === id);
+      if (collectionToEdit) {
+         setValuesToEdit({
+            title: `${collectionToEdit.title}`,
+            description: `${collectionToEdit.description}`,
+            tags: collectionToEdit.tags,
+            image: `${collectionToEdit.image}`,
+         });
+      }
       setIsEditCollectionOpen(true);
    };
 
@@ -217,6 +228,15 @@ const Home = () => {
          {isAddCollectionFormOpen && (
             <AddAndEditForm
                mode="add"
+               onAdd={handleAddCollection}
+               closeForm={handleClose}
+            />
+         )}
+
+         {isEditCollectionOpen && (
+            <AddAndEditForm
+               mode="edit"
+               initialEditValues={valuesToEdit}
                onAdd={handleAddCollection}
                closeForm={handleClose}
             />

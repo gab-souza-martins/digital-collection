@@ -15,6 +15,7 @@ import Collection from "@/app/Types/CollectionType";
 import Tag from "@/app/Types/TagType";
 import TagFilter from "@/app/Components/TagFilter";
 import AddAndEditForm from "@/app/Components/AddAndEditForm";
+import InitialEditValues from "@/app/Types/InitialEditValues";
 
 const CollectionPage = () => {
    const params = useParams();
@@ -117,8 +118,18 @@ const CollectionPage = () => {
    // *Edição de coleções
    // ?const [idToEdit, setIdToEdit] = React.useState<string>("");
    const [isEditItemOpen, setIsEditItemOpen] = React.useState<boolean>(false);
+   const [valuesToEdit, setValuesToEdit] = React.useState<InitialEditValues>();
 
-   const handleOpenEditItem = () => {
+   const handleOpenEditItem = (id: string) => {
+      const itemToEdit = allItems.find((c) => c.id === id);
+      if (itemToEdit) {
+         setValuesToEdit({
+            title: `${itemToEdit.title}`,
+            description: `${itemToEdit.description}`,
+            tags: itemToEdit.tags,
+            image: `${itemToEdit.image}`,
+         });
+      }
       setIsEditItemOpen(true);
    };
 
@@ -260,6 +271,15 @@ const CollectionPage = () => {
          {isAddItemFormOpen && (
             <AddAndEditForm
                mode="add"
+               onAdd={handleAddItem}
+               closeForm={handleClose}
+            />
+         )}
+
+         {isEditItemOpen && (
+            <AddAndEditForm
+               mode="edit"
+               initialEditValues={valuesToEdit}
                onAdd={handleAddItem}
                closeForm={handleClose}
             />

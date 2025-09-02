@@ -6,17 +6,12 @@ import CancelBtn from "./Botões/CancelBtn";
 import Tag from "../Types/TagType";
 import { v4 as uuidv4 } from "uuid";
 import TagComponent from "./TagComponent";
-
-interface InitialValues {
-   title: string;
-   description: string;
-   tags: Tag[];
-   image?: string;
-}
+import InitialEditValues from "../Types/InitialEditValues";
+import { FaFloppyDisk } from "react-icons/fa6";
 
 interface AddAndEditFormProps {
    mode: "add" | "edit";
-   initialEditValues?: InitialValues;
+   initialEditValues?: InitialEditValues;
    onAdd: (
       title: string,
       description: string,
@@ -270,7 +265,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                                 shadow-sm hover:bg-emerald-700 hover:border-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
                                  active:bg-emerald-800 active:border-emerald-800 active:shadow-md"
                   >
-                     <FaPlus />
+                     {mode === "edit" ? <FaFloppyDisk /> : <FaPlus />}
                      <span className="font-semibold">
                         {mode === "edit" ? "Salvar" : "Adicionar"}
                      </span>
