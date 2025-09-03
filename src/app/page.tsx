@@ -82,7 +82,7 @@ const Home = () => {
    };
 
    // *Edição de coleções
-   // ?const [idToEdit, setIdToEdit] = React.useState<string>("");
+   const [idToEdit, setIdToEdit] = React.useState<string>("");
    const [isEditCollectionOpen, setIsEditCollectionOpen] =
       React.useState<boolean>(false);
    const [valuesToEdit, setValuesToEdit] = React.useState<InitialEditValues>();
@@ -97,7 +97,30 @@ const Home = () => {
             image: `${collectionToEdit.image}`,
          });
       }
+      setIdToEdit(id);
       setIsEditCollectionOpen(true);
+   };
+
+   const handleEditCollection = (
+      newTitle: string,
+      newDescription: string,
+      newTags: Tag[],
+      newImage?: string
+   ) => {
+      const newCollections = allCollections.map((c) => {
+         if (c.id === idToEdit) {
+            return {
+               ...c,
+               title: newTitle,
+               description: newDescription,
+               tags: newTags,
+               image: newImage,
+            };
+         }
+         return c;
+      });
+      setAllCollections(newCollections);
+      localStorage.setItem("collections", JSON.stringify(newCollections));
    };
 
    // *Remoção de todas as coleções
@@ -229,6 +252,7 @@ const Home = () => {
             <AddAndEditForm
                mode="add"
                onAdd={handleAddCollection}
+               onEdit={handleEditCollection}
                closeForm={handleClose}
             />
          )}
@@ -238,6 +262,7 @@ const Home = () => {
                mode="edit"
                initialEditValues={valuesToEdit}
                onAdd={handleAddCollection}
+               onEdit={handleEditCollection}
                closeForm={handleClose}
             />
          )}

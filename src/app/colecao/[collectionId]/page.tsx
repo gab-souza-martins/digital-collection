@@ -116,7 +116,7 @@ const CollectionPage = () => {
    };
 
    // *Edição de coleções
-   // ?const [idToEdit, setIdToEdit] = React.useState<string>("");
+   const [idToEdit, setIdToEdit] = React.useState<string>("");
    const [isEditItemOpen, setIsEditItemOpen] = React.useState<boolean>(false);
    const [valuesToEdit, setValuesToEdit] = React.useState<InitialEditValues>();
 
@@ -130,7 +130,30 @@ const CollectionPage = () => {
             image: `${itemToEdit.image}`,
          });
       }
+      setIdToEdit(id);
       setIsEditItemOpen(true);
+   };
+
+   const handleEditItem = (
+      newTitle: string,
+      newDescription: string,
+      newTags: Tag[],
+      newImage?: string
+   ) => {
+      const newItems = allItems.map((i) => {
+         if (i.id === idToEdit) {
+            return {
+               ...i,
+               title: newTitle,
+               description: newDescription,
+               tags: newTags,
+               image: newImage,
+            };
+         }
+         return i;
+      });
+      setAllItems(newItems);
+      localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
    };
 
    // *Fechar tudo
@@ -272,6 +295,7 @@ const CollectionPage = () => {
             <AddAndEditForm
                mode="add"
                onAdd={handleAddItem}
+               onEdit={handleEditItem}
                closeForm={handleClose}
             />
          )}
@@ -281,6 +305,7 @@ const CollectionPage = () => {
                mode="edit"
                initialEditValues={valuesToEdit}
                onAdd={handleAddItem}
+               onEdit={handleEditItem}
                closeForm={handleClose}
             />
          )}
