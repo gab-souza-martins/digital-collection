@@ -1,33 +1,44 @@
 import React from "react";
 import Image from "next/image";
-import { FaTrash } from "react-icons/fa";
-import TagComponent from "./TagComponent";
 import Tag from "../Types/TagType";
+import TagComponent from "./TagComponent";
+import { FaStar, FaTrash } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
 
-interface CollectionCardProps {
+interface CardProps {
    id: string;
+   type: "coleção" | "item";
    title: string;
    description: string;
-   dateCreated: string;
+   dateAdded: string;
    image?: string;
+   isFav: boolean;
    tags: Tag[];
-   openRemoveConfirm: (id: string) => void;
+   favoriteEvent: (index: string) => void;
+   openRemoveConfirm: (index: string) => void;
    openEditForm: (index: string) => void;
-   filterTags: (collectionId: string, tagId: string) => void;
+   filterTags: (itemId: string, tagId: string) => void;
 }
 
-const CollectionCard: React.FC<CollectionCardProps> = ({
+const Card: React.FC<CardProps> = ({
    id,
+   type,
    title,
    description,
-   dateCreated,
+   dateAdded,
    image,
+   isFav,
    tags,
+   favoriteEvent,
    openRemoveConfirm,
    openEditForm,
    filterTags,
 }) => {
+   const handleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      favoriteEvent(id);
+   };
+
    const handleRemoveConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       openRemoveConfirm(id);
@@ -44,7 +55,23 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
    return (
       <div className="flex flex-col w-2xs min-h-[100%] justify-start border rounded-lg p-4 shadow-md">
-         <h2 className="text-2xl font-semibold break-all">{title}</h2>
+         <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold break-all">{title}</h2>
+
+            <label htmlFor="marcarFav" className="hidden">
+               Marcar como favorito
+            </label>
+            <button
+               onClick={handleFavorite}
+               aria-label="Marcar como favorito"
+               id="marcarFav"
+               className="cursor-pointer"
+            >
+               <FaStar
+                  className={isFav ? "text-yellow-400" : "text-gray-300"}
+               />
+            </button>
+         </div>
 
          {image && (
             <Image
@@ -76,16 +103,27 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
                ))}
             </div>
 
-            <p className="text-sm text-gray-500 mb-2">{dateCreated}</p>
+            <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
 
             <div className="text-lg text-gray-600 flex items-center gap-4">
-               <button aria-label="Editar coleção" onClick={handleOpenEdit}>
+               <label htmlFor="editar" className="hidden">
+                  Editar {type}
+               </label>
+               <button
+                  onClick={handleOpenEdit}
+                  aria-label="Botão de editar"
+                  id="editar"
+               >
                   <FaPenToSquare className="cursor-pointer hover:text-emerald-600 active:text-emerald-700 transition duration-75 ease-in-out" />
                </button>
 
+               <label htmlFor="remover" className="hidden">
+                  Remover {type}
+               </label>
                <button
-                  aria-label="Remover coleção"
                   onClick={handleRemoveConfirm}
+                  aria-label="Botão de remover"
+                  id="remover"
                >
                   <FaTrash className="cursor-pointer hover:text-rose-600 active:text-rose-700 transition duration-75 ease-in-out" />
                </button>
@@ -95,4 +133,4 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
    );
 };
 
-export default CollectionCard;
+export default Card;

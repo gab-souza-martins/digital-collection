@@ -1,6 +1,6 @@
 import Tag from "./TagType";
 
-interface Item {
+interface Card {
    id: string;
    title: string;
    description: string;
@@ -9,4 +9,4 @@ interface Item {
    isFav: boolean;
    tags: Tag[];
 }
-export default Item;
+export default Card;
