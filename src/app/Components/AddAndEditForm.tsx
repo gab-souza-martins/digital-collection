@@ -7,7 +7,7 @@ import Tag from "../Types/TagType";
 import { v4 as uuidv4 } from "uuid";
 import TagComponent from "./TagComponent";
 import InitialEditValues from "../Types/InitialEditValues";
-import { FaFloppyDisk } from "react-icons/fa6";
+import { FaFloppyDisk, FaX } from "react-icons/fa6";
 
 interface AddAndEditFormProps {
    mode: "add" | "edit";
@@ -152,9 +152,23 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                />
 
                <div className="border rounded-md p-2 flex flex-col gap-2">
-                  <p className="text-semibold text-neutral-500">
-                     Imagem (opcional)
-                  </p>
+                  <div className="flex items-center justify-between">
+                     <span className="text-semibold text-neutral-500">
+                        Imagem (opcional)
+                     </span>
+
+                     <button
+                        onClick={(e) => {
+                           e.preventDefault();
+                           setImageBase64("");
+                           setHasSelectedImage(false);
+                        }}
+                        aria-label="Remover imagem"
+                        className="cursor-pointer text-gray-600 hover:text-rose-600 active:text-rose-700 transition duration-75 ease-in-out"
+                     >
+                        <FaX />
+                     </button>
+                  </div>
 
                   <div className="flex justify-center items-center self-center">
                      {!hasSelectedImage && (

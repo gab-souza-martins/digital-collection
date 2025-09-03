@@ -101,14 +101,14 @@ const ItemCard: React.FC<ItemCardProps> = ({
 
                <div className="text-lg text-gray-600 flex items-center gap-4">
                   <button aria-label="Editar item" onClick={handleOpenEdit}>
-                     <FaPenToSquare className=" cursor-pointer hover:text-emerald-600 transition duration-75 ease-in-out" />
+                     <FaPenToSquare className="cursor-pointer hover:text-emerald-600 active:text-emerald-700 transition duration-75 ease-in-out" />
                   </button>
 
                   <button
                      aria-label="Remover item"
                      onClick={handleRemoveConfirm}
                   >
-                     <FaTrash className="cursor-pointer hover:text-rose-600 transition duration-75 ease-in-out" />
+                     <FaTrash className="cursor-pointer hover:text-rose-600 active:text-rose-700 transition duration-75 ease-in-out" />
                   </button>
                </div>
             </div>
