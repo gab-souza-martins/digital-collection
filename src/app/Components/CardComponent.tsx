@@ -5,7 +5,7 @@ import TagComponent from "./TagComponent";
 import { FaStar, FaTrash } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
 
-interface CardProps {
+interface CardComponentProps {
    id: string;
    type: "coleção" | "item";
    title: string;
@@ -20,7 +20,7 @@ interface CardProps {
    filterTags: (itemId: string, tagId: string) => void;
 }
 
-const Card: React.FC<CardProps> = ({
+const CardComponent: React.FC<CardComponentProps> = ({
    id,
    type,
    title,
@@ -133,4 +133,4 @@ const Card: React.FC<CardProps> = ({
    );
 };
 
-export default Card;
+export default CardComponent;

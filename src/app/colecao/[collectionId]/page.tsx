@@ -3,15 +3,14 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import OpenAddFormBtn from "@/app/Components/Botões/OpenAddFormBtn";
-import ItemCard from "@/app/Components/ItemCard";
+import CardComponent from "@/app/Components/CardComponent";
+import Card from "@/app/Types/CardType";
 import Searchbar from "@/app/Components/Searchbar";
 import Sort from "@/app/Components/Sort";
 import OpenRemoveAllBtn from "@/app/Components/Botões/OpenRemoveAllBtn";
 import ConfirmRemove from "@/app/Components/ConfirmRemove";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
-import Item from "@/app/Types/ItemType";
-import Collection from "@/app/Types/CollectionType";
 import Tag from "@/app/Types/TagType";
 import TagFilter from "@/app/Components/TagFilter";
 import AddAndEditForm from "@/app/Components/AddAndEditForm";
@@ -28,11 +27,11 @@ const CollectionPage = () => {
       const savedCollections: string | null =
          localStorage.getItem("collections");
 
-      const parsed: Collection[] = savedCollections
+      const parsed: Card[] = savedCollections
          ? JSON.parse(savedCollections)
          : [];
 
-      const currentCollection: Collection | undefined = parsed.find(
+      const currentCollection: Card | undefined = parsed.find(
          (c) => c.id === collectionId
       );
 
@@ -42,14 +41,14 @@ const CollectionPage = () => {
    }, [collectionId]);
 
    // *Itens totais e os visualizados
-   const [allItems, setAllItems] = React.useState<Item[]>([]);
-   const [viewedItems, setViewedItems] = React.useState<Item[]>([]);
+   const [allItems, setAllItems] = React.useState<Card[]>([]);
+   const [viewedItems, setViewedItems] = React.useState<Card[]>([]);
 
    React.useEffect(() => {
       const savedItems: string | null = localStorage.getItem(
          `items-${collectionId}`
       );
-      const parsed: Item[] = savedItems ? JSON.parse(savedItems) : [];
+      const parsed: Card[] = savedItems ? JSON.parse(savedItems) : [];
 
       setAllItems(parsed);
       setViewedItems(parsed);
@@ -98,7 +97,7 @@ const CollectionPage = () => {
    };
 
    const handleConfirmRemoveItem = () => {
-      const newItems: Item[] = allItems.filter((i) => i.id !== idToRemove);
+      const newItems: Card[] = allItems.filter((i) => i.id !== idToRemove);
       setAllItems(newItems);
       localStorage.setItem(`items-${collectionId}`, JSON.stringify(newItems));
    };
@@ -184,7 +183,7 @@ const CollectionPage = () => {
 
    // *Favoritos
    const handleFavoriteEvent = (id: string) => {
-      const newItems: Item[] = allItems.map((i) => {
+      const newItems: Card[] = allItems.map((i) => {
          if (i.id === id) {
             if (i.isFav) {
                i.isFav = false;
@@ -228,7 +227,7 @@ const CollectionPage = () => {
    const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
 
    React.useEffect(() => {
-      let filteredItems: Item[] = allItems;
+      let filteredItems: Card[] = allItems;
 
       // *Busca
       if (searchTerm.trim() !== "") {
@@ -362,9 +361,10 @@ const CollectionPage = () => {
          <main>
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
                {viewedItems.map((i) => (
-                  <ItemCard
+                  <CardComponent
                      key={i.id}
                      id={i.id}
+                     type="item"
                      title={i.title}
                      description={i.description}
                      dateAdded={i.dateAdded}

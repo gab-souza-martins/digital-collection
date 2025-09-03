@@ -6,9 +6,9 @@ import Searchbar from "./Components/Searchbar";
 import Sort from "./Components/Sort";
 import OpenAddFormBtn from "./Components/Botões/OpenAddFormBtn";
 import OpenRemoveAllBtn from "./Components/Botões/OpenRemoveAllBtn";
-import CollectionCard from "./Components/CollectionCard";
+import CardComponent from "./Components/CardComponent";
+import Card from "./Types/CardType";
 import Link from "next/link";
-import Collection from "./Types/CollectionType";
 import TagFilter from "./Components/TagFilter";
 import Tag from "./Types/TagType";
 import AddAndEditForm from "./Components/AddAndEditForm";
@@ -16,16 +16,14 @@ import InitialEditValues from "./Types/InitialEditValues";
 
 const Home = () => {
    // *Coleções totais e visualizadas
-   const [allCollections, setAllCollections] = React.useState<Collection[]>([]);
-   const [viewedCollections, setViewedCollections] = React.useState<
-      Collection[]
-   >([]);
+   const [allCollections, setAllCollections] = React.useState<Card[]>([]);
+   const [viewedCollections, setViewedCollections] = React.useState<Card[]>([]);
 
    React.useEffect(() => {
       const savedCollections: string | null =
          localStorage.getItem("collections");
 
-      const parsed: Collection[] = savedCollections
+      const parsed: Card[] = savedCollections
          ? JSON.parse(savedCollections)
          : [];
 
@@ -55,9 +53,10 @@ const Home = () => {
             description,
             tags,
             image,
-            dateCreated: `Criado 
+            dateAdded: `Adicionado 
             em ${new Date().toLocaleDateString("pt-BR")} 
             às ${new Date().toLocaleTimeString("pt-BR")}`,
+            isFav: false,
          },
       ];
       setAllCollections(newCollections);
@@ -164,6 +163,25 @@ const Home = () => {
       return Array.from(new Set(tagNames.sort((a, b) => a.localeCompare(b))));
    }, [allCollections]);
 
+   // *Favoritos
+   const handleFavoriteEvent = (id: string) => {
+      const newCollections: Card[] = allCollections.map((c) => {
+         if (c.id === id) {
+            if (c.isFav) {
+               c.isFav = false;
+            } else {
+               c.isFav = true;
+            }
+         }
+         return c;
+      });
+
+      if (newCollections) {
+         setAllCollections(newCollections);
+         localStorage.setItem("collections", JSON.stringify(newCollections));
+      }
+   };
+
    // *Ordenação
    const [sortValue, setSortValue] = React.useState<string>("date");
    const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
@@ -188,7 +206,7 @@ const Home = () => {
    const [imageFilter, setImageFilter] = React.useState<boolean>(false);
 
    React.useEffect(() => {
-      let filteredCollections: Collection[] = allCollections;
+      let filteredCollections: Card[] = allCollections;
 
       // *Busca
       if (searchTerm.trim() !== "") {
@@ -234,6 +252,12 @@ const Home = () => {
          default:
             break;
       }
+
+      // *Ordenação de favoritos
+      filteredCollections = [...filteredCollections].sort(
+         ({ isFav: favA = false }, { isFav: favB = false }) =>
+            Number(favB) - Number(favA)
+      );
 
       // *
       setViewedCollections(filteredCollections);
@@ -308,13 +332,16 @@ const Home = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
                {viewedCollections.map((c) => (
                   <Link key={c.id} href={`colecao/${c.id}/`}>
-                     <CollectionCard
+                     <CardComponent
                         id={c.id}
+                        type="coleção"
                         title={c.title}
                         description={c.description}
-                        dateCreated={c.dateCreated}
+                        dateAdded={c.dateAdded}
                         image={c.image}
+                        isFav={c.isFav}
                         tags={c.tags}
+                        favoriteEvent={handleFavoriteEvent}
                         openRemoveConfirm={handleOpenConfirmRemoveCollection}
                         openEditForm={handleOpenEditCollection}
                         filterTags={handleRemoveTag}
