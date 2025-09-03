@@ -6,6 +6,7 @@ import { FaStar, FaTrash } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
+   arrayMove,
    rectSortingStrategy,
    SortableContext,
    useSortable,
@@ -24,7 +25,8 @@ interface CardComponentProps {
    favoriteEvent: (index: string) => void;
    openRemoveConfirm: (index: string) => void;
    openEditForm: (index: string) => void;
-   filterTags: (itemId: string, tagId: string) => void;
+   filterTags: (id: string, tagId: string) => void;
+   reorderTags: (id: string, newTags: Tag[]) => void;
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({
@@ -40,6 +42,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
    openRemoveConfirm,
    openEditForm,
    filterTags,
+   reorderTags,
 }) => {
    const handleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -56,11 +59,13 @@ const CardComponent: React.FC<CardComponentProps> = ({
       openEditForm(id);
    };
 
+   // *Tags
+
    const handleFilterTags = (tagId: string) => {
       filterTags(id, tagId);
    };
 
-   const SortableTag = ({ t }) => {
+   const SortableTag = ({ t }: { t: Tag }) => {
       const { attributes, listeners, setNodeRef, transform, transition } =
          useSortable({ id: t.id });
 
@@ -120,9 +125,27 @@ const CardComponent: React.FC<CardComponentProps> = ({
 
          <div className="mt-auto">
             <div className="mb-2 flex items-center flex-wrap gap-2">
-               <DndContext collisionDetection={closestCenter}>
+               <DndContext
+                  collisionDetection={closestCenter}
+                  onDragEnd={({ active, over }) => {
+                     if (over !== null) {
+                        if (active.id === over.id) {
+                           return;
+                        }
+                        const oldIndex = tags.findIndex(
+                           (t) => t.id === active.id
+                        );
+                        const newIndex = tags.findIndex(
+                           (t) => t.id === over.id
+                        );
+                        const reordered = arrayMove(tags, oldIndex, newIndex);
+
+                        reorderTags(id, reordered);
+                     }
+                  }}
+               >
                   <SortableContext items={tags} strategy={rectSortingStrategy}>
-                     {(tags ?? []).map((t) => (
+                     {tags.map((t) => (
                         <SortableTag key={t.id} t={t} />
                      ))}
                   </SortableContext>

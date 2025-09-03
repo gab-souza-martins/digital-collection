@@ -157,6 +157,18 @@ const Home = () => {
       localStorage.setItem("collections", JSON.stringify(newCollections));
    };
 
+   // *Reordenar tags
+   const handleReorderTags = (id: string, newTags: Tag[]) => {
+      const newCollections = allCollections.map((c) => {
+         if (c.id === id) {
+            return { ...c, tags: newTags };
+         }
+         return c;
+      });
+      setAllCollections(newCollections);
+      localStorage.setItem("collections", JSON.stringify(newCollections));
+   };
+
    // *useMemo para filtragem de tags
    const uniqueTags = React.useMemo(() => {
       const tagNames = allCollections.flatMap((c) => c.tags.map((t) => t.name));
@@ -345,6 +357,7 @@ const Home = () => {
                         openRemoveConfirm={handleOpenConfirmRemoveCollection}
                         openEditForm={handleOpenEditCollection}
                         filterTags={handleRemoveTag}
+                        reorderTags={handleReorderTags}
                      />
                   </Link>
                ))}
