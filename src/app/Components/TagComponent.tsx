@@ -7,6 +7,7 @@ interface TagComponentProps {
    bgColor: string;
    textColor: string;
    removeTag: (index: string) => void;
+   dragListeners?: React.HTMLAttributes<HTMLSpanElement>;
 }
 
 const TagComponent: React.FC<TagComponentProps> = ({
@@ -15,9 +16,11 @@ const TagComponent: React.FC<TagComponentProps> = ({
    bgColor,
    textColor,
    removeTag,
+   dragListeners,
 }) => {
    const handleRemoveTag = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
+      e.stopPropagation();
       removeTag(id);
    };
 
@@ -26,7 +29,11 @@ const TagComponent: React.FC<TagComponentProps> = ({
          className="flex items-center gap-0 border border-dashed rounded-md shadow-md"
          style={{ backgroundColor: bgColor, color: textColor }}
       >
-         <span onClick={(e) => e.preventDefault()} className="break-all px-2">
+         <span
+            onClick={(e) => e.stopPropagation()}
+            {...(dragListeners || {})}
+            className="break-all px-2"
+         >
             {name}
          </span>
 

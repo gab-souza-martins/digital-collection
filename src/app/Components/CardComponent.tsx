@@ -75,13 +75,14 @@ const CardComponent: React.FC<CardComponentProps> = ({
       };
 
       return (
-         <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
+         <div ref={setNodeRef} style={styles} {...attributes}>
             <TagComponent
                id={t.id}
                name={t.name}
                bgColor={t.bgColor}
                textColor={t.textColor}
                removeTag={() => handleFilterTags(t.id)}
+               dragListeners={listeners}
             />
          </div>
       );
@@ -123,7 +124,13 @@ const CardComponent: React.FC<CardComponentProps> = ({
             {description}
          </p>
 
-         <div className="mt-auto">
+         <div
+            className="mt-auto"
+            onClick={(e) => {
+               e.preventDefault();
+               e.stopPropagation();
+            }}
+         >
             <div className="mb-2 flex items-center flex-wrap gap-2">
                <DndContext
                   collisionDetection={closestCenter}
