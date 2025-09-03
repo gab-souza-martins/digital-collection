@@ -145,7 +145,10 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
             <form className="flex flex-col gap-3">
                <input
                   onChange={(e) => setName(e.target.value)}
-                  className="border border-gray-800 rounded-md p-2"
+                  aria-label="Nome"
+                  className={`border ${
+                     error ? "border-rose-600 text-rose-600" : "border-gray-800"
+                  } rounded-md p-2`}
                   type="text"
                   value={name}
                   placeholder="Nome"
@@ -208,7 +211,10 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
 
                <textarea
                   onChange={(e) => setDescription(e.target.value)}
-                  className="border border-gray-800 rounded-md p-2"
+                  aria-label="Descrição"
+                  className={`border ${
+                     error ? "border-rose-600 text-rose-600" : "border-gray-800"
+                  } rounded-md p-2`}
                   value={description}
                   placeholder="Descrição"
                />
@@ -266,7 +272,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                </div>
 
                {error && (
-                  <p className="text-sm text-rose-700">
+                  <p className="text-sm text-rose-600">
                      Preencha todos os campos obrigatórios.
                   </p>
                )}
