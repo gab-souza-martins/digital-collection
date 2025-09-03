@@ -4,6 +4,13 @@ import Tag from "../Types/TagType";
 import TagComponent from "./TagComponent";
 import { FaStar, FaTrash } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+   rectSortingStrategy,
+   SortableContext,
+   useSortable,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface CardComponentProps {
    id: string;
@@ -53,6 +60,28 @@ const CardComponent: React.FC<CardComponentProps> = ({
       filterTags(id, tagId);
    };
 
+   const SortableTag = ({ t }) => {
+      const { attributes, listeners, setNodeRef, transform, transition } =
+         useSortable({ id: t.id });
+
+      const styles = {
+         transform: CSS.Transform.toString(transform),
+         transition,
+      };
+
+      return (
+         <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
+            <TagComponent
+               id={t.id}
+               name={t.name}
+               bgColor={t.bgColor}
+               textColor={t.textColor}
+               removeTag={() => handleFilterTags(t.id)}
+            />
+         </div>
+      );
+   };
+
    return (
       <div className="flex flex-col w-2xs min-h-[100%] justify-start border rounded-lg p-4 shadow-md">
          <div className="flex justify-between items-center">
@@ -91,16 +120,13 @@ const CardComponent: React.FC<CardComponentProps> = ({
 
          <div className="mt-auto">
             <div className="mb-2 flex items-center flex-wrap gap-2">
-               {(tags ?? []).map((t) => (
-                  <TagComponent
-                     key={t.id}
-                     id={t.id}
-                     name={t.name}
-                     bgColor={t.bgColor}
-                     textColor={t.textColor}
-                     removeTag={() => handleFilterTags(t.id)}
-                  />
-               ))}
+               <DndContext collisionDetection={closestCenter}>
+                  <SortableContext items={tags} strategy={rectSortingStrategy}>
+                     {(tags ?? []).map((t) => (
+                        <SortableTag key={t.id} t={t} />
+                     ))}
+                  </SortableContext>
+               </DndContext>
             </div>
 
             <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
