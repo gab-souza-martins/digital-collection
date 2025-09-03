@@ -16,7 +16,8 @@ const TagComponent: React.FC<TagComponentProps> = ({
    textColor,
    removeTag,
 }) => {
-   const handleRemoveTag = () => {
+   const handleRemoveTag = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
       removeTag(id);
    };
 

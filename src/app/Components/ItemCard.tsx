@@ -32,15 +32,18 @@ const ItemCard: React.FC<ItemCardProps> = ({
    openEditForm,
    filterTags,
 }) => {
-   const handleFavorite = () => {
+   const handleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
       favoriteEvent(id);
    };
 
-   const handleRemoveConfirm = () => {
+   const handleRemoveConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
       openRemoveConfirm(id);
    };
 
-   const handleOpenEdit = () => {
+   const handleOpenEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
       openEditForm(id);
    };
 
