@@ -348,7 +348,11 @@ const Home = () => {
          <main>
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
                {viewedCollections.map((c) => (
-                  <Link key={c.id} href={`colecao/${c.id}/`}>
+                  <Link
+                     key={c.id}
+                     href={`colecao/${c.id}/`}
+                     aria-label={c.title}
+                  >
                      <CardComponent
                         id={c.id}
                         type="coleção"
