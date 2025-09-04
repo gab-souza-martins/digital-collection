@@ -26,7 +26,7 @@ const TagFilter: FC<TagFilterProps> = ({ tagNames, selectedTags, onCheck }) => {
       }
    };
    return (
-      <>
+      <div>
          <button
             onClick={handleDropdown}
             className="cursor-pointer rounded-md flex items-center gap-1 py-1 px-2 text-emerald-600 border-2 border-emerald-600
@@ -61,7 +61,7 @@ const TagFilter: FC<TagFilterProps> = ({ tagNames, selectedTags, onCheck }) => {
                ))}
             </ul>
          )}
-      </>
+      </div>
    );
 };
 export default TagFilter;
