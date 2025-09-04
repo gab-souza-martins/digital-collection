@@ -129,6 +129,8 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
       e.preventDefault();
 
       if (name.trim() && description.trim()) {
+         setNameError(false);
+         setDescriptionError(false);
          if (mode === "edit") {
             onEdit(name, description, itemTags, imageBase64);
          } else {
@@ -156,7 +158,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
       if (focusRef.current) {
          focusRef.current.focus();
       }
-   });
+   }, []);
 
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
@@ -314,12 +316,8 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                   </div>
                </div>
 
-               {(nameError || description) && (
-                  <p
-                     className="text-sm text-rose-500"
-                     role="alert"
-                     aria-live="assertive"
-                  >
+               {(nameError || descriptionError) && (
+                  <p className="text-sm text-rose-500" role="alert">
                      Preencha todos os campos obrigatórios.
                   </p>
                )}
