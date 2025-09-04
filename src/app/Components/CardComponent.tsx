@@ -159,9 +159,17 @@ const CardComponent: React.FC<CardComponentProps> = ({
                </DndContext>
             </div>
 
-            <p className="text-sm text-gray-500 mb-2">{dateAdded}</p>
+            <p
+               className="text-sm mb-2"
+               style={{ color: "var(--light-foreground)" }}
+            >
+               {dateAdded}
+            </p>
 
-            <div className="text-lg text-gray-600 flex items-center gap-4">
+            <div
+               className="text-lg flex items-center gap-4"
+               style={{ color: "var(--light-foreground)" }}
+            >
                <label htmlFor="editar" className="hidden">
                   Editar {type}
                </label>

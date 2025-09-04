@@ -38,10 +38,16 @@ const TagFilter: FC<TagFilterProps> = ({ tagNames, selectedTags, onCheck }) => {
          </button>
 
          {isDropdownOpen && (
-            <ul className="absolute block bg-white border rounded-sm shadow-lg p-2 max-w-50 max-h-48 overflow-auto">
+            <ul
+               className="absolute block border rounded-sm shadow-lg p-2 max-w-50 max-h-48 overflow-auto"
+               style={{
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--light-foreground)",
+               }}
+            >
                {tagNames.map((t) => (
                   <li key={t} className="mb-1">
-                     <label className="cursor-pointer break-all" htmlFor={t}>
+                     <label htmlFor={t} className="cursor-pointer break-all">
                         <input
                            onChange={() => handleCheck(t)}
                            checked={selectedTags.includes(t)}

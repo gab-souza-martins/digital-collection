@@ -18,7 +18,8 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
                   textSearch(e.target.value);
                }}
                type="text"
-               className="border border-gray-800 rounded-md py-1 px-2 w-40 2xs:w-59"
+               className="border rounded-md py-1 px-2 w-40 2xs:w-59"
+               style={{ borderColor: "var(--light-foreground)" }}
                value={textTerm}
                placeholder="Pesquisar itens"
                aria-label="Pesquisar itens"
@@ -27,7 +28,8 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
             <div className="flex items-center gap-1">
                <label
                   htmlFor="imageFilter"
-                  className="cursor-pointer text-gray-700"
+                  className="cursor-pointer"
+                  style={{ color: "var(--light-foreground)" }}
                >
                   Tem imagem
                </label>
@@ -35,7 +37,8 @@ const Searchbar: React.FC<SearchbarProps> = ({ textSearch, imageFilter }) => {
                   onChange={(e) => imageFilter(e.target.checked)}
                   type="checkbox"
                   id="imageFilter"
-                  className="cursor-pointer border border-gray-800 rounded-md w-5 h-5"
+                  className="cursor-pointer border rounded-md w-5 h-5"
+                  style={{ borderColor: "var(--light-foreground)" }}
                   aria-label="Filtrar por imagem"
                />
             </div>

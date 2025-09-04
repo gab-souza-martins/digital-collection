@@ -141,20 +141,33 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
 
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
-         <div className="bg-white border-1 border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96">
+         <div
+            className="border border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96"
+            style={{
+               backgroundColor: "var(--background)",
+            }}
+         >
             <form className="flex flex-col gap-3">
                <input
                   onChange={(e) => setName(e.target.value)}
                   aria-label="Nome"
                   className={`border ${
-                     error ? "border-rose-600 text-rose-600" : "border-gray-800"
+                     error ? "border-rose-600 text-rose-600" : ""
                   } rounded-md p-2`}
+                  style={{
+                     borderColor: "var(--light-foreground)",
+                  }}
                   type="text"
                   value={name}
                   placeholder="Nome"
                />
 
-               <div className="border rounded-md p-2 flex flex-col gap-2">
+               <div
+                  className="border rounded-md p-2 flex flex-col gap-2"
+                  style={{
+                     borderColor: "var(--light-foreground)",
+                  }}
+               >
                   <div className="flex items-center justify-between">
                      <span className="text-semibold text-neutral-500">
                         Imagem (opcional)
@@ -167,7 +180,8 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                            setHasSelectedImage(false);
                         }}
                         aria-label="Remover imagem"
-                        className="cursor-pointer text-gray-600 hover:text-rose-600 active:text-rose-700 transition duration-75 ease-in-out"
+                        className="cursor-pointer text-gray-400 hover:text-rose-600 active:text-rose-700 
+                                   transition duration-100 ease-in-out"
                      >
                         <FaX />
                      </button>
@@ -175,7 +189,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
 
                   <div className="flex justify-center items-center self-center">
                      {!hasSelectedImage && (
-                        <div className="flex justify-center items-center gap-2 bg-gray-600/80 rounded-md w-50 h-50 self-center">
+                        <div className="flex justify-center items-center gap-2 bg-gray-500 rounded-md w-50 h-50 self-center">
                            <FaFileImage
                               className="text-white"
                               style={{ fontSize: "2em" }}
@@ -213,13 +227,21 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                   onChange={(e) => setDescription(e.target.value)}
                   aria-label="Descrição"
                   className={`border ${
-                     error ? "border-rose-600 text-rose-600" : "border-gray-800"
+                     error ? "border-rose-600 text-rose-600" : ""
                   } rounded-md p-2`}
+                  style={{
+                     borderColor: "var(--light-foreground)",
+                  }}
                   value={description}
                   placeholder="Descrição"
                />
 
-               <div className="flex flex-col gap-1 border rounded-md p-2">
+               <div
+                  className="flex flex-col gap-1 border rounded-md p-2"
+                  style={{
+                     borderColor: "var(--light-foreground)",
+                  }}
+               >
                   <p className="text-semibold text-neutral-500">
                      Etiquetas (opcional)
                   </p>
@@ -231,7 +253,10 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                            e.key === "Enter" && (e.preventDefault(), addTag(e))
                         }
                         type="text"
-                        className="border border-gray-800 rounded-md p-2 min-w-6/10 sm:min-w-73/100"
+                        className="border rounded-md p-2 min-w-6/10 sm:min-w-73/100"
+                        style={{
+                           borderColor: "var(--light-foreground)",
+                        }}
                         value={tagInput}
                         placeholder="Etiqueta"
                      />

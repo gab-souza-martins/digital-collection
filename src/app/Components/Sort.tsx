@@ -24,7 +24,8 @@ const Sort: React.FC<SortProps> = ({ sort }) => {
                      }}
                      value={selectedSort}
                      id="sortSelect"
-                     className="border border-gray-600/50 rounded-md py-1 px-2"
+                     className="border rounded-md py-1 px-2"
+                     style={{ borderColor: "var(--light-foreground)" }}
                   >
                      <option value="date">primeiro adicionado</option>
                      <option value="date-reverse">último adicionado</option>
