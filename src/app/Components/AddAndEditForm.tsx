@@ -163,6 +163,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                <input
                   onChange={(e) => setName(e.target.value)}
                   aria-label="Nome"
+                  aria-required={true}
                   className={`border required-input ${
                      nameError ? "not-inputted" : ""
                   } rounded-md p-2`}
@@ -235,6 +236,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                <textarea
                   onChange={(e) => setDescription(e.target.value)}
                   aria-label="Descrição"
+                  aria-required={true}
                   className={`border required-input ${
                      descriptionError ? "not-inputted" : ""
                   } rounded-md p-2`}
