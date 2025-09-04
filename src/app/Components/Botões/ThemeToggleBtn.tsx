@@ -37,6 +37,7 @@ const ThemeToggleBtn = () => {
       >
          <span className="hidden">Mudar tema</span>
          <input
+            aria-label="Mudar tema da página"
             type="checkbox"
             id="themeToggle"
             className="absolute inset-0 appearance-none rounded-4xl

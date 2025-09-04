@@ -4,12 +4,16 @@
    --background: #ffffff;
    --foreground: #171717;
    --light-foreground: var(--color-gray-700);
+   --emerald-text: var(--color-emerald-700);
+   --rose-text: var(--color-red-600);
 }
 
 [data-theme="dark"] {
    --background: #171717;
    --foreground: #ffffff;
    --light-foreground: var(--color-gray-400);
+   --emerald-text: var(--color-emerald-600);
+   --rose-text: var(--color-rose-500);
 }
 
 @theme {
@@ -40,5 +44,19 @@ body {
 }
 .required-input.not-inputted {
    border-color: var(--color-rose-600);
-   color: var(--color-rose-600);
+   color: var(--rose-text);
+}
+
+.emerald-text {
+   color: var(--emerald-text);
+}
+.emerald-text:hover {
+   color: white;
+}
+
+.rose-text {
+   color: var(--rose-text);
+}
+.rose-text:hover {
+   color: white;
 }

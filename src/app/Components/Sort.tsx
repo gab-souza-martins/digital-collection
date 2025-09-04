@@ -37,9 +37,9 @@ const Sort: React.FC<SortProps> = ({ sort }) => {
          <button
             onClick={handleSort}
             type="submit"
-            className="cursor-pointer rounded-md flex items-center gap-1 py-1 px-2 text-emerald-600 border-2 border-emerald-600
-                          shadow-sm hover:bg-emerald-600 hover:text-white hover:shadow-xl transition duration-75 ease-in-out
-                          active:bg-emerald-700 active:border-emerald-700 active:shadow-md"
+            className="cursor-pointer rounded-md flex items-center gap-1 py-1 px-2 border-2 border-emerald-600
+                       shadow-sm emerald-text hover:bg-emerald-600 hover:shadow-xl 
+                       transition duration-75 ease-in-out active:bg-emerald-700 active:border-emerald-700 active:shadow-md"
          >
             <FaSort />
             Ordenar
