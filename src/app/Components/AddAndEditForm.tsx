@@ -119,8 +119,10 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
    const [hasSelectedImage, setHasSelectedImage] =
       React.useState<boolean>(false);
 
-   // *Handler de erro
-   const [error, setError] = React.useState<boolean>(false);
+   // *Handlers de erro
+   const [nameError, setNameError] = React.useState<boolean>(false);
+   const [descriptionError, setDescriptionError] =
+      React.useState<boolean>(false);
 
    // *Handler de submit
    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -134,7 +136,16 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
          }
          closeForm();
       } else {
-         setError(true);
+         if (!name.trim()) {
+            setNameError(true);
+         } else {
+            setNameError(false);
+         }
+         if (!description.trim()) {
+            setDescriptionError(true);
+         } else {
+            setDescriptionError(false);
+         }
          return;
       }
    };
@@ -153,7 +164,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                   onChange={(e) => setName(e.target.value)}
                   aria-label="Nome"
                   className={`border required-input ${
-                     error ? "not-inputted" : ""
+                     nameError ? "not-inputted" : ""
                   } rounded-md p-2`}
                   type="text"
                   value={name}
@@ -225,7 +236,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                   onChange={(e) => setDescription(e.target.value)}
                   aria-label="Descrição"
                   className={`border required-input ${
-                     error ? "not-inputted" : ""
+                     descriptionError ? "not-inputted" : ""
                   } rounded-md p-2`}
                   value={description}
                   placeholder="Descrição"
@@ -291,7 +302,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                   </div>
                </div>
 
-               {error && (
+               {(nameError || description) && (
                   <p className="text-sm text-rose-500">
                      Preencha todos os campos obrigatórios.
                   </p>
