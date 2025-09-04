@@ -19,7 +19,8 @@ const OpenFormBtn: React.FC<OpenFormBtnProps> = ({ openForm }) => {
                        text-xl xs:text-2xl sm:text-3xl
                       text-white bg-emerald-600 shadow-sm
                       hover:bg-emerald-700 hover:shadow-xl transition duration-75 ease-in-out
-                      active:bg-emerald-800 active:shadow-md"
+                      active:bg-emerald-800 active:shadow-md
+                      focus:outline-3 focus:outline-emerald-600 focus:outline-offset-4"
          aria-label="Adicionar"
       >
          <FaPlus />
