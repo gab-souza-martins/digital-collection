@@ -152,12 +152,9 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                <input
                   onChange={(e) => setName(e.target.value)}
                   aria-label="Nome"
-                  className={`border ${
-                     error ? "border-rose-600 text-rose-600" : ""
+                  className={`border required-input ${
+                     error ? "not-inputted" : ""
                   } rounded-md p-2`}
-                  style={{
-                     borderColor: "var(--light-foreground)",
-                  }}
                   type="text"
                   value={name}
                   placeholder="Nome"
@@ -227,12 +224,9 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                <textarea
                   onChange={(e) => setDescription(e.target.value)}
                   aria-label="Descrição"
-                  className={`border ${
-                     error ? "border-rose-600 text-rose-600" : ""
+                  className={`border required-input ${
+                     error ? "not-inputted" : ""
                   } rounded-md p-2`}
-                  style={{
-                     borderColor: "var(--light-foreground)",
-                  }}
                   value={description}
                   placeholder="Descrição"
                />

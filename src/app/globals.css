@@ -30,3 +30,11 @@ body {
    color: var(--foreground);
    font-family: Arial, Helvetica, sans-serif;
 }
+
+.required-input {
+   border-color: var(--light-foreground);
+}
+.required-input.not-inputted {
+   border-color: var(--color-rose-600);
+   color: var(--color-rose-600);
+}
