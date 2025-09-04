@@ -10,6 +10,7 @@ const ThemeToggleBtn = () => {
       const parsed = savedTheme ? JSON.parse(savedTheme) : "light";
 
       if (parsed) {
+         setTheme(parsed);
          document.querySelector("body")?.setAttribute("data-theme", parsed);
       }
    }, []);
@@ -39,7 +40,7 @@ const ThemeToggleBtn = () => {
             type="checkbox"
             id="themeToggle"
             className="size-0 opacity-0"
-            defaultChecked={theme === "dark"}
+            checked={theme === "dark"}
             onChange={handleToggle}
          />
          <div
