@@ -16,6 +16,7 @@ import TagFilter from "@/app/Components/TagFilter";
 import AddAndEditForm from "@/app/Components/AddAndEditForm";
 import InitialEditValues from "@/app/Types/InitialEditValues";
 import Footer from "@/app/Components/Footer";
+import ThemeToggleBtn from "@/app/Components/Botões/ThemeToggleBtn";
 
 const CollectionPage = () => {
    const params = useParams();
@@ -339,14 +340,18 @@ const CollectionPage = () => {
          )}
 
          <header>
-            <div className="flex items-center gap-2">
-               <Link
-                  href={"../../"}
-                  className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
-               >
-                  <FaArrowLeft />
-               </Link>
-               <h1 className="text-3xl font-bold">{collectionName}</h1>
+            <div className="flex items-center justify-between">
+               <div className="flex items-center gap-2 max-w-75/100">
+                  <Link
+                     href={"../../"}
+                     className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
+                  >
+                     <FaArrowLeft />
+                  </Link>
+                  <h1 className="text-3xl font-bold">{collectionName}</h1>
+               </div>
+
+               <ThemeToggleBtn />
             </div>
 
             <div className="my-5 flex flex-wrap gap-4 lg:gap-10">
