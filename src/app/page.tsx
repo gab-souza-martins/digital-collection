@@ -14,6 +14,7 @@ import Tag from "./Types/TagType";
 import AddAndEditForm from "./Components/AddAndEditForm";
 import InitialEditValues from "./Types/InitialEditValues";
 import Footer from "./Components/Footer";
+import ThemeToggleBtn from "./Components/Botões/ThemeToggleBtn";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -321,7 +322,11 @@ const Home = () => {
          )}
 
          <header>
-            <h1 className="text-3xl font-bold">Coleção digital</h1>
+            <div className="flex items-center justify-between">
+               <h1 className="text-3xl font-bold">Coleção digital</h1>
+
+               <ThemeToggleBtn />
+            </div>
 
             <div className="my-5 flex flex-wrap gap-4 lg:gap-10">
                <Searchbar
