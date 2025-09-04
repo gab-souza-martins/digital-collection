@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const ThemeToggleBtn = () => {
    const [toggled, setToggled] = React.useState<boolean>(false);
@@ -9,7 +10,12 @@ const ThemeToggleBtn = () => {
    };
 
    return (
-      <label htmlFor="themeToggle" className="relative inline-block w-16 h-8">
+      <label
+         htmlFor="themeToggle"
+         className={`relative cursor-pointer inline-block w-16 h-8 rounded-4xl transition duration-200 ease-in-out ${
+            toggled ? "bg-gray-800" : "bg-gray-500"
+         }`}
+      >
          <span className="hidden">Mudar tema</span>
          <input
             type="checkbox"
@@ -18,15 +24,14 @@ const ThemeToggleBtn = () => {
             defaultChecked={toggled}
             onClick={handleToggle}
          />
-         <span
-            className={`cursor-pointer absolute top-0 left-0 bottom-0 right-0 rounded-4xl transition duration-200
-                       before:absolute before:size-6 before:top-1 before:left-1 before:bg-white before:rounded-full 
-                       before:transition before:duration-300 ${
-                          toggled
-                             ? "bg-emerald-500 before:translate-x-8"
-                             : "bg-gray-500"
-                       }`}
-         ></span>
+         <div
+            className={`cursor-pointer absolute flex items-center justify-center top-1 left-1 size-6 rounded-full 
+                transition duration-300 ease-in-out ${
+                   toggled ? "translate-x-8 bg-gray-600 text-white" : "bg-white"
+                }`}
+         >
+            {toggled ? <FaMoon /> : <FaSun />}
+         </div>
       </label>
    );
 };
