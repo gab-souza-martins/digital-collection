@@ -346,6 +346,7 @@ const CollectionPage = () => {
                <div className="flex items-center gap-2 max-w-75/100">
                   <Link
                      href={"../../"}
+                     aria-label="Voltar para as coleções"
                      className="text-lg text-center p-2 rounded-full hover:bg-black hover:text-white transition duration-100 ease-in-out"
                   >
                      <FaArrowLeft />
@@ -374,11 +375,11 @@ const CollectionPage = () => {
 
          <hr className="mb-5 text-gray-400" />
 
-         <p className="text-gray-600 mb-3">
-            Tamanho da coleção: {allItems.length}
-         </p>
-
          <main>
+            <p className="mb-3" style={{ color: "var(--light-foreground)" }}>
+               Tamanho da coleção: {allItems.length}
+            </p>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 ml:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
                {viewedItems.map((i) => (
                   <CardComponent
