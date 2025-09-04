@@ -21,8 +21,14 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
 
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
-         <div className="bg-white border-1 border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96">
-            <p className="text-rose-700">{text} Deseja prosseguir?</p>
+         <div
+            className="border p-6 rounded-lg shadow-lg w-70 sm:w-96"
+            style={{
+               backgroundColor: "var(--background)",
+               borderColor: "var(--light-foreground)",
+            }}
+         >
+            <p className="text-rose-500">{text} Deseja prosseguir?</p>
             <br />
 
             <div className="flex gap-2">

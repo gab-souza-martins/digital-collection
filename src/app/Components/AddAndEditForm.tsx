@@ -142,9 +142,10 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
          <div
-            className="border border-gray-600 p-6 rounded-lg shadow-lg w-70 sm:w-96"
+            className="border p-6 rounded-lg shadow-lg w-70 sm:w-96"
             style={{
                backgroundColor: "var(--background)",
+               borderColor: "var(--light-foreground)",
             }}
          >
             <form className="flex flex-col gap-3">
@@ -297,7 +298,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                </div>
 
                {error && (
-                  <p className="text-sm text-rose-600">
+                  <p className="text-sm text-rose-500">
                      Preencha todos os campos obrigatórios.
                   </p>
                )}
