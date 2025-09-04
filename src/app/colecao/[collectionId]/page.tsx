@@ -304,40 +304,42 @@ const CollectionPage = () => {
    //
    return (
       <div className="p-4 md:px-6 lg:px-8">
-         {isAddItemFormOpen && (
-            <AddAndEditForm
-               mode="add"
-               onAdd={handleAddItem}
-               onEdit={handleEditItem}
-               closeForm={handleClose}
-            />
-         )}
+         <section aria-label="Janela">
+            {isAddItemFormOpen && (
+               <AddAndEditForm
+                  mode="add"
+                  onAdd={handleAddItem}
+                  onEdit={handleEditItem}
+                  closeForm={handleClose}
+               />
+            )}
 
-         {isEditItemOpen && (
-            <AddAndEditForm
-               mode="edit"
-               initialEditValues={valuesToEdit}
-               onAdd={handleAddItem}
-               onEdit={handleEditItem}
-               closeForm={handleClose}
-            />
-         )}
+            {isEditItemOpen && (
+               <AddAndEditForm
+                  mode="edit"
+                  initialEditValues={valuesToEdit}
+                  onAdd={handleAddItem}
+                  onEdit={handleEditItem}
+                  closeForm={handleClose}
+               />
+            )}
 
-         {isConfirmRemoveItemOpen && (
-            <ConfirmRemove
-               text="Remover um item é uma ação irreversível."
-               confirmRemove={handleConfirmRemoveItem}
-               closeRemove={handleClose}
-            />
-         )}
+            {isConfirmRemoveItemOpen && (
+               <ConfirmRemove
+                  text="Remover um item é uma ação irreversível."
+                  confirmRemove={handleConfirmRemoveItem}
+                  closeRemove={handleClose}
+               />
+            )}
 
-         {isConfirmEmptyCollectionOpen && (
-            <ConfirmRemove
-               text="Esvaziar a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
-               confirmRemove={handleConfirmEmptyCollection}
-               closeRemove={handleClose}
-            />
-         )}
+            {isConfirmEmptyCollectionOpen && (
+               <ConfirmRemove
+                  text="Esvaziar a coleção é uma ação irreversível. Todos os itens dentro serão perdidos."
+                  confirmRemove={handleConfirmEmptyCollection}
+                  closeRemove={handleClose}
+               />
+            )}
+         </section>
 
          <header>
             <div className="flex items-center justify-between">

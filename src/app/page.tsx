@@ -286,37 +286,39 @@ const Home = () => {
 
    return (
       <div className="p-4 md:px-6 lg:px-8">
-         {isAddCollectionFormOpen && (
-            <AddAndEditForm
-               mode="add"
-               onAdd={handleAddCollection}
-               onEdit={handleEditCollection}
-               closeForm={handleClose}
-            />
-         )}
-         {isEditCollectionOpen && (
-            <AddAndEditForm
-               mode="edit"
-               initialEditValues={valuesToEdit}
-               onAdd={handleAddCollection}
-               onEdit={handleEditCollection}
-               closeForm={handleClose}
-            />
-         )}
-         {isConfirmRemoveCollectionOpen && (
-            <ConfirmRemove
-               text="Remover uma coleção é uma ação irreversível."
-               confirmRemove={handleConfirmRemoveCollection}
-               closeRemove={handleClose}
-            />
-         )}
-         {isConfirmRemoveAllCollectionsOpen && (
-            <ConfirmRemove
-               text="Remover as coleções é uma ação irreversível. Todos os itens serão perdidos."
-               confirmRemove={handleConfirmRemoveAllCollections}
-               closeRemove={handleClose}
-            />
-         )}
+         <section aria-label="Janela">
+            {isAddCollectionFormOpen && (
+               <AddAndEditForm
+                  mode="add"
+                  onAdd={handleAddCollection}
+                  onEdit={handleEditCollection}
+                  closeForm={handleClose}
+               />
+            )}
+            {isEditCollectionOpen && (
+               <AddAndEditForm
+                  mode="edit"
+                  initialEditValues={valuesToEdit}
+                  onAdd={handleAddCollection}
+                  onEdit={handleEditCollection}
+                  closeForm={handleClose}
+               />
+            )}
+            {isConfirmRemoveCollectionOpen && (
+               <ConfirmRemove
+                  text="Remover uma coleção é uma ação irreversível."
+                  confirmRemove={handleConfirmRemoveCollection}
+                  closeRemove={handleClose}
+               />
+            )}
+            {isConfirmRemoveAllCollectionsOpen && (
+               <ConfirmRemove
+                  text="Remover as coleções é uma ação irreversível. Todos os itens serão perdidos."
+                  confirmRemove={handleConfirmRemoveAllCollections}
+                  closeRemove={handleClose}
+               />
+            )}
+         </section>
 
          <header>
             <div className="flex items-center justify-between">
