@@ -13,6 +13,7 @@ import TagFilter from "./Components/TagFilter";
 import Tag from "./Types/TagType";
 import AddAndEditForm from "./Components/AddAndEditForm";
 import InitialEditValues from "./Types/InitialEditValues";
+import Footer from "./Components/Footer";
 
 const Home = () => {
    // *Coleções totais e visualizadas
@@ -367,6 +368,12 @@ const Home = () => {
                openRemoveAll={handleOpenConfirmRemoveAllCollections}
             />
          </main>
+
+         <hr className="my-5 text-gray-400" />
+
+         <footer>
+            <Footer />
+         </footer>
       </div>
    );
 };

@@ -15,6 +15,7 @@ import Tag from "@/app/Types/TagType";
 import TagFilter from "@/app/Components/TagFilter";
 import AddAndEditForm from "@/app/Components/AddAndEditForm";
 import InitialEditValues from "@/app/Types/InitialEditValues";
+import Footer from "@/app/Components/Footer";
 
 const CollectionPage = () => {
    const params = useParams();
@@ -396,6 +397,12 @@ const CollectionPage = () => {
                openRemoveAll={handleOpenConfirmEmptyCollection}
             />
          </main>
+
+         <hr className="my-5 text-gray-400" />
+
+         <footer>
+            <Footer />
+         </footer>
       </div>
    );
 };
