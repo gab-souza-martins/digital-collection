@@ -30,7 +30,11 @@ const ThemeToggleBtn = () => {
                    toggled ? "translate-x-8 bg-gray-600 text-white" : "bg-white"
                 }`}
          >
-            {toggled ? <FaMoon /> : <FaSun />}
+            {toggled ? (
+               <FaMoon />
+            ) : (
+               <FaSun className="-ml-0.45 text-gray-700" />
+            )}
          </div>
       </label>
    );
