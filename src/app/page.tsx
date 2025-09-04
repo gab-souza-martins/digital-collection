@@ -294,7 +294,6 @@ const Home = () => {
                closeForm={handleClose}
             />
          )}
-
          {isEditCollectionOpen && (
             <AddAndEditForm
                mode="edit"
@@ -304,7 +303,6 @@ const Home = () => {
                closeForm={handleClose}
             />
          )}
-
          {isConfirmRemoveCollectionOpen && (
             <ConfirmRemove
                text="Remover uma coleção é uma ação irreversível."
@@ -312,7 +310,6 @@ const Home = () => {
                closeRemove={handleClose}
             />
          )}
-
          {isConfirmRemoveAllCollectionsOpen && (
             <ConfirmRemove
                text="Remover as coleções é uma ação irreversível. Todos os itens serão perdidos."

@@ -19,6 +19,13 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
       closeRemove();
    };
 
+   const focusRef = React.useRef<HTMLButtonElement>(null);
+   React.useEffect(() => {
+      if (focusRef.current) {
+         focusRef.current.focus();
+      }
+   });
+
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
          <div
@@ -34,11 +41,14 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
             <div className="flex gap-2">
                <button
                   onClick={handleConfirm}
+                  ref={focusRef}
+                  tabIndex={-1}
                   type="submit"
                   className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 
                             text-white bg-rose-600 border-2 border-rose-600 shadow-sm
-                             hover:bg-rose-700 hover:border-rose-700 hover:shadow-xl transition duration-75 ease-in-out
-                             active:bg-rose-800 active:border-rose-800 active:shadow-md"
+                            hover:bg-rose-700 hover:border-rose-700 hover:shadow-xl transition duration-75 ease-in-out
+                            active:bg-rose-800 active:border-rose-800 active:shadow-md
+                             focus:outline-2 focus:outline-rose-600 focus:outline-offset-2"
                >
                   <FaTrash />
                   <span className="font-semibold">Confirmar</span>

@@ -150,6 +150,14 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
       }
    };
 
+   // *Foco de tabulação
+   const focusRef = React.useRef<HTMLInputElement>(null);
+   React.useEffect(() => {
+      if (focusRef.current) {
+         focusRef.current.focus();
+      }
+   });
+
    return (
       <div className="w-screen h-screen fixed top-0 left-0 bg-neutral-950/50 flex justify-center items-center z-10">
          <div
@@ -162,6 +170,8 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
             <form className="flex flex-col gap-3">
                <input
                   onChange={(e) => setName(e.target.value)}
+                  ref={focusRef}
+                  tabIndex={-1}
                   aria-label="Nome"
                   aria-required={true}
                   className={`border required-input ${
