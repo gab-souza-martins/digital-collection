@@ -39,19 +39,24 @@ const ThemeToggleBtn = () => {
          <input
             type="checkbox"
             id="themeToggle"
-            className="size-0 opacity-0"
+            className="absolute inset-0 appearance-none rounded-4xl
+                       focus-visible:outline-2 focus-visible:outline-gray-500 focus-visible:outline-offset-2"
             checked={theme === "dark"}
             onChange={handleToggle}
          />
          <div
-            className={`cursor-pointer absolute flex items-center justify-center top-1 left-1 size-6 rounded-full 
-                transition duration-300 ease-in-out text-gray-700 ${
-                   theme === "dark"
-                      ? "translate-x-8 bg-gray-600 text-white"
-                      : "bg-white"
-                }`}
+            className={`cursor-pointer absolute flex items-center justify-center top-1 left-1 size-6 rounded-full
+                        transition duration-300 ease-in-out text-gray-700  ${
+                           theme === "dark"
+                              ? "translate-x-8 bg-gray-600 text-white"
+                              : "bg-white"
+                        }`}
          >
-            {theme === "dark" ? <FaMoon /> : <FaSun className="-ml-0.45" />}
+            {theme === "dark" ? (
+               <FaMoon className="mx-auto" />
+            ) : (
+               <FaSun className="mx-auto" />
+            )}
          </div>
       </label>
    );
