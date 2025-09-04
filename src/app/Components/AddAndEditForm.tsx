@@ -315,7 +315,11 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                </div>
 
                {(nameError || description) && (
-                  <p className="text-sm text-rose-500">
+                  <p
+                     className="text-sm text-rose-500"
+                     role="alert"
+                     aria-live="assertive"
+                  >
                      Preencha todos os campos obrigatórios.
                   </p>
                )}

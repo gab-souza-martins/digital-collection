@@ -19,7 +19,7 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
       closeRemove();
    };
 
-   const focusRef = React.useRef<HTMLButtonElement>(null);
+   const focusRef = React.useRef<HTMLParagraphElement>(null);
    React.useEffect(() => {
       if (focusRef.current) {
          focusRef.current.focus();
@@ -35,14 +35,20 @@ const ConfirmRemove: React.FC<ConfirmRemoveProps> = ({
                borderColor: "var(--light-foreground)",
             }}
          >
-            <p className="text-rose-500">{text} Deseja prosseguir?</p>
+            <p
+               className="text-rose-500"
+               role="alert"
+               aria-live="assertive"
+               ref={focusRef}
+               tabIndex={-1}
+            >
+               {text} Deseja prosseguir?
+            </p>
             <br />
 
             <div className="flex gap-2">
                <button
                   onClick={handleConfirm}
-                  ref={focusRef}
-                  tabIndex={-1}
                   type="submit"
                   className="cursor-pointer rounded-md flex items-center gap-2 py-1 px-2 
                             text-white bg-rose-600 border-2 border-rose-600 shadow-sm
