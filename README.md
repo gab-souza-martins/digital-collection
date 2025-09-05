@@ -30,7 +30,7 @@ Ao acessar pela primeira vez, você verá a tela inicial. Você pode alterar ent
 
 ### Adicionando coleções e itens
 
-É obrigatório preencher os campos de nome e descrição. Também pode-se adicionar uma imagem e etiquetas com cores e nomes à sua escolha.
+É obrigatório preencher os campos de nome e descrição. Também pode-se adicionar uma imagem e etiquetas com cores e nomes à sua escolha. As etiquetas podem ser reorganizando ao arrastar e soltá-las na posição desejada.
 
 ![Formulário para adicionar coleção](public/Screenshots/addForm.png)
 ![Formulário preenchido com informações de uma coleção de dados](public/Screenshots/addForm-filled.png.png)
