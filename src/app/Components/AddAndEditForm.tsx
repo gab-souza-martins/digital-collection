@@ -237,7 +237,7 @@ const AddAndEditForm: React.FC<AddAndEditFormProps> = ({
                         <Image
                            src={imageBase64}
                            alt="Pré-visualização da imagem"
-                           className="self-center rounded-md object-cover"
+                           className="self-center rounded-md object-cover max-h-80"
                            width={300}
                            height={300}
                         />

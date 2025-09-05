@@ -112,7 +112,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
             <Image
                src={image}
                alt={title}
-               className="rounded-md object-cover mb-3"
+               className="rounded-md object-contain mb-3 max-h-80"
                width={300}
                height={300}
             />
